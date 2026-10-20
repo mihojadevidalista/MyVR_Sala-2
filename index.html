@@ -163,7 +163,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 
-const CFG = {"title":"MyVR","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":2.2222,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1.71542,1.71542,1.71542]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,3.24921,-1.16837],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,1.51429,-0.39817],[-0.4661,1.51429,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,1.51429,0.39817],[-0.4661,1.51429,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,-0.41107,-0.08137],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.41107,-1.23933],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"mp":{"enabled":true,"room":"myvr-rb10kp","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
+const CFG = {"title":"MyVR","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":1.7396,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[2.27472,2.27472,2.27472]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,0.93621,-2.42508],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,1.51429,-0.39817],[-0.4661,1.51429,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,1.51429,0.39817],[-0.4661,1.51429,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,-0.41107,0.10622],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.41107,-2.57237],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"viewer":{"chat":true,"chatMax":140},"admin":{"pub":{"x":"tRgdl4gfULubiDmGb9Z4NGhpenlyqDQ5lQhYugLQbjU","y":"_KEKpXhbbBhnx94G9l_5pRWhgfDB_HCMpGEHZcA35vw"},"global":{"screen":false,"voice":false,"cam":false,"chat":true}},"mp":{"enabled":true,"room":"myvr-rb10kp","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
 const $ = (id) => document.getElementById(id);
 document.title = CFG.title || 'MyVR';
 
@@ -2100,6 +2100,87 @@ const GM = (function (isPlaying) {
     return { tick, stop, warned: false };
 })(() => state === 'play');
 
+/* ===== COLISIONES DINÁMICAS (objetos animados por la línea de tiempo o escalados en vivo) =====
+   Las mallas de colisión ya siguen la escala / posición del objeto; lo que faltaba es reaccionar cuando es EL OBJETO
+   quien se acerca al jugador. Cada fotograma, con el jugador quieto o en movimiento:
+   · si una pared sólida invade el radio del cuerpo, el jugador es empujado hacia fuera (no se puede atravesar);
+   · si un volumen sólido crece y envuelve al jugador, este sale por la cara más cercana en lugar de quedar dentro. */
+const _dcRay = new THREE.Raycaster();
+const _dcBox = new THREE.Box3();
+const _dcNM = new THREE.Matrix3();
+const _dcN = new THREE.Vector3();
+const _dcO = new THREE.Vector3();
+const _dcDirs = (() => { const a = []; for (let i = 0; i < 8; i++) { const t = i * Math.PI / 4; a.push(new THREE.Vector3(Math.cos(t), 0, Math.sin(t))); } return a; })();
+function resolveDynamicCollisions(meshes, body) {
+    const R = body.radius, H = body.height;
+    const maxSlopeCos = Math.cos(THREE.MathUtils.degToRad(playerConfig.maxSlopeAngle));
+    const feet0 = playerLogicalPos.y - playerConfig.eyeHeight;
+    const px0 = playerLogicalPos.x, pz0 = playerLogicalPos.z;
+    const cands = [];
+    for (const m of meshes) {
+        m.updateWorldMatrix(true, false);   // transformación al día, también la de objetos animados este mismo fotograma
+        _dcBox.setFromObject(m);
+        const near = !_dcBox.isEmpty()
+            && _dcBox.max.x > px0 - R - 0.15 && _dcBox.min.x < px0 + R + 0.15
+            && _dcBox.max.z > pz0 - R - 0.15 && _dcBox.min.z < pz0 + R + 0.15
+            && _dcBox.max.y > feet0 + 0.05 && _dcBox.min.y < feet0 + H;
+        if (near) cands.push({ m, min: _dcBox.min.clone(), max: _dcBox.max.clone() });
+        else m.userData._dcInside = false;
+    }
+    if (!cands.length) return;
+    for (let pass = 0; pass < 3; pass++) {
+        const px = playerLogicalPos.x, pz = playerLogicalPos.z;
+        const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
+        let moved = false, bestPen = 0, bx = 0, bz = 0;
+        for (const c of cands) {
+            const m = c.m;
+            _dcNM.getNormalMatrix(m.matrixWorld);
+            const liftable = (c.max.y - feetY) <= playerConfig.stepHeight + 1.2;   // la lógica de suelo lo sube como escalón
+            const far = Math.max(c.max.x - c.min.x, c.max.z - c.min.z) + R * 2 + 0.5;
+            let insideNow = false, exitD = Infinity, exitDir = null;
+            for (const f of [0.444, 0.778]) {
+                const h = feetY + H * f;
+                if (h < c.min.y || h > c.max.y) continue;
+                _dcO.set(px, h, pz);
+                let back = 0, nd = Infinity, ndir = null;
+                for (const d of _dcDirs) {
+                    _dcRay.set(_dcO, d);
+                    _dcRay.far = far;
+                    const hit = _dcRay.intersectObject(m, false)[0];
+                    if (!hit) continue;
+                    _dcN.copy(hit.face.normal).applyMatrix3(_dcNM).normalize();
+                    const dn = _dcN.dot(d);
+                    if (dn > 0) {                                  // el rayo sale por esta cara: el jugador está dentro del volumen
+                        back++;
+                        if (hit.distance < nd) { nd = hit.distance; ndir = d; }
+                    } else if (hit.distance < R && _dcN.y < maxSlopeCos) {   // pared sólida dentro del radio del cuerpo
+                        const pen = R - hit.distance;
+                        if (pen > bestPen) { bestPen = pen; bx = -d.x; bz = -d.z; }
+                    }
+                }
+                if (back >= 6) { insideNow = true; if (nd < exitD) { exitD = nd; exitDir = ndir; } }
+            }
+            const was = m.userData._dcInside;
+            m.userData._dcInside = insideNow;
+            // Solo se expulsa si el jugador estaba FUERA el fotograma anterior (el volumen lo envolvió al crecer / moverse).
+            // Quien empieza dentro de un volumen (p. ej. una sala definida como caja) conserva el comportamiento de siempre.
+            if (insideNow && was === false && !liftable && exitDir) {
+                playerLogicalPos.x += exitDir.x * (exitD + R + 0.02);
+                playerLogicalPos.z += exitDir.z * (exitD + R + 0.02);
+                m.userData._dcInside = false;
+                moved = true;
+                break;
+            }
+        }
+        if (!moved && bestPen > 0.001) {
+            playerLogicalPos.x += bx * (bestPen + 0.005);
+            playerLogicalPos.z += bz * (bestPen + 0.005);
+            moved = true;
+        }
+        if (!moved) break;
+    }
+}
+
 function updatePlayerPhysics(delta, moveDelta) {
     const solidColliderMeshes = solidColliderMeshList();
     const body = bodyCfg;
@@ -2124,6 +2205,7 @@ function updatePlayerPhysics(delta, moveDelta) {
         }
     }
     if (allowHorizontalMove) playerLogicalPos.add(moveDelta);
+    if (!body.noclip && solidColliderMeshes.length > 0) resolveDynamicCollisions(solidColliderMeshes, body);   // reacciona a objetos que se escalan / animan
 
     let groundY = floorCfg.enabled ? 0 : -Infinity;
     if (solidColliderMeshes.length > 0) {
@@ -3025,6 +3107,7 @@ function mpHelloMsg(withFace) {
     const m = { t: 'hi', u: MP.uid, n: p.nick, c: p.color, h: p.hair };
     if (l) { m.p = [+l.x.toFixed(2), +l.y.toFixed(2), +l.z.toFixed(2)]; m.r = +l.yaw.toFixed(3); }
     if (withFace && p.face) m.f = p.face;
+    MPA.decorateHello(m);
     return m;
 }
 function mpBroadcast(msg) { MP.transports.forEach(t => { try { t.send(msg); } catch (e) { /* transporte caído */ } }); }
@@ -3033,20 +3116,25 @@ function mpOnMessage(m, t, peerKey) {
     if (!m || typeof m !== 'object' || MP.blocked) return;
     const uid = typeof m.u === 'string' ? m.u.slice(0, 24) : '';
     if (!uid || uid === MP.uid) return;
-    if (m.t === 'fu') { mpBlock(Number(m.max) || 0); return; }
+    if (MPA.banned.has(uid)) { if (MPA.banned.get(uid) > Date.now()) return; MPA.banned.delete(uid); }   // desconectado por un admin
+    if (m.t === 'ad') { mpaOnAd(m); return; }   // órdenes de administrador (firmadas)
+    if (m.t === 'fu') { if (MPA.isRoot && MPA.adminOn) return; mpBlock(Number(m.max) || 0); return; }   // el admin entra aunque la sala esté llena
     if (m.t === 'bye') { mpRemove(uid); return; }
     if (m.t === 'rq') { t.send(mpHelloMsg(true), peerKey); return; }
+    if (m.t === 'ch') { if (typeof chatReceive === 'function') chatReceive(uid, m); return; }   // chat entre usuarios
     if (m.t === 'hi') {
+        if (m.ad && !m.__v) { mpaVerifyClaim(m).then(ok => { m.__v = true; m.__root = ok; mpOnMessage(m, t, peerKey); }); return; }
         let r = MP.remotes.get(uid), isNew = false;
         if (!r) {
-            if (MP.remotes.size + 1 >= MP.maxUsers) { t.send({ t: 'fu', u: MP.uid, max: MP.maxUsers }, peerKey); return; }
+            if (MP.remotes.size + 1 >= MP.maxUsers && !m.__root) { t.send({ t: 'fu', u: MP.uid, max: MP.maxUsers }, peerKey); return; }
             r = mpCreateRemote(uid); isNew = true;
         }
         r.links.set(t.name + ':' + peerKey, { t, peerKey });
         r.seen = performance.now();
         mpApplyProfile(r, m);
+        mpaNoteHi(r, m);
         if (Array.isArray(m.p)) mpSetTarget(r, m.p, m.r, 0);
-        if (isNew) { t.send(mpHelloMsg(true), peerKey); mpRoster(); mpRefreshStatus(); }
+        if (isNew) { t.send(mpHelloMsg(true), peerKey); mpRoster(); mpRefreshStatus(); mpaOnNewPeer(uid, t, peerKey); }
         return;
     }
     if (m.t === 'st') {
@@ -3212,6 +3300,7 @@ function mpEscalate(name) {
 /* ---------- Ciclo de vida ---------- */
 function mpStart() {
     if (MP.started) return;
+    if (Date.now() < MPA.kickedUntil) { if (typeof showToast === 'function') showToast('⛔ Un administrador te desconectó. Espera unos minutos para volver a conectarte.', 6000); return; }
     MP.started = true; MP.blocked = false; MP.errors = [];
     mpStatus('Conectando…');
     if (MP.useLocal) {
@@ -3245,6 +3334,419 @@ function mpBlock(max) {
     mpStatus('⛔ Sala llena (máx. ' + (max || MP.maxUsers) + ' usuarios)');
     if (typeof showToast === 'function') showToast('⛔ La sala está llena (máx. ' + (max || MP.maxUsers) + '). Prueba otra sala.', 6000);
 }
+
+/* ---------- ADMINISTRADOR (modo Explorar): desconectar, borrar chat, permisos y roles ----------
+   - Los comandos de admin viajan FIRMADOS (ECDSA P-256). El editor (dueño) guarda la clave privada; el visor
+     exportado solo lleva la clave pública, así nadie puede falsificar órdenes aunque la red sea P2P.
+   - El dueño puede delegar el rol de admin a otros usuarios y quitárselo cuando quiera.            */
+var MPA = {
+    editor: false, adminOn: false, isRoot: false, usable: false, host: null,
+    rootPub: null, rootKey: null, rootPriv: null, rootUid: null, myPub: null, myPriv: null,
+    admins: new Map(), banned: new Map(), nonces: new Set(), deleted: new Set(), mutedPeers: new Set(),
+    me: {}, sent: new Map(), global: { chat: null, screen: false, voice: false, cam: false },
+    claim: null, kickedUntil: 0, ready: null, refresh: function () { }
+};
+const MPA_KEYS = ['chat', 'screen', 'voice', 'cam'];
+const MPA_LABEL = { chat: ['💬', 'Chat'], screen: ['🖥️', 'Compartir pantalla'], voice: ['🎙️', 'Voz'], cam: ['📷', 'Cámara'] };
+const MPA_ALG = { name: 'ECDSA', namedCurve: 'P-256' }, MPA_SIG = { name: 'ECDSA', hash: 'SHA-256' };
+const MPA_XY = /^[A-Za-z0-9_-]{40,60}$/;
+function mpaB64(u8) { let s = ''; for (let i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]); return btoa(s); }
+function mpaUnB64(s) { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+function mpaCleanPub(k) { return (k && typeof k === 'object' && MPA_XY.test(k.x) && MPA_XY.test(k.y)) ? { x: k.x, y: k.y } : null; }
+async function mpaImportPub(k) {
+    k = mpaCleanPub(k); if (!k) return null;
+    try { return await crypto.subtle.importKey('jwk', { kty: 'EC', crv: 'P-256', x: k.x, y: k.y, ext: true }, MPA_ALG, false, ['verify']); } catch (e) { return null; }
+}
+async function mpaSignWith(priv, str) { return mpaB64(new Uint8Array(await crypto.subtle.sign(MPA_SIG, priv, new TextEncoder().encode(str)))); }
+async function mpaVerifySig(key, str, sig) {
+    try { return await crypto.subtle.verify(MPA_SIG, key, mpaUnB64(sig), new TextEncoder().encode(str)); } catch (e) { return false; }
+}
+const mpaOk = () => !!(window.crypto && crypto.subtle);
+
+async function mpaInitKeys() {
+    if (!mpaOk()) return;
+    const kp = await crypto.subtle.generateKey(MPA_ALG, true, ['sign', 'verify']);
+    const j = await crypto.subtle.exportKey('jwk', kp.publicKey);
+    MPA.myPriv = kp.privateKey; MPA.myPub = { x: j.x, y: j.y }; MPA.usable = true;
+}
+async function mpaInitRoot() {   // solo en el editor: clave del dueño, guardada en este navegador
+    const LS = 'myvr_admin_root_v1'; let d = null;
+    try { d = JSON.parse(localStorage.getItem(LS)); } catch (e) { d = null; }
+    if (d && d.priv && d.pub) {
+        try {
+            MPA.rootPriv = await crypto.subtle.importKey('jwk', d.priv, MPA_ALG, false, ['sign']);
+            MPA.rootPub = mpaCleanPub(d.pub); MPA.rootKey = await mpaImportPub(MPA.rootPub);
+            if (!MPA.rootPub || !MPA.rootKey) MPA.rootPriv = null;
+        } catch (e) { MPA.rootPriv = null; }
+    }
+    if (!MPA.rootPriv) {
+        const kp = await crypto.subtle.generateKey(MPA_ALG, true, ['sign', 'verify']);
+        const pj = await crypto.subtle.exportKey('jwk', kp.privateKey), uj = await crypto.subtle.exportKey('jwk', kp.publicKey);
+        MPA.rootPub = { x: uj.x, y: uj.y }; MPA.rootKey = kp.publicKey; MPA.rootPriv = kp.privateKey;
+        try { localStorage.setItem(LS, JSON.stringify({ priv: pj, pub: MPA.rootPub })); } catch (e) { /* sin almacenamiento */ }
+    }
+    MPA.isRoot = true;
+    let on = true; try { on = localStorage.getItem('myvr_admin_on') !== '0'; } catch (e) { /* sin almacenamiento */ }
+    MPA.adminOn = on;
+    try { const g = JSON.parse(localStorage.getItem('myvr_admin_global')); if (g) MPA.setGlobalState(g); } catch (e) { /* sin datos */ }
+    await mpaRefreshClaim();
+}
+MPA.setGlobalState = function (g) {
+    if (!g || typeof g !== 'object') return;
+    ['screen', 'voice', 'cam'].forEach(k => { if (typeof g[k] === 'boolean') MPA.global[k] = g[k]; });
+    if (typeof g.chat === 'boolean') MPA.global.chat = g.chat;
+};
+function mpaGlobalForExport() {
+    const g = { screen: !!MPA.global.screen, voice: !!MPA.global.voice, cam: !!MPA.global.cam };
+    if (MPA.global.chat !== null) g.chat = !!MPA.global.chat;
+    return g;
+}
+async function mpaRefreshClaim() {
+    if (!MPA.isRoot || !MPA.rootPriv) return;
+    const p = JSON.stringify({ c: 'root', uid: MP.uid, ts: Date.now(), r: 1 });
+    MPA.claim = { p, s: await mpaSignWith(MPA.rootPriv, p) };
+}
+
+/* ---- Firmar y verificar ---- */
+async function mpaMakeMsg(P) {
+    const key = MPA.isRoot ? MPA.rootPriv : MPA.myPriv;
+    if (!key) return null;
+    P.ts = Date.now(); P.n = Math.random().toString(36).slice(2, 12); P.room = MP.room; P.r = MPA.isRoot ? 1 : 0;
+    const p = JSON.stringify(P);
+    return { t: 'ad', u: MP.uid, p, s: await mpaSignWith(key, p) };
+}
+async function mpaSend(P) {
+    if (!MPA.adminOn) return false;
+    const m = await mpaMakeMsg(P);
+    if (!m) return false;
+    mpBroadcast(m);
+    return true;
+}
+async function mpaCheck(m, claim) {
+    if (typeof m.p !== 'string' || m.p.length > 700 || typeof m.s !== 'string' || m.s.length > 140) return null;
+    let P; try { P = JSON.parse(m.p); } catch (e) { return null; }
+    if (!P || typeof P !== 'object' || !(Math.abs(Date.now() - P.ts) < 600000)) return null;
+    if (!claim && P.room !== MP.room) return null;
+    let key = null, role = null;
+    if (P.r === 1) { key = MPA.rootKey; role = 'root'; }
+    else { const a = MPA.admins.get(m.u); if (a && a.key) { key = a.key; role = 'admin'; } }
+    if (!key || !(await mpaVerifySig(key, m.p, m.s))) return null;
+    if (!claim) {
+        if (typeof P.n !== 'string' || MPA.nonces.has(P.n)) return null;   // anti-repetición
+        MPA.nonces.add(P.n);
+        if (MPA.nonces.size > 500) MPA.nonces.delete(MPA.nonces.values().next().value);
+    }
+    return { P, role };
+}
+async function mpaVerifyClaim(m) {
+    if (!MPA.rootKey || !m.ad || typeof m.ad !== 'object') return false;
+    const v = await mpaCheck({ p: m.ad.p, s: m.ad.s, u: m.u }, true);
+    return !!(v && v.role === 'root' && v.P.c === 'root' && v.P.uid === m.u);
+}
+function mpaNoteHi(r, m) {
+    const k = mpaCleanPub(m.k); if (k) r.pub = k;
+    if (m.__root) { r.isRoot = true; MPA.rootUid = r.uid; }
+    if (MPA.refresh) MPA.refresh();
+}
+MPA.decorateHello = function (m) {
+    if (MPA.myPub) m.k = MPA.myPub;
+    if (MPA.isRoot && MPA.adminOn && MPA.claim) m.ad = MPA.claim;
+};
+
+/* ---- Recibir comandos ---- */
+async function mpaOnAd(m) {
+    if (!mpaOk() || (!MPA.rootKey && !MPA.admins.size)) return;
+    const v = await mpaCheck(m, false);
+    if (!v) return;
+    const P = v.P, role = v.role, uid = typeof P.uid === 'string' ? P.uid.slice(0, 24) : '';
+    switch (P.c) {
+        case 'kick': {
+            if (!uid || uid === m.u) return;
+            if (MPA.isRoot && uid === MP.uid) return;                       // el dueño es inmune
+            if (uid === MPA.rootUid) return;
+            if (role === 'admin' && MPA.admins.has(uid)) return;            // un admin delegado no puede con otro admin
+            if (uid === MP.uid) { mpaKicked(); return; }
+            MPA.banned.set(uid, Date.now() + 1800000); mpRemove(uid);
+            if (typeof showToast === 'function') showToast('⛔ Un administrador desconectó a un usuario', 3500);
+            break;
+        }
+        case 'delmsg': mpaRemoveMsg(typeof P.id === 'string' ? P.id.slice(0, 16) : ''); break;
+        case 'perm': {
+            if (!MPA_KEYS.includes(P.k)) return;
+            const val = P.v === 1 ? true : P.v === 0 ? false : null;
+            if (uid === MP.uid) {
+                if (val === null) delete MPA.me[P.k]; else MPA.me[P.k] = val;
+                if (typeof showToast === 'function') showToast(MPA_LABEL[P.k][0] + ' ' + MPA_LABEL[P.k][1] + ': ' + (val === true ? 'un admin te dio permiso' : val === false ? 'un admin te lo quitó' : 'vuelve a las reglas del espacio'), 4500);
+                if (typeof chatSync === 'function') chatSync();
+            } else if (P.k === 'chat') {
+                if (val === false) MPA.mutedPeers.add(uid); else MPA.mutedPeers.delete(uid);
+            }
+            break;
+        }
+        case 'gperm': {
+            if (role !== 'root' || !MPA_KEYS.includes(P.k)) return;
+            MPA.global[P.k] = P.v === 1 ? true : P.v === 0 ? false : (P.k === 'chat' ? null : MPA.global[P.k]);
+            if (typeof chatSync === 'function') chatSync();
+            break;
+        }
+        case 'role': {
+            if (role !== 'root' || !uid) return;
+            if (P.a === 1) {
+                const pub = mpaCleanPub(P.k), key = await mpaImportPub(pub);
+                if (!key) return;
+                MPA.admins.set(uid, { key, pub });
+                if (uid === MP.uid && MPA.myPub && pub.x === MPA.myPub.x && pub.y === MPA.myPub.y) {
+                    MPA.adminOn = true;
+                    if (typeof showToast === 'function') showToast('👑 Ahora eres administrador de este espacio', 5000);
+                }
+            } else {
+                MPA.admins.delete(uid);
+                if (uid === MP.uid && !MPA.isRoot) {
+                    MPA.adminOn = false;
+                    if (typeof showToast === 'function') showToast('🛡️ Ya no eres administrador', 4000);
+                }
+            }
+            if (typeof chatSync === 'function') chatSync();
+            break;
+        }
+        default: return;
+    }
+    if (MPA.refresh) MPA.refresh();
+}
+function mpaKicked() {
+    MPA.kickedUntil = Date.now() + 120000;
+    try { mpStop(true); } catch (e) { /* ya desconectado */ }
+    if (typeof mpStatus === 'function') mpStatus('⛔ Un administrador te desconectó');
+    if (typeof showToast === 'function') showToast('⛔ Un administrador te desconectó de la sala. Podrás volver a conectarte en un par de minutos.', 9000);
+    if (MPA.refresh) MPA.refresh();
+}
+function mpaRemoveMsg(id) {
+    if (!id) return;
+    MPA.deleted.add(id);
+    const log = document.getElementById('chat-log');
+    if (log) Array.from(log.children).forEach(row => { if (row.dataset && row.dataset.mid === id) row.remove(); });
+}
+// Cuando aparece un usuario nuevo, el admin le reenvía (firmado de nuevo) lo que él mismo decidió
+async function mpaOnNewPeer(uid, t, peerKey) {
+    if (!MPA.adminOn || !mpaOk()) return;
+    try {
+        const out = [];
+        const s = MPA.sent.get(uid);
+        if (s) Object.keys(s).forEach(k => out.push({ c: 'perm', uid, k, v: s[k] ? 1 : 0 }));
+        if (MPA.isRoot) {
+            MPA.admins.forEach((a, auid) => out.push({ c: 'role', uid: auid, a: 1, k: a.pub }));
+            MPA_KEYS.forEach(k => { const v = MPA.global[k]; if (v !== null) out.push({ c: 'gperm', k, v: v ? 1 : 0 }); });
+        }
+        for (const P of out) { const m = await mpaMakeMsg(P); if (m) t.send(m, peerKey); }
+    } catch (e) { /* sin conexión */ }
+}
+
+/* ---- Acciones del admin (las usa el panel) ---- */
+MPA.kick = async function (uid) {
+    const r = MP.remotes.get(uid);
+    if (!r || r.isRoot || uid === MPA.rootUid) return;
+    if (!MPA.isRoot && MPA.admins.has(uid)) return;
+    if (!(await mpaSend({ c: 'kick', uid }))) { if (typeof showToast === 'function') showToast('⚠️ No se pudo firmar la orden (el navegador no permite criptografía aquí)'); return; }
+    MPA.banned.set(uid, Date.now() + 1800000); mpRemove(uid);
+    if (typeof showToast === 'function') showToast('⛔ Usuario desconectado');
+    MPA.refresh();
+};
+MPA.delMsg = async function (id, row) {
+    if (id) { await mpaSend({ c: 'delmsg', id }); mpaRemoveMsg(id); }
+    else if (row) row.remove();
+};
+MPA.setPerm = async function (uid, k, v) {
+    if (!(await mpaSend({ c: 'perm', uid, k, v: v === true ? 1 : v === false ? 0 : null }))) return;
+    let s = MPA.sent.get(uid); if (!s) { s = {}; MPA.sent.set(uid, s); }
+    if (v === null) delete s[k]; else s[k] = v;
+    if (k === 'chat') { if (v === false) MPA.mutedPeers.add(uid); else MPA.mutedPeers.delete(uid); }
+    MPA.refresh();
+};
+MPA.setGlobal = async function (k, v) {
+    if (!MPA.isRoot) return;
+    MPA.global[k] = !!v;
+    try { localStorage.setItem('myvr_admin_global', JSON.stringify(mpaGlobalForExport())); } catch (e) { /* sin almacenamiento */ }
+    await mpaSend({ c: 'gperm', k, v: v ? 1 : 0 });
+    if (typeof chatSync === 'function') chatSync();
+    MPA.refresh();
+};
+MPA.setRole = async function (uid, on) {
+    if (!MPA.isRoot) return;
+    const r = MP.remotes.get(uid);
+    if (on) {
+        const pub = r && r.pub; const key = await mpaImportPub(pub);
+        if (!key) { if (typeof showToast === 'function') showToast('⚠️ Ese usuario aún no envió su clave. Inténtalo en unos segundos.'); return; }
+        if (!(await mpaSend({ c: 'role', uid, a: 1, k: pub }))) return;
+        MPA.admins.set(uid, { key, pub });
+    } else {
+        if (!(await mpaSend({ c: 'role', uid, a: 0 }))) return;
+        MPA.admins.delete(uid);
+    }
+    MPA.refresh();
+};
+MPA.setAdminOn = async function (on) {   // el dueño enciende / apaga su propio modo admin (reversible)
+    if (!MPA.isRoot) return;
+    MPA.adminOn = !!on;
+    try { localStorage.setItem('myvr_admin_on', on ? '1' : '0'); } catch (e) { /* sin almacenamiento */ }
+    if (on) await mpaRefreshClaim();
+    if (MP.started) { try { mpBroadcast(mpHelloMsg(false)); } catch (e) { /* sin red */ } }
+    if (typeof chatSync === 'function') chatSync();
+    if (typeof showToast === 'function') showToast(on ? '👑 Modo administrador activado' : '👤 Modo administrador apagado: ahora eres un usuario normal');
+    MPA.refresh();
+};
+/* ---- Reglas efectivas (el admin se salta las restricciones del espacio) ---- */
+MPA.can = function (k) {   // para pantalla / voz / cámara
+    if (MPA.adminOn && MP.started) return true;
+    if (MPA.me[k] === true) return true;
+    if (MPA.me[k] === false) return false;
+    return !!MPA.global[k];
+};
+MPA.chatOn = function (base) {
+    if (MPA.adminOn && MP.started) return true;
+    if (MPA.me.chat === true) return true;
+    if (MPA.me.chat === false) return false;
+    return MPA.global.chat === null ? !!base : !!MPA.global.chat;
+};
+MPA.decorateRow = function (row) {
+    if (!MPA.adminOn || !row || row.classList.contains('sys') || row.querySelector('.cm-x')) return;
+    const x = document.createElement('button');
+    x.className = 'cm-x'; x.textContent = '✖'; x.title = 'Borrar este mensaje para todos';
+    x.style.cssText = 'margin-left:6px;cursor:pointer;color:#e74c3c;background:none;border:none;font-size:11px;padding:0 2px;';
+    x.addEventListener('click', (e) => { e.stopPropagation(); MPA.delMsg(row.dataset ? row.dataset.mid : '', row); });
+    row.appendChild(x);
+};
+MPA.syncRows = function () {
+    const log = document.getElementById('chat-log'); if (!log) return;
+    Array.from(log.children).forEach(row => {
+        if (MPA.adminOn) MPA.decorateRow(row);
+        else { const x = row.querySelector('.cm-x'); if (x) x.remove(); }
+    });
+};
+
+/* ---- Panel de administración ---- */
+function mpaBuildUI() {
+    const mk = (tag, props, parent) => { const e = document.createElement(tag); if (props) Object.assign(e, props); if (parent) parent.appendChild(e); return e; };
+    const st = mk('style', { textContent:
+        '#mpa-wrap{position:fixed;right:12px;top:' + (MPA.editor ? 62 : 100) + 'px;width:min(310px,calc(100vw - 24px));z-index:320;display:none;flex-direction:column;align-items:flex-end;gap:6px;font:12px system-ui,sans-serif;color:#fff;pointer-events:none}' +
+        '#mpa-wrap>*{pointer-events:auto}' +
+        '#mpa-btn{background:rgba(28,32,40,.94);border:1px solid #f1c40f;color:#f1c40f;border-radius:8px;padding:6px 10px;cursor:grab;font:inherit;font-weight:700;touch-action:none;user-select:none}' +
+        '#mpa-panel{display:none;width:100%;box-sizing:border-box;max-height:52vh;overflow-y:auto;background:rgba(28,32,40,.96);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 10px;flex-direction:column;gap:6px}' +
+        '#mpa-wrap.open #mpa-panel{display:flex}' +
+        '#mpa-panel .h{cursor:grab;touch-action:none;user-select:none;font-weight:700;color:#f1c40f;display:flex;justify-content:space-between;align-items:center;gap:8px}' +
+        '#mpa-panel .s{font-size:10px;font-weight:700;color:#8c96a8;border-top:1px solid rgba(255,255,255,.1);padding-top:5px;margin-top:2px}' +
+        '#mpa-panel .n{font-size:10px;color:#8c96a8;line-height:1.35}' +
+        '#mpa-panel button{background:#2a2f3a;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:2px 6px;cursor:pointer;font:inherit}' +
+        '#mpa-panel button:disabled{opacity:.35;cursor:default}' +
+        '#mpa-panel .u{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.06)}' +
+        '#mpa-panel .u b{flex:1 1 100%}' +
+        '#mpa-panel label{display:flex;align-items:center;gap:6px}' }, document.head);
+    const wrap = mk('div', { id: 'mpa-wrap' }, document.body);
+    const btn = mk('button', { id: 'mpa-btn', textContent: '👑 Admin' }, wrap);
+    const panel = mk('div', { id: 'mpa-panel' }, wrap);
+    ['pointerdown', 'click', 'mousedown', 'touchstart', 'keydown'].forEach(ev => wrap.addEventListener(ev, (e) => e.stopPropagation()));
+    const POS_LS = 'myvr_admin_pos_v1';
+    const place = (x, y) => {
+        x = Math.max(0, Math.min(window.innerWidth - wrap.offsetWidth, x));
+        y = Math.max(0, Math.min(window.innerHeight - 40, y));
+        wrap.style.left = x + 'px'; wrap.style.top = y + 'px'; wrap.style.right = 'auto';
+    };
+    let moved = false;
+    const startDrag = (e) => {
+        if (e.button !== undefined && e.button !== 0) return;
+        if (e.currentTarget !== btn && e.target.closest && e.target.closest('button')) return;
+        const r = wrap.getBoundingClientRect(), ox = e.clientX - r.left, oy = e.clientY - r.top, sx = e.clientX, sy = e.clientY, id = e.pointerId, el = e.currentTarget;
+        moved = false;
+        try { el.setPointerCapture(id); } catch (err) { /* sin captura */ }
+        const mv = (ev) => {
+            if (ev.pointerId !== id) return;
+            if (!moved && Math.hypot(ev.clientX - sx, ev.clientY - sy) < 4) return;
+            moved = true; place(ev.clientX - ox, ev.clientY - oy);
+        };
+        const up = (ev) => {
+            if (ev.pointerId !== id) return;
+            el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); el.removeEventListener('pointercancel', up);
+            if (moved) { try { localStorage.setItem(POS_LS, JSON.stringify({ x: parseFloat(wrap.style.left), y: parseFloat(wrap.style.top) })); } catch (err) { /* sin almacenamiento */ } }
+        };
+        el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+    };
+    btn.addEventListener('pointerdown', startDrag);
+    try { const p = JSON.parse(localStorage.getItem(POS_LS)); if (p && isFinite(p.x) && isFinite(p.y)) { wrap.style.display = 'flex'; place(p.x, p.y); wrap.style.display = 'none'; } } catch (err) { /* sin posición guardada */ }
+    window.addEventListener('resize', () => { if (wrap.style.left) place(parseFloat(wrap.style.left), parseFloat(wrap.style.top)); });
+    btn.addEventListener('click', () => {
+        if (moved) { moved = false; return; }   // fue un arrastre, no un clic
+        const open = !wrap.classList.contains('open');
+        wrap.classList.toggle('open', open);
+        if (open && MPA.host && MPA.host.unlock) MPA.host.unlock();
+        MPA.refresh();
+    });
+    MPA.refresh = function () {
+        btn.textContent = '⠿ ' + (MPA.adminOn ? '👑 Admin' : '👑 Admin (apagado)') + (MP.started ? '' : ' · sin conexión');
+        panel.textContent = '';
+        const conn = !!MP.started;
+        const h = mk('div', { className: 'h' }, panel);
+        h.addEventListener('pointerdown', startDrag);
+        mk('span', { textContent: '👑 Administración' }, h);
+        if (MPA.isRoot) {
+            const sw = mk('button', { textContent: MPA.adminOn ? 'Modo admin: ON' : 'Modo admin: OFF', title: 'Enciende o apaga tus privilegios (reversible)', disabled: !conn }, h);
+            sw.addEventListener('click', () => MPA.setAdminOn(!MPA.adminOn));
+        }
+        if (!conn) mk('div', { className: 'n', style: 'color:#f39c12', textContent: '🔌 Sin conexión: conéctate a una sala (botón «Conectar» / entrar al visor) para administrar. Todo permanece desactivado hasta entonces.' }, panel);
+        if (!MPA.adminOn) { mk('div', { className: 'n', textContent: 'Modo admin apagado: eres un usuario normal y te rigen las reglas del espacio. Enciéndelo para volver a administrar.' }, panel); return; }
+        mk('div', { className: 's', textContent: 'RESTRICCIONES GLOBALES (visitantes)' }, panel);
+        const base = MPA.host && MPA.host.baseChat ? !!MPA.host.baseChat() : true;
+        MPA_KEYS.forEach(k => {
+            const lb = mk('label', {}, panel);
+            const cb = mk('input', { type: 'checkbox' }, lb);
+            cb.checked = k === 'chat' ? (MPA.global.chat === null ? base : !!MPA.global.chat) : !!MPA.global[k];
+            cb.disabled = !MPA.isRoot || !conn;
+            cb.addEventListener('change', () => MPA.setGlobal(k, cb.checked));
+            mk('span', { textContent: MPA_LABEL[k][0] + ' Permitir ' + MPA_LABEL[k][1].toLowerCase() }, lb);
+        });
+        mk('div', { className: 'n', textContent: MPA.isRoot ? 'Tú (admin) no estás sujeto a estas restricciones. Pantalla, voz y cámara aún no existen en esta versión: sus permisos quedan registrados y listos.' : 'Solo el dueño del espacio cambia las restricciones globales.' }, panel);
+        mk('div', { className: 's', textContent: 'USUARIOS CONECTADOS' }, panel);
+        if (!MP.remotes.size) mk('div', { className: 'n', textContent: conn ? 'No hay otros usuarios conectados.' : 'Sin conexión.' }, panel);
+        MP.remotes.forEach((r, uid) => {
+            const row = mk('div', { className: 'u' }, panel);
+            const isAdm = MPA.admins.has(uid);
+            mk('b', { textContent: (r.isRoot ? '👑 ' : isAdm ? '🛡️ ' : '') + (r.nick || '…') }, row);
+            const protectedUser = r.isRoot || (!MPA.isRoot && isAdm);
+            const kb = mk('button', { textContent: '⛔ Desconectar', disabled: protectedUser, title: 'Echar a este usuario de la sala' }, row);
+            kb.addEventListener('click', () => { if (confirm('¿Desconectar a ' + (r.nick || 'este usuario') + '?')) MPA.kick(uid); });
+            const cur = MPA.sent.get(uid) || {};
+            MPA_KEYS.forEach(k => {
+                const v = cur[k], glyph = v === true ? '✔' : v === false ? '✖' : '·';
+                const pb = mk('button', { textContent: MPA_LABEL[k][0] + glyph, disabled: r.isRoot, title: MPA_LABEL[k][1] + ': ' + (v === true ? 'permitido por ti' : v === false ? 'revocado por ti' : 'según las reglas del espacio') + ' (clic para cambiar)' }, row);
+                pb.addEventListener('click', () => MPA.setPerm(uid, k, v === undefined ? true : v === true ? false : null));
+            });
+            if (MPA.isRoot && !r.isRoot) {
+                const rb = mk('button', { textContent: isAdm ? '🛡️ Quitar admin' : '🛡️ Dar admin', title: 'Delegar o quitar el rol de administrador' }, row);
+                rb.addEventListener('click', () => MPA.setRole(uid, !isAdm));
+            }
+        });
+    };
+    let sig = '';
+    setInterval(() => {
+        const show = MPA.editor ? true : !!(MPA.host && MPA.host.isPlaying() && (MPA.adminOn || MPA.isRoot));
+        wrap.style.display = show ? 'flex' : 'none';
+        if (!show) wrap.classList.remove('open');
+        const now = (MP.started ? 1 : 0) + ':' + (MPA.adminOn ? 1 : 0) + ':' + (MPA.isRoot ? 1 : 0);
+        if (now !== sig) { sig = now; MPA.refresh(); }
+        MPA.syncRows();
+    }, 400);
+    MPA.refresh();
+}
+function mpaInit(opts) {
+    MPA.host = opts; MPA.editor = !!opts.editor;
+    const g = opts.global; if (g) MPA.setGlobalState(g);
+    if (!MPA.editor && opts.rootPub) { const p = mpaCleanPub(opts.rootPub); MPA.rootPub = p; mpaImportPub(p).then(k => { MPA.rootKey = k; }); }
+    mpaBuildUI();
+    const prev = MP.host.onRoster;
+    MP.host.onRoster = () => { if (prev) prev(); MPA.refresh(); };
+    if (!mpaOk()) return;
+    MPA.ready = (async () => { await mpaInitKeys(); if (MPA.editor) await mpaInitRoot(); MPA.refresh(); })().catch(e => console.warn('[Admin] sin criptografía', e));
+    if (MPA.editor) setInterval(() => { mpaRefreshClaim(); }, 240000);
+}
+
 
 /* ---------- Bucle: interpolación + envío de estado (~10 Hz) ---------- */
 function mpTick(delta) {
@@ -3357,6 +3859,169 @@ function mpEnter(nick) {
     mpStart();
     showToast('🌐 Conectando a la sala «' + MP.room + '»… (máx. ' + MP.maxUsers + ' usuarios)', 4500);
 }
+
+/* ===== Administración: se activa en el visor (por rol delegado) y en el editor (dueño) ===== */
+mpaInit({
+    editor: false, rootPub: CFG.admin && CFG.admin.pub, global: CFG.admin && CFG.admin.global,
+    isPlaying: () => state === 'play',
+    baseChat: () => !(CFG.viewer && CFG.viewer.chat === false),
+    unlock: () => { try { if (fpsControls.isLocked) fpsControls.unlock(); } catch (e) { /* sin bloqueo */ } }
+});
+
+/* =================================================================
+   CHAT ENTRE USUARIOS
+   Se activa / desactiva desde «Configuración del Visor» y limita la longitud de cada mensaje.
+   Usa la misma red del multiusuario (P2P + pestañas locales): los mensajes viajan como { t: 'ch' } por mpBroadcast.
+   Enter abre el chat (suelta el cursor); Enter envía; Esc cierra. En móvil basta con tocar la caja.
+   ================================================================= */
+const chatHooks = {
+    enabled: () => MPC.enabled !== false && MP.started && MPA.chatOn(!(CFG.viewer && CFG.viewer.chat === false)),
+    maxChars: () => { if (MPA.adminOn) return 500; const v = parseInt(CFG.viewer && CFG.viewer.chatMax, 10); return Number.isFinite(v) ? Math.max(20, Math.min(500, v)) : 140; },
+    isPlaying: () => state === 'play',
+    unlock: () => { try { if (fpsControls.isLocked) fpsControls.unlock(); } catch (e) { /* sin bloqueo */ } },
+    relock: () => { try { if (state === 'play' && activeProfile().mouseLook) fpsControls.lock(); } catch (e) { /* requiere gesto */ } },
+    pos: { top: '12px', left: '12px' }
+};
+const CHAT_ABS_MAX = 500;
+const chatState = { lastSent: 0, seen: new Set(), seenOrder: [], rate: new Map(), hintShown: false };
+
+(function chatStyle() {
+    const st = document.createElement('style');
+    st.textContent =
+        '#chat-box{position:fixed;z-index:140;display:none;flex-direction:column;gap:6px;width:min(340px,calc(100vw - 24px));font-size:12px;font-family:inherit;}' +
+        '#chat-log{display:flex;flex-direction:column;gap:3px;max-height:170px;overflow-y:auto;padding:6px 9px;border-radius:10px;background:rgba(20,24,32,.62);border:1px solid rgba(255,255,255,.14);color:#eceff4;word-break:break-word;user-select:text;-webkit-user-select:text;}' +
+        '#chat-log:empty{display:none;}' +
+        '#chat-log .cm b{margin-right:5px;}' +
+        '#chat-log .cm.sys{color:#9aa0a6;font-style:italic;}' +
+        '#chat-row{display:flex;align-items:center;gap:6px;background:rgba(20,24,32,.82);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:3px 12px;}' +
+        '#chat-input{flex:1;min-width:0;display:block;background:transparent;border:none;border-radius:0;outline:none;color:#fff;font-size:12px;padding:5px 0;cursor:text;user-select:text;-webkit-user-select:text;}' +
+        '#chat-count{font-size:10px;color:#9aa0a6;white-space:nowrap;}';
+    document.head.appendChild(st);
+})();
+
+const chatBox = document.createElement('div');
+chatBox.id = 'chat-box';
+Object.assign(chatBox.style, chatHooks.pos);
+const chatLog = document.createElement('div');
+chatLog.id = 'chat-log';
+const chatRow = document.createElement('div');
+chatRow.id = 'chat-row';
+const chatInput = document.createElement('input');
+chatInput.id = 'chat-input';
+chatInput.type = 'text';
+chatInput.autocomplete = 'off';
+chatInput.placeholder = '💬 Enter para escribir…';
+const chatCount = document.createElement('span');
+chatCount.id = 'chat-count';
+chatRow.append(chatInput, chatCount);
+chatBox.append(chatLog, chatRow);
+document.body.appendChild(chatBox);
+
+function chatClean(s, max) {
+    return String(s == null ? '' : s).replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
+}
+function chatUpdateCount() { chatCount.textContent = chatInput.value.length + '/' + chatHooks.maxChars(); }
+
+function chatAdd(nick, color, text, sys, mid) {
+    const row = document.createElement('div');
+    row.className = 'cm' + (sys ? ' sys' : '');
+    if (sys) {
+        row.textContent = text;
+    } else {
+        const b = document.createElement('b');
+        b.textContent = nick + ':';
+        b.style.color = /^#[0-9a-fA-F]{6}$/.test(color || '') ? color : '#aab4c8';
+        const sp = document.createElement('span');
+        sp.textContent = text;   // textContent: el contenido de otros usuarios nunca se interpreta como HTML
+        row.append(b, sp);
+    }
+    if (mid) row.dataset.mid = mid;
+    if (!sys) MPA.decorateRow(row);   // el admin ve ✖ para borrar mensajes
+    chatLog.appendChild(row);
+    while (chatLog.children.length > 60) chatLog.removeChild(chatLog.firstChild);
+    chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+function chatRemember(id) {
+    chatState.seen.add(id);
+    chatState.seenOrder.push(id);
+    if (chatState.seenOrder.length > 200) chatState.seen.delete(chatState.seenOrder.shift());
+}
+
+function chatSend() {
+    if (!chatHooks.enabled()) return;
+    const text = chatClean(chatInput.value, chatHooks.maxChars());
+    if (!text) return;
+    const now = performance.now();
+    if (now - chatState.lastSent < 600) return;   // evita ráfagas
+    chatState.lastSent = now;
+    chatInput.value = '';
+    chatUpdateCount();
+    const id = Math.random().toString(36).slice(2, 10);
+    chatRemember(id);
+    chatAdd('Tú', MP.profile.color, text, false, id);
+    try { mpBroadcast({ t: 'ch', u: MP.uid, n: MP.profile.nick, x: text, i: id }); } catch (e) { /* sin red */ }
+    if (!MP.remotes.size && !chatState.hintShown) {
+        chatState.hintShown = true;
+        chatAdd('', '', 'Por ahora nadie más está conectado: te leerán cuando entren.', true);
+    }
+}
+
+// Mensaje recibido de otro usuario (lo llama mpOnMessage; el contenido se valida siempre)
+function chatReceive(uid, m) {
+    if (!chatHooks.enabled()) return;
+    const id = (typeof m.i === 'string') ? m.i.slice(0, 16) : '';
+    if ((id && MPA.deleted.has(id)) || MPA.mutedPeers.has(uid)) return;   // mensaje borrado o usuario silenciado por un admin
+    if (id) { if (chatState.seen.has(id)) return; chatRemember(id); }   // el mismo mensaje puede llegar por varias redes
+    const now = performance.now();
+    const times = (chatState.rate.get(uid) || []).filter(t => now - t < 5000);
+    if (times.length >= 6) { chatState.rate.set(uid, times); return; }  // límite de ráfagas por usuario
+    times.push(now);
+    chatState.rate.set(uid, times);
+    const text = chatClean(m.x, Math.min(CHAT_ABS_MAX, chatHooks.maxChars()));
+    if (!text) return;
+    const r = MP.remotes.get(uid);
+    chatAdd((r && r.nick) ? r.nick : mpCleanNick(m.n), r && r.color, text, false, id);
+}
+
+function chatOpen() {
+    chatHooks.unlock();
+    try { clearInputStates(); } catch (e) { /* sin estados de entrada */ }
+    chatInput.focus();
+}
+function chatClose(relock) {
+    chatInput.blur();
+    if (relock) chatHooks.relock();
+}
+
+// Los clics dentro de la caja no deben capturar el cursor ni interactuar con la escena
+['pointerdown', 'click', 'mousedown', 'touchstart'].forEach(ev => chatBox.addEventListener(ev, (e) => e.stopPropagation()));
+chatInput.addEventListener('keydown', (e) => {
+    e.stopPropagation();   // las teclas del chat no mueven al personaje ni activan atajos
+    if (e.key === 'Enter') { e.preventDefault(); chatSend(); chatClose(true); }
+    else if (e.key === 'Escape') { e.preventDefault(); chatClose(false); }
+});
+chatInput.addEventListener('input', chatUpdateCount);
+window.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' || e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (!chatHooks.enabled() || !chatHooks.isPlaying()) return;
+    const tg = e.target;
+    if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.tagName === 'SELECT' || tg.isContentEditable)) return;
+    e.preventDefault();
+    chatOpen();
+});
+// Si el cursor se vuelve a capturar para jugar, el chat deja de tener el foco
+document.addEventListener('pointerlockchange', () => { if (document.pointerLockElement && document.activeElement === chatInput) chatInput.blur(); });
+
+function chatSync() {
+    const show = chatHooks.enabled() && chatHooks.isPlaying();
+    chatBox.style.display = show ? 'flex' : 'none';
+    chatInput.maxLength = chatHooks.maxChars();
+    chatUpdateCount();
+    if (!show && document.activeElement === chatInput) chatInput.blur();
+}
+setInterval(chatSync, 300);
+chatSync();
 
 /* ============ BUCLE ============ */
 const clock = new THREE.Clock();
