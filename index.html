@@ -1,0 +1,3624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyVR</title>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+</script>
+<style>
+:root { --bg:#15171c; --panel:rgba(28,32,40,0.94); --border:rgba(255,255,255,0.14); --btn:#2d323e; --btn-h:#3e4454; --accent:#4772b3; --cyan:#00d2ff; --text:#e8eaed; --muted:#9aa0a6; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,-apple-system,sans-serif; user-select:none; -webkit-user-select:none; }
+canvas { position:fixed; inset:0; width:100vw; height:100vh; display:block; z-index:1; }
+button, select, input { font-family:inherit; }
+button { background:var(--btn); border:1px solid var(--border); color:var(--text); padding:7px 12px; font-size:12px; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px; transition:background .15s; outline:none; }
+button:hover { background:var(--btn-h); }
+button.primary { background:var(--accent); border-color:var(--accent); font-weight:700; }
+button.primary:hover { background:#5b88cc; }
+button:disabled { opacity:.55; cursor:default; }
+select { background:var(--btn); border:1px solid var(--border); color:var(--text); padding:6px 8px; font-size:12px; border-radius:6px; outline:none; cursor:pointer; }
+input[type=text] { background:#0f1115; border:1px solid var(--border); color:var(--text); padding:8px 10px; font-size:13px; border-radius:6px; outline:none; width:100%; user-select:text; -webkit-user-select:text; }
+input[type=text]:focus { border-color:var(--accent); }
+#crosshair { position:fixed; top:50%; left:50%; width:6px; height:6px; background:#fff; border-radius:50%; transform:translate(-50%,-50%); pointer-events:none; z-index:5; display:none; box-shadow:0 0 3px #000; }
+#crosshair.hot { width:auto; height:auto; background:transparent; border-radius:0; font-size:28px; line-height:1; text-shadow:0 0 4px #000; box-shadow:none; }
+#crosshair.hot::before { content:'👆'; }
+#toast { position:fixed; top:64px; left:50%; transform:translateX(-50%); background:#20242c; border:1px solid var(--border); color:#fff; padding:8px 18px; border-radius:20px; font-size:13px; display:none; z-index:120; box-shadow:0 4px 20px rgba(0,0,0,.5); text-align:center; max-width:80vw; pointer-events:none; }
+#hud { position:fixed; top:12px; right:12px; z-index:300; display:flex; gap:6px; }
+#hud button { background:rgba(28,32,40,0.82); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+#ctl-menu { position:fixed; top:56px; right:12px; width:310px; max-height:calc(100vh - 80px); overflow-y:auto; z-index:310; background:var(--panel); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid var(--border); border-radius:10px; padding:12px; display:none; flex-direction:column; gap:9px; box-shadow:0 10px 30px rgba(0,0,0,.5); }
+#ctl-menu.open { display:flex; }
+#ctl-menu h3 { font-size:12px; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); }
+#ctl-desc { font-size:11px; color:var(--muted); line-height:1.4; }
+.key-row { display:flex; justify-content:space-between; align-items:center; gap:6px; font-size:12px; }
+.key-btn { min-width:104px; font-weight:700; color:var(--cyan); }
+.key-btn.capturing { background:#e67e22; border-color:#e67e22; color:#000; }
+.row { display:flex; align-items:center; gap:8px; font-size:12px; }
+.row input[type=range] { flex:1; }
+#loading { position:fixed; inset:0; z-index:500; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; font-size:15px; }
+#load-bar { width:240px; height:6px; background:#2a2e38; border-radius:3px; overflow:hidden; }
+#load-fill { display:block; height:100%; width:0%; background:var(--accent); transition:width .2s; }
+#welcome { position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:flex-start; padding:0 5vw; background:linear-gradient(90deg, rgba(10,12,16,.78) 0%, rgba(10,12,16,.35) 55%, rgba(10,12,16,0) 100%); }
+#welcome .card { width:min(380px, 92vw); max-height:92vh; overflow-y:auto; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:22px; display:flex; flex-direction:column; gap:14px; box-shadow:0 16px 50px rgba(0,0,0,.55); }
+#welcome h1 { font-size:20px; }
+#welcome h2 { font-size:11px; text-transform:uppercase; letter-spacing:.7px; color:var(--muted); margin-bottom:6px; }
+.choice { display:flex; gap:8px; }
+.choice button { flex:1; flex-direction:column; padding:10px 6px; border-radius:8px; line-height:1.3; }
+.choice button.active { background:var(--accent); border-color:var(--accent); }
+.file-btn { position:relative; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:6px; background:var(--btn); border:1px solid var(--border); border-radius:6px; padding:7px 12px; font-size:12px; cursor:pointer; }
+.file-btn:hover { background:var(--btn-h); }
+.file-btn input { position:absolute; inset:0; opacity:0; cursor:pointer; }
+#face-preview { width:42px; height:42px; border-radius:6px; background:#0f1115 center/cover no-repeat; border:1px solid var(--border); flex:none; }
+#btn-enter { padding:12px; font-size:15px; }
+#vr-banner { position:fixed; left:50%; bottom:28px; transform:translateX(-50%); z-index:400; display:none; padding:14px 26px; font-size:16px; font-weight:700; border-radius:999px; background:#6c3fd1; border:1px solid #9b7bff; color:#fff; box-shadow:0 8px 30px rgba(0,0,0,.55); }
+#vr-banner:hover { background:#7d52e0; }
+#btn-vr.unsupported { opacity:.65; }
+#btn-vr.in-vr { background:var(--accent); border-color:var(--accent); color:#fff; }
+#btn-mp { display:none; }
+#touch-ui { display:none; position:fixed; inset:0; z-index:150; pointer-events:none; }
+#touch-look { position:absolute; inset:0; pointer-events:auto; touch-action:none; }
+#tj-base { position:absolute; left:max(22px, env(safe-area-inset-left)); bottom:max(26px, env(safe-area-inset-bottom)); width:130px; height:130px; border-radius:50%; background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.35); pointer-events:auto; touch-action:none; backdrop-filter:blur(4px); }
+#tj-knob { position:absolute; left:50%; top:50%; width:58px; height:58px; margin:-29px 0 0 -29px; border-radius:50%; background:rgba(0,210,255,.55); border:2px solid rgba(255,255,255,.7); pointer-events:none; }
+.tb { position:absolute; width:64px; height:64px; border-radius:50%; font-size:26px; background:rgba(28,32,40,.7); border:2px solid rgba(255,255,255,.4); color:#fff; pointer-events:auto; touch-action:none; display:flex; align-items:center; justify-content:center; padding:0; backdrop-filter:blur(4px); }
+.tb:active { background:var(--accent); }
+#tb-jump { right:max(26px, env(safe-area-inset-right)); bottom:max(34px, env(safe-area-inset-bottom)); }
+#tb-view { right:max(26px, env(safe-area-inset-right)); bottom:calc(max(34px, env(safe-area-inset-bottom)) + 76px); }
+@media (pointer:coarse) { html, body { touch-action:none; overscroll-behavior:none; } #hud button { padding:7px 9px; font-size:11px; } }
+
+#mp-panel { position:fixed; top:56px; right:12px; width:290px; max-height:calc(100vh - 80px); overflow-y:auto; z-index:305; background:var(--panel); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid var(--border); border-radius:12px; padding:12px; display:none; flex-direction:column; gap:8px; font-size:12px; box-shadow:0 12px 40px rgba(0,0,0,.55); }
+#mp-panel.open { display:flex; }
+#mp-panel h3 { font-size:12px; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); }
+#mp-status { color:var(--cyan); line-height:1.4; }
+#mp-list { display:flex; flex-direction:column; gap:4px; }
+.mp-row { display:flex; align-items:center; gap:8px; padding:4px 6px; border-radius:6px; background:rgba(255,255,255,.05); }
+.mp-dot { width:12px; height:12px; border-radius:50%; flex:none; border:1px solid rgba(255,255,255,.4); }
+.mini { font-size:11px; color:var(--muted); line-height:1.4; }
+
+</style>
+</head>
+<body>
+<canvas id="canvas3d"></canvas>
+<div id="crosshair"></div>
+<div id="toast"></div>
+
+<div id="hud">
+    <button id="btn-mp" title="Usuarios conectados">👥 1</button>
+    <button id="btn-ctl" title="Configurar controles">🎮 Controles</button>
+    <button id="btn-vr" title="Entrar en realidad virtual (WebXR · Meta Quest 2 y otras gafas)">🥽 Entrar en VR</button>
+    <button id="btn-fs" title="Pantalla completa / salir">⛶ Pantalla completa</button>
+</div>
+
+<div id="ctl-menu">
+    <h3>🎮 Perfil de controles</h3>
+    <select id="ctl-profile">
+        <option value="1">🎮 P1: WASD + Mouse</option>
+        <option value="2">⌨️ P2: WASD + Flechas</option>
+        <option value="3">🛠️ P3: Personalizado</option>
+    </select>
+    <div id="ctl-desc"></div>
+    <div id="ctl-keys"></div>
+    <label class="row" id="ctl-mouse-row"><input type="checkbox" id="ctl-mouse"> Girar con el mouse (cursor capturado)</label>
+    <div class="row"><span>Giro con teclas</span><input type="range" id="ctl-turn" min="30" max="240" step="5"><span id="ctl-turn-val" style="min-width:48px; text-align:right;"></span></div>
+    <div id="ctl-custom-actions" style="display:none; gap:6px;">
+        <button id="ctl-save" class="primary" style="flex:1;">💾 Guardar</button>
+        <button id="ctl-reset" style="flex:1;">↺ Restablecer</button>
+    </div>
+    <div id="ctl-dirty" style="display:none; font-size:11px; color:#f1c40f;">Tienes cambios sin guardar.</div>
+</div>
+
+<div id="touch-ui">
+    <div id="touch-look"></div>
+    <div id="tj-base"><div id="tj-knob"></div></div>
+    <button class="tb" id="tb-view" title="Cambiar 1ª / 3ª persona">👁</button>
+    <button class="tb" id="tb-jump" title="Saltar">⤒</button>
+</div>
+
+<div id="mp-panel">
+    <h3>🌐 Multijugador P2P</h3>
+    <div id="mp-status">Sin conexión</div>
+    <div class="row"><span>Sala</span><input type="text" id="mp-room-show" readonly></div>
+    <div class="row"><button id="mp-copy" style="flex:1;">🔗 Copiar enlace / sala</button><button id="mp-retry" style="flex:1;" title="Probar con todos los servicios de conexión">🔄 Reintentar</button></div>
+    <div id="mp-list"></div>
+    <div class="mini">Conexión directa entre navegadores (WebRTC). Comparte el enlace o el código de sala para que otros entren contigo.</div>
+</div>
+
+<div id="loading"><div id="loading-text">Cargando experiencia…</div><div id="load-bar"><i id="load-fill"></i></div></div>
+
+<div id="welcome">
+    <div class="card">
+        <h1 id="w-title">Bienvenido</h1>
+        <div>
+            <h2>Tu apodo</h2>
+            <input type="text" id="w-nick" maxlength="20" placeholder="Escribe tu nickname" autocomplete="off">
+            <div class="row" style="margin-top:8px;"><span style="flex:1;">🎨 Tu color (cuerpo e identificador)</span><input type="color" id="w-color" value="#4772b3"></div>
+        </div>
+        <div>
+            <h2>Elige tu avatar</h2>
+            <div class="choice" id="w-choice">
+                <button id="w-ch-glb" style="display:none;">🤖<span>Avatar de la experiencia</span></button>
+                <button id="w-ch-default" class="active">🧍<span>Avatar por defecto</span></button>
+            </div>
+        </div>
+        <div id="w-default-opts">
+            <h2>Personaliza tu avatar</h2>
+            <div class="row" style="margin-bottom:8px;">
+                <div id="face-preview"></div>
+                <label class="file-btn">📷 Cambiar foto de rostro<input type="file" id="w-face" accept="image/*"></label>
+            </div>
+            <div class="row"><span style="flex:1;">💇 Color de cabello</span><input type="color" id="w-hair" value="#3a2010"></div>
+        </div>
+        <div id="w-mp-box">
+            <h2>🌐 Multijugador</h2>
+            <label class="row"><input type="checkbox" id="w-mp-on" checked> Ver y conectarme con otros usuarios</label>
+            <div class="row" style="margin-top:6px;"><span style="min-width:36px;">Sala</span><input type="text" id="w-room" maxlength="40" autocomplete="off"></div>
+            <div class="mini" id="w-mp-info" style="margin-top:4px;"></div>
+        </div>
+        <button id="btn-enter" class="primary">🚀 Entrar</button>
+    </div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
+
+const CFG = {"title":"MyVR","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":0,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,0.79557,-1.16837],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,1.51429,-0.39817],[-0.4661,1.51429,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,1.51429,0.39817],[-0.4661,1.51429,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,-0.41107,-0.08137],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.41107,-1.23933],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"mp":{"enabled":true,"room":"myvr-rb10kp","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
+const $ = (id) => document.getElementById(id);
+document.title = CFG.title || 'MyVR';
+
+/* ============ ESCENA Y RENDER ============ */
+const canvas = $('canvas3d');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color((CFG.env && CFG.env.color) || '#393939');
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 1.7, 5);
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, logarithmicDepthBuffer: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+RectAreaLightUniformsLib.init();
+
+let toastTimer = null;
+function showToast(msg, ms = 3500) {
+    const t = $('toast');
+    t.innerText = msg; t.style.display = 'block';
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.style.display = 'none'; }, ms);
+}
+
+/* ============ RECURSOS (carpetas; en file:// se usan copias incrustadas) ============ */
+const embeddedURLs = {};
+function loadScriptTag(src) {
+    return new Promise((res, rej) => {
+        const s = document.createElement('script');
+        s.src = src; s.onload = () => res(); s.onerror = () => rej(new Error('No se pudo cargar ' + src));
+        document.head.appendChild(s);
+    });
+}
+async function assetURL(path) {
+    if (location.protocol !== 'file:') return path;
+    const wrapper = CFG.embedded && CFG.embedded[path];
+    if (!wrapper) return path;
+    if (embeddedURLs[path]) return embeddedURLs[path];
+    await loadScriptTag(wrapper);
+    const e = window.__EMB && window.__EMB[path];
+    if (!e) return path;
+    const bin = atob(e.d);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    delete window.__EMB[path];
+    embeddedURLs[path] = URL.createObjectURL(new Blob([bytes], { type: e.t }));
+    return embeddedURLs[path];
+}
+const gltfLoader = new GLTFLoader();
+
+/* ===== GLB animados (v17): esqueletos / clips integrados ===== */
+const mvMixers = [];
+let mvAnimLast = performance.now();
+function mvSetupAnim(model, clips) {
+    if (!model || !clips || !clips.length) return;
+    model.userData.animClips = clips;
+    model.traverse(o => { if (o.isSkinnedMesh) o.frustumCulled = false; });   // evita que el modelo desaparezca al animarse
+    const mixer = new THREE.AnimationMixer(model);
+    mixer.clipAction(clips[0]).play();                                        // se reproduce en bucle
+    mvMixers.push({ obj: model, mixer });
+}
+function mvTickAnim() {
+    const now = performance.now(), dt = Math.min(0.1, (now - mvAnimLast) / 1000);
+    mvAnimLast = now;
+    for (const m of mvMixers) if (m.obj.parent) m.mixer.update(dt);
+}
+/* ===== GIF ANIMADO: decodificador propio + textura de canvas (sin dependencias) ===== */
+const gifAnimators = [];
+function mvGifLzw(minCode, data, count) {
+    const clear = 1 << minCode, eoi = clear + 1;
+    let size = minCode + 1, next = eoi + 1, mask = (1 << size) - 1;
+    const prefix = new Uint16Array(4096), suffix = new Uint8Array(4096), stack = new Uint8Array(4097);
+    const out = new Uint8Array(count);
+    for (let i = 0; i < clear; i++) suffix[i] = i;
+    let bits = 0, nbits = 0, pos = 0, op = 0, prev = -1, first = 0;
+    while (op < count) {
+        while (nbits < size) {
+            if (pos >= data.length) return out;
+            bits |= data[pos++] << nbits; nbits += 8;
+        }
+        const code = bits & mask; bits >>= size; nbits -= size;
+        if (code === clear) { size = minCode + 1; mask = (1 << size) - 1; next = eoi + 1; prev = -1; continue; }
+        if (code === eoi) break;
+        if (prev === -1) { out[op++] = suffix[code]; prev = code; first = code; continue; }
+        let cur = code, sp = 0;
+        if (code >= next) { stack[sp++] = first; cur = prev; }
+        while (cur >= clear) { stack[sp++] = suffix[cur]; cur = prefix[cur]; }
+        first = suffix[cur]; stack[sp++] = first;
+        if (next < 4096) {
+            prefix[next] = prev; suffix[next] = first; next++;
+            if (next === (1 << size) && size < 12) { size++; mask = (1 << size) - 1; }
+        }
+        while (sp > 0 && op < count) out[op++] = stack[--sp];
+        prev = code;
+    }
+    return out;
+}
+function mvParseGif(buffer) {
+    const d = new Uint8Array(buffer);
+    const sig = String.fromCharCode(d[0], d[1], d[2], d[3], d[4], d[5]);
+    if (sig !== 'GIF87a' && sig !== 'GIF89a') throw new Error('No es un GIF válido');
+    const W = d[6] | (d[7] << 8), H = d[8] | (d[9] << 8), flags = d[10];
+    let p = 13, gct = null;
+    if (flags & 0x80) { const n = 3 * (2 << (flags & 7)); gct = d.subarray(p, p + n); p += n; }
+    const frames = []; let gce = null;
+    while (p < d.length) {
+        const b = d[p++];
+        if (b === 0x3B) break;
+        if (b === 0x21) {
+            const label = d[p++];
+            if (label === 0xF9) gce = { disposal: (d[p + 1] >> 2) & 7, trans: d[p + 1] & 1, delay: d[p + 2] | (d[p + 3] << 8), tIndex: d[p + 4] };
+            while (p < d.length && d[p] !== 0) p += d[p] + 1;
+            p++;
+        } else if (b === 0x2C) {
+            const x = d[p] | (d[p + 1] << 8), y = d[p + 2] | (d[p + 3] << 8), w = d[p + 4] | (d[p + 5] << 8), h = d[p + 6] | (d[p + 7] << 8), f = d[p + 8];
+            p += 9;
+            let ct = gct;
+            if (f & 0x80) { const n = 3 * (2 << (f & 7)); ct = d.subarray(p, p + n); p += n; }
+            const minCode = d[p++];
+            const chunks = []; let total = 0;
+            while (p < d.length && d[p] !== 0) { const sz = d[p++]; chunks.push(d.subarray(p, p + sz)); p += sz; total += sz; }
+            p++;
+            const data = new Uint8Array(total); let o = 0;
+            for (const c of chunks) { data.set(c, o); o += c.length; }
+            const idx = mvGifLzw(minCode, data, w * h);
+            const img = new ImageData(w, h), px = img.data;
+            const rowOf = (r) => r;
+            let order = null;
+            if (f & 0x40) {
+                order = []; const st = [0, 4, 2, 1], sp = [8, 8, 4, 2];
+                for (let ps = 0; ps < 4; ps++) for (let r = st[ps]; r < h; r += sp[ps]) order.push(r);
+            }
+            for (let r = 0; r < h; r++) {
+                const dstRow = order ? order[r] : rowOf(r);
+                for (let c = 0; c < w; c++) {
+                    const ci = idx[r * w + c], q = (dstRow * w + c) * 4;
+                    if (gce && gce.trans && ci === gce.tIndex) { px[q + 3] = 0; continue; }
+                    if (ct) { px[q] = ct[ci * 3]; px[q + 1] = ct[ci * 3 + 1]; px[q + 2] = ct[ci * 3 + 2]; }
+                    px[q + 3] = 255;
+                }
+            }
+            const dl = gce ? gce.delay : 10;
+            frames.push({ x, y, w, h, image: img, disposal: gce ? gce.disposal : 0, delay: dl < 2 ? 100 : dl * 10 });
+            gce = null;
+        } else break;
+    }
+    if (!W || !H || !frames.length) throw new Error('GIF sin fotogramas');
+    return { width: W, height: H, frames };
+}
+function mvCreateGifAnimator(buffer) {
+    const gif = mvParseGif(buffer);
+    const W = gif.width, H = gif.height, frames = gif.frames;
+    const canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    const tmp = document.createElement('canvas'), tctx = tmp.getContext('2d');
+    let saved = null, cur = 0;
+    function draw(i) {
+        if (i === 0) { ctx.clearRect(0, 0, W, H); saved = null; }
+        else {
+            const pf = frames[i - 1];
+            if (pf.disposal === 2) ctx.clearRect(pf.x, pf.y, pf.w, pf.h);
+            else if (pf.disposal === 3 && saved) ctx.putImageData(saved, 0, 0);
+        }
+        const f = frames[i];
+        if (f.disposal === 3) saved = ctx.getImageData(0, 0, W, H);
+        tmp.width = f.w; tmp.height = f.h;
+        tctx.putImageData(f.image, 0, 0);
+        ctx.drawImage(tmp, f.x, f.y);
+        cur = i;
+    }
+    draw(0);
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.generateMipmaps = false;
+    tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter;
+    const anim = {
+        texture: tex, width: W, height: H, frameCount: frames.length, acc: 0, last: performance.now(),
+        step(now) {
+            let dt = now - this.last; this.last = now;
+            if (frames.length < 2) return;
+            if (dt > 250) dt = 250;
+            this.acc += dt;
+            let changed = false, guard = 0;
+            while (this.acc >= frames[cur].delay && guard++ < frames.length) {
+                this.acc -= frames[cur].delay;
+                draw((cur + 1) % frames.length);
+                changed = true;
+            }
+            if (guard >= frames.length) this.acc = 0;
+            if (changed) tex.needsUpdate = true;
+        }
+    };
+    gifAnimators.push(anim);
+    return anim;
+}
+function updateGifAnimations() {
+    if (!gifAnimators.length || document.hidden) return;
+    const now = performance.now();
+    for (let i = 0; i < gifAnimators.length; i++) gifAnimators[i].step(now);
+}
+
+const textureLoader = new THREE.TextureLoader();
+async function loadGLBAsset(path) {
+    const url = await assetURL(path);
+    return new Promise((res, rej) => gltfLoader.load(url, res, undefined, rej));
+}
+async function loadTextureAsset(path) {
+    const url = await assetURL(path);
+    return new Promise((res, rej) => textureLoader.load(url, res, undefined, rej));
+}
+
+const applyXform = (o, t) => {
+    if (!t) return;
+    o.position.fromArray(t.pos); o.quaternion.fromArray(t.quat); o.scale.fromArray(t.scl);
+};
+
+/* ============ ENVIRONMENT, LUCES Y SUELO ============ */
+async function setupEnvironment() {
+    const env = CFG.env;
+    if (!env || !env.image) return;
+    try {
+        const tex = await loadTextureAsset(env.image);
+        tex.mapping = THREE.EquirectangularReflectionMapping;
+        tex.colorSpace = THREE.SRGBColorSpace;
+        scene.background = tex;
+        if (env.light) scene.environment = tex;
+    } catch (err) { console.warn('Environment no disponible', err); }
+}
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+
+function buildLights() {
+    (CFG.lights || []).forEach(d => {
+        const g = new THREE.Group();
+        const color = new THREE.Color(d.color || '#ffffff');
+        let light;
+        if (d.type === 'area') {
+            light = new THREE.RectAreaLight(color, d.intensity, d.width || 3, d.height || 2);
+        } else if (d.type === 'point') {
+            light = new THREE.PointLight(color, d.intensity, d.distance || 0, 2);
+            light.castShadow = !!d.castShadow;
+            light.shadow.mapSize.set(512, 512);
+            light.shadow.bias = -0.002;
+            light.shadow.camera.near = 0.1;
+            light.shadow.camera.far = 60;
+        } else {
+            light = new THREE.DirectionalLight(color, d.intensity);
+            light.castShadow = !!d.castShadow;
+            const ms = d.main ? 2048 : 1024;
+            light.shadow.mapSize.set(ms, ms);
+            light.shadow.bias = -0.0001;
+            light.shadow.camera.near = 0.5; light.shadow.camera.far = 100;
+            light.shadow.camera.left = -25; light.shadow.camera.right = 25;
+            light.shadow.camera.top = 25; light.shadow.camera.bottom = -25;
+        }
+        g.add(light);
+        g.userData.isLight = true; g.userData.light = light; g.userData.isMainSun = !!d.main; lightObjects.push(g);
+        if (d.main) {
+            const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.7, 16, 16), new THREE.MeshBasicMaterial({ color: color }));
+            g.userData.helperMat = sphere.material;
+            g.add(sphere);
+        }
+        applyXform(g, d.xform);
+        scene.add(g);
+    });
+}
+
+const floor = new THREE.Mesh(
+    new THREE.PlaneGeometry(100, 100),
+    new THREE.MeshStandardMaterial({ color: 0x2b2b2b, roughness: 0.8, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 })
+);
+floor.rotation.x = -Math.PI / 2;
+floor.receiveShadow = true;
+scene.add(floor);
+const floorCfg = Object.assign({ enabled: true, scale: 1, killY: -20 }, CFG.floor || {});
+floor.scale.set(floorCfg.scale, floorCfg.scale, 1);
+if (!floorCfg.enabled) scene.remove(floor);
+
+/* ============ CONFIGURACIÓN DE JUEGO ============ */
+const playerConfig = Object.assign({ speed: 16, jumpEnabled: true, jumpForce: 8.5, maxSlopeAngle: 45, stepHeight: 0.35, gravity: 22, eyeHeight: 1.7 }, CFG.player || {});
+const spawnConfig = { pos: new THREE.Vector3().fromArray((CFG.spawn && CFG.spawn.pos) || [0, 1.7, 5]), rotY: (CFG.spawn && CFG.spawn.rotY) || 0 };
+const avatarCamConfig = (CFG.avatar && CFG.avatar.cams) || { fps: { x: 0, y: 1.7, z: 0 }, tps: { x: 0, y: 2.1, z: 2.5 } };
+const bodyCfg = (CFG.avatar && CFG.avatar.phys) || { radius: 0.4, height: 1.8, noclip: false };
+let viewPerspective = (CFG.view && CFG.view.perspective) || 'fps';
+
+const playerLogicalPos = new THREE.Vector3().copy(spawnConfig.pos);
+let isGrounded = true;
+let verticalVelocity = 0;
+const velocity = new THREE.Vector3();
+const direction = new THREE.Vector3();
+const moveState = { fwd: false, bwd: false, lft: false, rgt: false };
+const turnState = { left: false, right: false, up: false, down: false };
+let state = 'loading'; // loading | welcome | play
+
+/* ============ ENTIDADES ============ */
+const entities = [];
+const entityByUidMap = new Map();
+const globalRules = (CFG.globalRules || []).map(r => Object.assign({}, r, { collected: [], completed: false }));
+let touchingSet = new Set();
+
+/* ===== Portales de cambio de sala (visor): cada sala exportada es independiente y las puertas llevan a su enlace ===== */
+function roomPortalUse(ent) {
+    const d = ent.userData.portalDest;
+    if (!d || d.type !== 'link') return false;
+    let url = String(d.url || '').trim();
+    const name = d.label ? '«' + d.label + '»' : 'otro espacio';
+    if (!url) { showToast('🔗 Esta puerta hacia ' + name + ' aún no tiene enlace configurado', 5000); return true; }
+    if (!/^(https?:|\.{0,2}\/)/i.test(url)) url = 'https://' + url;
+    showToast('🚪 Yendo a ' + name + '…', 3000);
+    setTimeout(() => { window.location.href = url; }, 400);
+    return true;
+}
+{
+    const _apvRoom = applyPortalVisual;
+    applyPortalVisual = function (pad) {
+        _apvRoom(pad);
+        try {
+            const d = pad.userData.portalDest;
+            if (d && !pad.userData.isLocked && pad.material) { pad.material.color.set(0x9b59b6); pad.material.emissive.set(0x3d1f55); }
+        } catch (e) { /* sin material */ }
+    };
+}
+
+let portalActiveCooldown = false;
+
+function defaultRules() {
+    return { touchAction: 'none', touchUrl: '', touchMsg: '', clickAction: 'none', clickUrl: '', clickMsg: '', touchValue: 50, clickValue: 50, targetIds: [] };
+}
+function entityByUid(uid) { return entityByUidMap.get(uid); }
+function allColliders(obj) { return (obj && obj.userData.colliders) || []; }
+
+function eachVisualMesh(obj, fn) {
+    (function walk(o) {
+        if (o.userData.isColPivot) return;
+        if (o.isMesh) fn(o);
+        o.children.forEach(walk);
+    })(obj);
+}
+function applyObjectTransparency(obj, pct) {
+    pct = Math.min(100, Math.max(0, Number(pct) || 0));
+    const factor = 1 - pct / 100;
+    eachVisualMesh(obj, mesh => {
+        const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        mats.forEach(m => {
+            if (!m) return;
+            if (!m.userData._tp) m.userData._tp = { transparent: m.transparent, opacity: m.opacity };
+            const base = m.userData._tp;
+            const wantTransparent = factor < 0.999 || base.transparent;
+            if (m.transparent !== wantTransparent) { m.transparent = wantTransparent; m.needsUpdate = true; }
+            m.opacity = base.opacity * factor;
+        });
+    });
+    obj.userData.appliedTransparency = pct;
+}
+
+function toggleMediaPlay(media) {
+    if (media.paused) { const p = media.play(); if (p && p.catch) p.catch(() => {}); showToast('▶️ Reproduciendo'); }
+    else { media.pause(); showToast('⏸️ Pausado'); }
+}
+
+function applyPortalVisual(pad) {
+    if (!pad.userData.isPortalPad) return;
+    if (pad.userData.isLocked) {
+        pad.material.color.set(0x555555);
+        pad.material.emissive.set(0x000000);
+    } else {
+        const isA = pad.userData.padType === 'A';
+        pad.material.color.set(isA ? 0x00d2ff : 0xe67e22);
+        pad.material.emissive.set(isA ? 0x004466 : 0x663300);
+    }
+}
+
+// Mueve el origen del objeto sin mover su forma (se repite lo hecho en el editor)
+function applyPivotOffset(obj, P) {
+    if (obj.isMesh && obj.geometry) {
+        obj.geometry = obj.geometry.clone();
+        obj.geometry.translate(-P.x, -P.y, -P.z);
+    }
+    obj.children.forEach(ch => ch.position.sub(P));
+}
+
+function buildColliders(obj, list) {
+    obj.userData.colliders = [];
+    (list || []).forEach(cd => {
+        const pivot = new THREE.Group();
+        pivot.userData.isColPivot = true;
+        pivot.position.fromArray(cd.pivot.pos); pivot.quaternion.fromArray(cd.pivot.quat); pivot.scale.fromArray(cd.pivot.scl);
+        obj.add(pivot);
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(cd.verts.flat(), 3));
+        geo.setIndex(cd.indices);
+        geo.computeVertexNormals(); geo.computeBoundingBox(); geo.computeBoundingSphere();
+        const mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ visible: false, side: THREE.DoubleSide }));
+        mesh.name = 'ColliderMesh';
+        pivot.add(mesh);
+        obj.userData.colliders.push({ name: cd.name, enabled: cd.enabled, isTrigger: cd.isTrigger, mesh, pivot });
+    });
+}
+
+async function createBaseObject(d) {
+    switch (d.kind) {
+        case 'cube': {
+            const m = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.5, 1.5), new THREE.MeshStandardMaterial({ color: 0x828282, roughness: 0.4, metalness: 0.1 }));
+            m.castShadow = true; m.receiveShadow = true;
+            return m;
+        }
+        case 'portal': {
+            const isA = d.portal && d.portal.padType === 'A';
+            const m = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.8, 0.9, 0.1, 32),
+                new THREE.MeshStandardMaterial({ color: isA ? 0x00d2ff : 0xe67e22, roughness: 0.3, emissive: isA ? 0x004466 : 0x663300 })
+            );
+            m.castShadow = true;
+            return m;
+        }
+        case 'button': {
+            const g = new THREE.Group();
+            const base = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.38, 0.08, 32), new THREE.MeshStandardMaterial({ color: 0x22262e, roughness: 0.5 }));
+            base.castShadow = true; g.add(base);
+            const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.26, 0.1, 32), new THREE.MeshStandardMaterial({ color: 0xf1c40f, roughness: 0.2, emissive: 0x665500 }));
+            cap.position.y = 0.05; cap.castShadow = true; g.add(cap);
+            return g;
+        }
+        case 'glb': {
+            const gltf = await loadGLBAsset(d.asset);
+            const model = gltf.scene;
+            model.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } });
+            mvSetupAnim(model, gltf.animations);
+            return model;
+        }
+        case 'image': {
+            let gifAnim = null, tex = null;
+            if (/\.gif$/i.test(d.asset || '')) {
+                try {
+                    const gUrl = await assetURL(d.asset);
+                    const gBuf = await (await fetch(gUrl)).arrayBuffer();
+                    gifAnim = mvCreateGifAnimator(gBuf);
+                    tex = gifAnim.texture;
+                } catch (err) { gifAnim = null; tex = null; } // sin acceso al archivo: se muestra estático
+            }
+            if (!tex) tex = await loadTextureAsset(d.asset);
+            tex.colorSpace = THREE.SRGBColorSpace;
+            const aspect = d.aspect || (tex.image.width / tex.image.height) || 1;
+            const h = 2.0, w = h * aspect;
+            const g = new THREE.Group();
+            const plane = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.2, metalness: 0.05, side: THREE.DoubleSide, alphaTest: gifAnim ? 0.5 : 0 }));
+            plane.castShadow = true; g.add(plane);
+            const frame = new THREE.Mesh(new THREE.BoxGeometry(w + 0.08, h + 0.08, 0.05), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.7 }));
+            frame.position.z = -0.026; frame.receiveShadow = true; g.add(frame);
+            return g;
+        }
+        case 'video': {
+            const video = document.createElement('video');
+            video.src = await assetURL(d.asset);
+            video.crossOrigin = 'anonymous'; video.playsInline = true; video.preload = 'auto';
+            video.loop = d.media ? !!d.media.loop : true;
+            video.muted = d.media ? !!d.media.muted : true;
+            video.volume = d.media && d.media.volume != null ? d.media.volume : 1;
+            await new Promise(res => { const t = setTimeout(res, 8000); const fin = () => { clearTimeout(t); res(); }; video.addEventListener('loadedmetadata', fin, { once: true }); video.addEventListener('error', fin, { once: true }); video.load(); });
+            const aspect = (video.videoWidth && video.videoHeight) ? video.videoWidth / video.videoHeight : (d.aspect || 16 / 9);
+            const h = 2.0, w = h * aspect;
+            const vt = new THREE.VideoTexture(video);
+            vt.colorSpace = THREE.SRGBColorSpace;
+            const g = new THREE.Group();
+            g.add(new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: vt, side: THREE.DoubleSide })));
+            const frame = new THREE.Mesh(new THREE.BoxGeometry(w + 0.1, h + 0.1, 0.06), new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.5, metalness: 0.3 }));
+            frame.position.z = -0.031; g.add(frame);
+            g.userData.mediaElement = video;
+            g.userData.onClick = () => toggleMediaPlay(video);
+            return g;
+        }
+        case 'audio': {
+            const audio = new Audio();
+            audio.src = await assetURL(d.asset);
+            audio.loop = d.media ? !!d.media.loop : true;
+            audio.volume = d.media && d.media.volume != null ? d.media.volume : 0.8;
+            audio.muted = d.media ? !!d.media.muted : false;
+            const g = new THREE.Group();
+            const box = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.9, 0.5), new THREE.MeshStandardMaterial({ color: 0x22262e, roughness: 0.6 }));
+            box.castShadow = true; g.add(box);
+            const cone = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.12, 0.08, 24), new THREE.MeshStandardMaterial({ color: 0x4772b3, roughness: 0.3, metalness: 0.4 }));
+            cone.rotation.x = Math.PI / 2; cone.position.set(0, 0.1, 0.24); g.add(cone);
+            g.userData.mediaElement = audio;
+            g.userData.onClick = () => toggleMediaPlay(audio);
+            return g;
+        }
+    }
+    return null;
+}
+
+async function buildEntity(d) {
+    const obj = await createBaseObject(d);
+    if (!obj) return null;
+    if (d.pivot) applyPivotOffset(obj, new THREE.Vector3().fromArray(d.pivot));
+    applyXform(obj, d.xform);
+    obj.name = d.name;
+    const ud = obj.userData;
+    ud.uid = d.uid;
+    ud.kind = d.kind;
+    ud.rules = Object.assign(defaultRules(), d.rules || {});
+    if (!Array.isArray(ud.rules.targetIds)) ud.rules.targetIds = [];
+    ud.transparency = d.transparency || 0;
+    ud.userHidden = !d.visible;
+    if (d.kind === 'cube' && Number.isInteger(d.cubeColor)) { ud.cubeColor = d.cubeColor; applySpecialLook(obj); }
+    if (d.special) { ud.special = Object.assign({}, d.special); applySpecialLook(obj); }
+    if (d.game) ud.game = Object.assign({}, d.game);
+    ud.autoplay = !!(d.media && d.media.autoplay);
+    if (d.portal) {
+        ud.isPortalPad = true;
+        ud.padType = d.portal.padType;
+        ud.bidirectional = d.portal.bidirectional !== false;
+        ud.initialLocked = !!d.portal.initialLocked;
+        ud.isLocked = !!d.portal.initialLocked;
+        ud.linkedUid = d.portal.linkedUid;
+        ud.portalDest = d.portal.dest || null;
+    }
+    obj.visible = d.visible;
+    buildColliders(obj, d.colliders);
+    if (ud.transparency > 0) applyObjectTransparency(obj, ud.transparency);
+    return obj;
+}
+
+/* ============ AVATAR ============ */
+const avatarGroup = new THREE.Group();
+avatarGroup.visible = false;
+scene.add(avatarGroup);
+const AV = CFG.avatar || {};
+const avatarBodyMat = new THREE.MeshStandardMaterial({ color: new THREE.Color(AV.bodyColor || '#4772b3'), roughness: 0.5 });
+const avatarHairMat = new THREE.MeshStandardMaterial({ color: new THREE.Color(AV.hairColor || '#3a2010'), roughness: 0.7 });
+const facePlaneMat = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, transparent: true });
+const facePlane = new THREE.Mesh(new THREE.PlaneGeometry(0.32, 0.32), facePlaneMat);
+facePlane.position.set(0, 1.38, 0.18);
+applyXform(facePlane, AV.face);
+facePlane.visible = false;   // sin foto no se muestra ningún marco vacío
+
+const defaultAvatarMesh = new THREE.Group();
+(function () {
+    const torso = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.7, 0.3), avatarBodyMat);
+    torso.position.y = 0.85; torso.castShadow = true; defaultAvatarMesh.add(torso);
+    const head = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.35, 0.35), new THREE.MeshStandardMaterial({ color: 0xffeaa7 }));
+    head.position.y = 1.38; head.castShadow = true; defaultAvatarMesh.add(head);
+    const hair = new THREE.Mesh(new THREE.BoxGeometry(0.37, 0.12, 0.37), avatarHairMat);
+    hair.position.set(0, 1.55, 0); defaultAvatarMesh.add(hair);
+    defaultAvatarMesh.add(facePlane);
+})();
+applyXform(defaultAvatarMesh, AV.defaultXform);
+avatarGroup.add(defaultAvatarMesh);
+
+let customAvatarModel = null;
+let avatarMixer = null;
+let avatarChoice = 'default';
+let nameTag = null;
+
+async function buildAvatar() {
+    if (AV.facePhoto) {
+        try {
+            const tex = await loadTextureAsset(AV.facePhoto);
+            tex.colorSpace = THREE.SRGBColorSpace;
+            facePlaneMat.map = tex; facePlaneMat.needsUpdate = true; facePlane.visible = true;
+        } catch (err) { console.warn('Foto de rostro no disponible', err); }
+    }
+    if (AV.glb) {
+        try {
+            const gltf = await loadGLBAsset(AV.glb);
+            customAvatarModel = gltf.scene;
+            applyXform(customAvatarModel, AV.glbXform);
+            customAvatarModel.traverse(c => { if (c.isMesh) c.castShadow = true; });
+            avatarGroup.add(customAvatarModel);
+            if (gltf.animations && gltf.animations.length) {
+                avatarMixer = new THREE.AnimationMixer(customAvatarModel);
+                avatarMixer.clipAction(gltf.animations[0]).play();
+            }
+            avatarChoice = 'glb';
+        } catch (err) { console.warn('Avatar GLB no disponible', err); customAvatarModel = null; }
+    }
+    setAvatarChoice(avatarChoice);
+}
+
+function setAvatarChoice(choice) {
+    if (choice === 'glb' && !customAvatarModel) choice = 'default';
+    avatarChoice = choice;
+    defaultAvatarMesh.visible = (choice === 'default');
+    if (customAvatarModel) customAvatarModel.visible = (choice === 'glb');
+    $('w-ch-glb').classList.toggle('active', choice === 'glb');
+    $('w-ch-default').classList.toggle('active', choice === 'default');
+    $('w-default-opts').style.display = (choice === 'default') ? 'block' : 'none';
+}
+
+function makeNameTag(text) {
+    const c = document.createElement('canvas');
+    c.width = 512; c.height = 112;
+    const g = c.getContext('2d');
+    g.font = 'bold 44px "Segoe UI", system-ui, sans-serif';
+    const tw = Math.min(g.measureText(text).width + 44, 504);
+    g.fillStyle = 'rgba(10,12,16,0.62)';
+    const x = (512 - tw) / 2, y = 20, h = 72, r = 24;
+    g.beginPath();
+    g.moveTo(x + r, y); g.arcTo(x + tw, y, x + tw, y + h, r); g.arcTo(x + tw, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + tw, y, r); g.closePath(); g.fill();
+    g.fillStyle = '#ffffff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText(text, 256, y + h / 2 + 2, 480);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
+    sp.scale.set(1.5, 0.33, 1);
+    sp.position.set(0, bodyCfg.height + 0.35, 0);
+    return sp;
+}
+function setNickname(text) {
+    if (nameTag) { avatarGroup.remove(nameTag); nameTag.material.map.dispose(); nameTag.material.dispose(); nameTag = null; }
+    if (!text) return;
+    nameTag = makeNameTag(text);
+    avatarGroup.add(nameTag);
+}
+
+/* ============ PERFILES DE CONTROL ============ */
+const CONTROL_ACTIONS = [
+    ['forward', 'Avanzar'], ['backward', 'Retroceder'],
+    ['left', 'Paso a la izquierda'], ['right', 'Paso a la derecha'],
+    ['turnLeft', 'Girar a la izquierda'], ['turnRight', 'Girar a la derecha'],
+    ['lookUp', 'Mirar hacia arriba'], ['lookDown', 'Mirar hacia abajo'],
+    ['jump', 'Saltar'], ['view', 'Cambiar 1ª / 3ª persona']
+];
+const PROFILE_1 = {
+    name: 'Perfil 1: WASD + Mouse',
+    desc: 'WASD (o flechas) para moverte y el mouse para girar la vista. Haz clic en la escena para capturar el cursor; ESC lo libera.',
+    mouseLook: true,
+    keys: { forward: ['KeyW', 'ArrowUp'], backward: ['KeyS', 'ArrowDown'], left: ['KeyA', 'ArrowLeft'], right: ['KeyD', 'ArrowRight'], turnLeft: [], turnRight: [], lookUp: [], lookDown: [], jump: ['Space'], view: ['KeyV'] }
+};
+const PROFILE_2 = {
+    name: 'Perfil 2: WASD + Flechas',
+    desc: 'WASD para moverte y las flechas del teclado para girar (← → izquierda/derecha, ↑ ↓ arriba/abajo). El mouse queda libre como cursor normal.',
+    mouseLook: false,
+    keys: { forward: ['KeyW'], backward: ['KeyS'], left: ['KeyA'], right: ['KeyD'], turnLeft: ['ArrowLeft'], turnRight: ['ArrowRight'], lookUp: ['ArrowUp'], lookDown: ['ArrowDown'], jump: ['Space'], view: ['KeyV'] }
+};
+function cloneKeys(k) { const o = {}; Object.keys(k).forEach(a => { o[a] = [...k[a]]; }); return o; }
+const customProfile = {
+    name: 'Perfil 3: Personalizado',
+    desc: 'Perfil propio: haz clic en una tecla para reasignarla (Esc cancela) y pulsa Guardar para conservarlo.',
+    mouseLook: false,
+    keys: cloneKeys(PROFILE_2.keys)
+};
+const controlSettings = { profileId: (CFG.controls && CFG.controls.profileId) || 1, turnSpeed: (CFG.controls && CFG.controls.turnSpeed) || 110 };
+let customDirty = false;
+let capturingAction = null;
+const codeToAction = new Map();
+const LS_PREFS = 'metaverso_visor_prefs_v1';
+const LS_CUSTOM = 'metaverso_visor_custom_v1';
+
+const TOUCH = { on: !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches) && !/OculusBrowser|Quest|Pico|Wolvic|VIVE/i.test(navigator.userAgent || '') };
+function activeProfile() {
+    const p = controlSettings.profileId === 2 ? PROFILE_2 : (controlSettings.profileId === 3 ? customProfile : PROFILE_1);
+    return (TOUCH.on && p.mouseLook) ? Object.assign({}, p, { mouseLook: false }) : p;   // en celular no hay mouse que capturar
+}
+function buildCodeMap() {
+    codeToAction.clear();
+    const keys = activeProfile().keys;
+    Object.keys(keys).forEach(act => keys[act].forEach(code => codeToAction.set(code, act)));
+}
+function keyLabel(code) {
+    if (!code) return '—';
+    const names = { ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→', Space: 'Espacio', ShiftLeft: 'Shift Izq', ShiftRight: 'Shift Der', Enter: 'Enter', Tab: 'Tab', Backspace: 'Retroceso' };
+    if (names[code]) return names[code];
+    if (/^Key[A-Z]$/.test(code)) return code.slice(3);
+    if (/^Digit\d$/.test(code)) return code.slice(5);
+    if (/^Numpad/.test(code)) return 'Num ' + code.slice(6);
+    return code;
+}
+function loadControlPrefs() {
+    try {
+        const rawC = localStorage.getItem(LS_CUSTOM);
+        if (rawC) {
+            const d = JSON.parse(rawC);
+            if (d && d.keys) {
+                CONTROL_ACTIONS.forEach(([a]) => {
+                    if (Array.isArray(d.keys[a]) && d.keys[a].every(c => typeof c === 'string')) customProfile.keys[a] = d.keys[a].slice(0, 1);
+                });
+                customProfile.mouseLook = !!d.mouseLook;
+            }
+        }
+        const rawP = localStorage.getItem(LS_PREFS);
+        if (rawP) {
+            const p = JSON.parse(rawP);
+            if (p && [1, 2, 3].includes(p.profileId)) controlSettings.profileId = p.profileId;
+            if (p && typeof p.turnSpeed === 'number' && p.turnSpeed >= 30 && p.turnSpeed <= 240) controlSettings.turnSpeed = p.turnSpeed;
+        }
+    } catch (err) { /* almacenamiento no disponible */ }
+}
+function saveControlPrefs() {
+    try { localStorage.setItem(LS_PREFS, JSON.stringify({ profileId: controlSettings.profileId, turnSpeed: controlSettings.turnSpeed })); return true; } catch (err) { return false; }
+}
+function saveCustomProfile() {
+    try { localStorage.setItem(LS_CUSTOM, JSON.stringify({ mouseLook: customProfile.mouseLook, keys: customProfile.keys })); return true; } catch (err) { return false; }
+}
+
+const fpsControls = new PointerLockControls(camera, document.body);
+function clearInputStates() {
+    velocity.set(0, 0, 0);
+    moveState.fwd = false; moveState.bwd = false; moveState.lft = false; moveState.rgt = false;
+    turnState.left = false; turnState.right = false; turnState.up = false; turnState.down = false;
+}
+function viewActive() { return activeProfile().mouseLook ? fpsControls.isLocked : true; }
+
+function renderControlsMenu() {
+    const p = activeProfile();
+    const editable = controlSettings.profileId === 3;
+    $('ctl-profile').value = String(controlSettings.profileId);
+    $('ctl-desc').innerText = p.desc;
+    const list = $('ctl-keys');
+    list.innerHTML = '';
+    CONTROL_ACTIONS.forEach(([act, label]) => {
+        const row = document.createElement('div');
+        row.className = 'key-row';
+        row.style.marginBottom = '4px';
+        const span = document.createElement('span');
+        span.innerText = label;
+        row.appendChild(span);
+        const btn = document.createElement('button');
+        btn.className = 'key-btn' + (capturingAction === act ? ' capturing' : '');
+        btn.innerText = capturingAction === act ? 'Pulsa una tecla…' : (p.keys[act].map(keyLabel).join(' / ') || '—');
+        btn.disabled = !editable;
+        btn.addEventListener('click', () => { capturingAction = (capturingAction === act) ? null : act; renderControlsMenu(); btn.blur(); });
+        row.appendChild(btn);
+        list.appendChild(row);
+    });
+    $('ctl-mouse').checked = p.mouseLook;
+    $('ctl-mouse').disabled = !editable;
+    $('ctl-turn').value = controlSettings.turnSpeed;
+    $('ctl-turn-val').innerText = Math.round(controlSettings.turnSpeed) + '°/s';
+    $('ctl-custom-actions').style.display = editable ? 'flex' : 'none';
+    $('ctl-dirty').style.display = (editable && customDirty) ? 'block' : 'none';
+}
+function setControlProfile(id, silent) {
+    controlSettings.profileId = id;
+    capturingAction = null;
+    buildCodeMap();
+    clearInputStates();
+    if (!activeProfile().mouseLook) {
+        if (fpsControls.isLocked) fpsControls.unlock();
+        $('crosshair').style.display = 'none';
+    }
+    renderControlsMenu();
+    saveControlPrefs();
+    if (!silent) {
+        const p = activeProfile();
+        showToast('🎮 ' + p.name + (state === 'play' && p.mouseLook ? ' · haz clic en la escena para capturar el mouse' : ''));
+    }
+}
+function assignCustomKey(act, code) {
+    const keys = customProfile.keys;
+    const prev = keys[act][0];
+    Object.keys(keys).forEach(a => {
+        if (a !== act && keys[a].includes(code)) keys[a] = keys[a].filter(c => c !== code).concat(prev ? [prev] : []);
+    });
+    keys[act] = [code];
+    customDirty = true;
+    if (controlSettings.profileId === 3) buildCodeMap();
+}
+
+$('ctl-profile').addEventListener('change', () => { setControlProfile(parseInt($('ctl-profile').value, 10)); $('ctl-profile').blur(); });
+$('ctl-mouse').addEventListener('change', () => {
+    if (controlSettings.profileId !== 3) return;
+    customProfile.mouseLook = $('ctl-mouse').checked;
+    customDirty = true;
+    if (!customProfile.mouseLook && fpsControls.isLocked) fpsControls.unlock();
+    renderControlsMenu();
+});
+$('ctl-turn').addEventListener('input', () => {
+    controlSettings.turnSpeed = parseFloat($('ctl-turn').value);
+    $('ctl-turn-val').innerText = Math.round(controlSettings.turnSpeed) + '°/s';
+    saveControlPrefs();
+});
+$('ctl-save').addEventListener('click', () => {
+    const ok = saveCustomProfile();
+    customDirty = !ok;
+    renderControlsMenu();
+    showToast(ok ? '💾 Perfil personalizado guardado en este navegador' : '⚠️ No se pudo guardar (almacenamiento no disponible)');
+});
+$('ctl-reset').addEventListener('click', () => {
+    customProfile.keys = cloneKeys(PROFILE_2.keys);
+    customProfile.mouseLook = false;
+    customDirty = true; capturingAction = null;
+    if (controlSettings.profileId === 3) { buildCodeMap(); if (fpsControls.isLocked) fpsControls.unlock(); }
+    renderControlsMenu();
+    showToast('↺ Perfil personalizado restablecido (pulsa Guardar para conservarlo)');
+});
+$('btn-ctl').addEventListener('click', (e) => {
+    $('ctl-menu').classList.toggle('open');
+    if (fpsControls.isLocked && $('ctl-menu').classList.contains('open')) fpsControls.unlock();
+    e.currentTarget.blur();
+});
+
+// Captura de tecla para reasignar (fase de captura)
+window.addEventListener('keydown', (e) => {
+    if (!capturingAction) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    if (e.code === 'Escape') { capturingAction = null; renderControlsMenu(); return; }
+    if (e.repeat) return;
+    if (/^(Control|Meta|Alt|OS)/.test(e.code)) { showToast('⚠️ Esa tecla no se puede usar. Prueba con otra.'); return; }
+    assignCustomKey(capturingAction, e.code);
+    capturingAction = null;
+    renderControlsMenu();
+}, true);
+
+function setActionState(act, on) {
+    switch (act) {
+        case 'forward': moveState.fwd = on; break;
+        case 'backward': moveState.bwd = on; break;
+        case 'left': moveState.lft = on; break;
+        case 'right': moveState.rgt = on; break;
+        case 'turnLeft': turnState.left = on; break;
+        case 'turnRight': turnState.right = on; break;
+        case 'lookUp': turnState.up = on; break;
+        case 'lookDown': turnState.down = on; break;
+    }
+}
+const lookEuler = new THREE.Euler(0, 0, 0, 'YXZ');
+function applyKeyboardLook(delta) {
+    const dyaw = Number(turnState.left) - Number(turnState.right);
+    const dpitch = Number(turnState.up) - Number(turnState.down);
+    if (!dyaw && !dpitch) return;
+    const step = THREE.MathUtils.degToRad(controlSettings.turnSpeed) * delta;
+    lookEuler.setFromQuaternion(camera.quaternion);
+    lookEuler.y += dyaw * step;
+    lookEuler.x = Math.max(-1.5, Math.min(1.5, lookEuler.x + dpitch * step));
+    lookEuler.z = 0;
+    camera.quaternion.setFromEuler(lookEuler);
+}
+
+function setPerspective(p) {
+    viewPerspective = p;
+    tpsCamFactor = 1;
+    if (state === 'play') { avatarGroup.visible = (p === 'avatar'); syncPlayerCamera(); }
+}
+
+window.addEventListener('keydown', (e) => {
+    if (state !== 'play' || e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+    const act = codeToAction.get(e.code);
+    if (!act) return;
+    if (act === 'jump') {
+        e.preventDefault();
+        if (isGrounded && playerConfig.jumpEnabled) { verticalVelocity = playerConfig.jumpForce; isGrounded = false; }
+        return;
+    }
+    if (act === 'view') {
+        setPerspective(viewPerspective === 'fps' ? 'avatar' : 'fps');
+        showToast(viewPerspective === 'fps' ? 'Vista: 1ª Persona' : 'Vista: 3ª Persona (Avatar)');
+        return;
+    }
+    if (act === 'turnLeft' || act === 'turnRight' || act === 'lookUp' || act === 'lookDown') e.preventDefault();
+    setActionState(act, true);
+});
+window.addEventListener('keyup', (e) => {
+    if (state !== 'play') return;
+    const act = codeToAction.get(e.code);
+    if (act) setActionState(act, false);
+});
+window.addEventListener('blur', clearInputStates);
+
+fpsControls.addEventListener('lock', () => {
+    $('crosshair').style.display = 'block';
+    $('ctl-menu').classList.remove('open');
+    if (viewPerspective === 'avatar') avatarGroup.visible = true;
+});
+fpsControls.addEventListener('unlock', () => {
+    clearInputStates();
+    if (state === 'play') $('crosshair').style.display = 'none';
+});
+window.addEventListener('click', (e) => {
+    if (state === 'play' && activeProfile().mouseLook && !fpsControls.isLocked
+        && !(e.target.closest && e.target.closest('#hud, #ctl-menu, #welcome'))) {
+        fpsControls.lock();
+    }
+});
+
+/* ============ CONTROLES TÁCTILES (celular / tablet) ============ */
+function touchShow(on) { $('touch-ui').style.display = (on && TOUCH.on) ? 'block' : 'none'; }
+function touchEnter() {
+    if (!TOUCH.on) return;
+    touchShow(true);
+    // Pantalla completa + horizontal (el navegador lo permite solo tras un toque del usuario: el botón Entrar)
+    try {
+        const el = document.documentElement, req = el.requestFullscreen || el.webkitRequestFullscreen;
+        if (req && !(document.fullscreenElement || document.webkitFullscreenElement)) {
+            const p = req.call(el);
+            const lock = () => { try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); } catch (e) { /* sin bloqueo */ } };
+            if (p && p.then) p.then(lock).catch(() => {}); else lock();
+        }
+    } catch (e) { /* sin pantalla completa */ }
+    if (window.innerHeight > window.innerWidth) showToast('📱 Gira el teléfono en horizontal para una mejor vista', 5000);
+}
+(function touchInit() {
+    if (!TOUCH.on) return;
+    const base = $('tj-base'), knob = $('tj-knob'), look = $('touch-look'), R = 45, DEAD = 16;
+    let sid = null, cx = 0, cy = 0;
+    const setMove = (dx, dy) => {
+        const m = Math.hypot(dx, dy) || 1, k = m > R ? R / m : 1, nx = dx * k, ny = dy * k;
+        knob.style.transform = 'translate(' + nx + 'px,' + ny + 'px)';
+        moveState.lft = nx < -DEAD; moveState.rgt = nx > DEAD; moveState.fwd = ny < -DEAD; moveState.bwd = ny > DEAD;
+    };
+    const stopMove = () => { sid = null; knob.style.transform = ''; moveState.fwd = moveState.bwd = moveState.lft = moveState.rgt = false; };
+    base.addEventListener('pointerdown', (e) => {
+        sid = e.pointerId; try { base.setPointerCapture(e.pointerId); } catch (err) { /* sin captura */ }
+        const r = base.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2;
+        setMove(e.clientX - cx, e.clientY - cy); e.preventDefault();
+    });
+    base.addEventListener('pointermove', (e) => { if (e.pointerId === sid) setMove(e.clientX - cx, e.clientY - cy); });
+    ['pointerup', 'pointercancel'].forEach(t => base.addEventListener(t, (e) => { if (e.pointerId === sid) stopMove(); }));
+
+    // Arrastrar en la pantalla = mirar; un toque corto = interactuar con el objeto tocado
+    let lid = null, lx = 0, ly = 0, sx = 0, sy = 0, st = 0, moved = 0;
+    look.addEventListener('pointerdown', (e) => {
+        if (lid !== null || state !== 'play') return;
+        lid = e.pointerId; lx = sx = e.clientX; ly = sy = e.clientY; st = performance.now(); moved = 0;
+        try { look.setPointerCapture(e.pointerId); } catch (err) { /* sin captura */ }
+    });
+    look.addEventListener('pointermove', (e) => {
+        if (e.pointerId !== lid) return;
+        const dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY; moved += Math.abs(dx) + Math.abs(dy);
+        lookEuler.setFromQuaternion(camera.quaternion);
+        lookEuler.y -= dx * 0.005;
+        lookEuler.x = Math.max(-1.5, Math.min(1.5, lookEuler.x - dy * 0.005));
+        lookEuler.z = 0;
+        camera.quaternion.setFromEuler(lookEuler);
+    });
+    const endLook = (e, cancelled) => {
+        if (e.pointerId !== lid) return;
+        lid = null;
+        if (!cancelled && moved < 10 && performance.now() - st < 350 && state === 'play') {
+            const root = pickEntityAt(new THREE.Vector2((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1));
+            if (root) onAvatarClick(root);
+        }
+    };
+    look.addEventListener('pointerup', (e) => endLook(e, false));
+    look.addEventListener('pointercancel', (e) => endLook(e, true));
+
+    $('tb-jump').addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        if (state === 'play' && isGrounded && playerConfig.jumpEnabled) { verticalVelocity = playerConfig.jumpForce; isGrounded = false; }
+    });
+    $('tb-view').addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        if (state !== 'play') return;
+        setPerspective(viewPerspective === 'fps' ? 'avatar' : 'fps');
+        showToast(viewPerspective === 'fps' ? 'Vista: 1ª Persona' : 'Vista: 3ª Persona (Avatar)');
+    });
+    // Al salir de pantalla completa se libera la orientación (vuelve a poder girarse a vertical)
+    const onFs = () => { if (!(document.fullscreenElement || document.webkitFullscreenElement)) { try { screen.orientation && screen.orientation.unlock && screen.orientation.unlock(); } catch (e) { /* sin bloqueo */ } } };
+    document.addEventListener('fullscreenchange', onFs);
+    document.addEventListener('webkitfullscreenchange', onFs);
+})();
+
+/* ============ PANTALLA COMPLETA ============ */
+function toggleFullscreen() {
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    } else {
+        const el = document.documentElement;
+        const req = el.requestFullscreen || el.webkitRequestFullscreen;
+        if (!req) { showToast('⚠️ Tu navegador no permite pantalla completa'); return; }
+        const p = req.call(el);
+        if (p && p.catch) p.catch(() => showToast('⚠️ No se pudo entrar en pantalla completa'));
+    }
+}
+function refreshFullscreenButton() {
+    const on = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    $('btn-fs').innerText = on ? '🗗 Salir de pantalla completa' : '⛶ Pantalla completa';
+}
+document.addEventListener('fullscreenchange', refreshFullscreenButton);
+document.addEventListener('webkitfullscreenchange', refreshFullscreenButton);
+$('btn-fs').addEventListener('click', (e) => { toggleFullscreen(); e.currentTarget.blur(); });
+window.addEventListener('keydown', (e) => { if (e.altKey && e.code === 'KeyI') { e.preventDefault(); toggleFullscreen(); } });
+
+/* ============ CÁMARA / AVATAR ============ */
+let tpsCamFactor = 1;
+let tpsCamLastT = 0;
+const tpsCamRay = new THREE.Raycaster();
+const TPS_MARGIN = 0.25;
+
+function solidColliderMeshList() {
+    const out = [];
+    entities.forEach(ent => {
+        if (!ent.visible) return;
+        allColliders(ent).forEach(c => { if (c.enabled && !c.isTrigger && c.mesh) out.push(c.mesh); });
+    });
+    return out;
+}
+
+function syncPlayerCamera() {
+    const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
+    avatarGroup.position.set(playerLogicalPos.x, feetY, playerLogicalPos.z);
+    const camDir = new THREE.Vector3();
+    camera.getWorldDirection(camDir);
+    camDir.y = 0;
+    if (camDir.lengthSq() > 0.0001) camDir.normalize();
+    avatarGroup.rotation.y = Math.atan2(camDir.x, camDir.z);
+
+    const right = new THREE.Vector3().crossVectors(camDir, new THREE.Vector3(0, 1, 0));
+    if (right.lengthSq() > 0.000001) right.normalize();
+
+    if (viewPerspective === 'fps') {
+        const c = avatarCamConfig.fps;
+        camera.position.set(playerLogicalPos.x, feetY + c.y, playerLogicalPos.z);
+        camera.position.addScaledVector(right, c.x).addScaledVector(camDir, c.z);
+    } else {
+        const c = avatarCamConfig.tps;
+        const head = new THREE.Vector3(playerLogicalPos.x, feetY + c.y, playerLogicalPos.z);
+        const toCam = new THREE.Vector3().addScaledVector(right, c.x).addScaledVector(camDir, -c.z);
+        const fullLen = toCam.length();
+
+        let targetF = 1;
+        if (state === 'play' && fullLen > 0.05) {
+            const meshes = solidColliderMeshList();
+            if (meshes.length) {
+                tpsCamRay.set(head, toCam.clone().normalize());
+                tpsCamRay.far = fullLen + TPS_MARGIN;
+                const hit = tpsCamRay.intersectObjects(meshes, false)[0];
+                if (hit) targetF = Math.max(0, Math.min(1, (hit.distance - TPS_MARGIN) / fullLen));
+            }
+        }
+        const nowT = performance.now();
+        const dtCam = Math.min(0.1, (nowT - tpsCamLastT) / 1000) || 0.016;
+        tpsCamLastT = nowT;
+        if (targetF < tpsCamFactor) tpsCamFactor = targetF;
+        else tpsCamFactor += (targetF - tpsCamFactor) * Math.min(1, dtCam * 3.5);
+
+        camera.position.copy(head).addScaledVector(toCam, tpsCamFactor);
+        if (state === 'play' && viewPerspective === 'avatar') avatarGroup.visible = (tpsCamFactor * fullLen) > 0.5;
+    }
+}
+
+/* ============ REGLAS ============ */
+function resolveTargets(ids) {
+    if (!ids || !ids.length) return [];
+    return entities.filter(e => ids.includes(e.userData.uid));
+}
+function portalsFromTargets(targets) {
+    const set = new Set();
+    if (!targets.length) {
+        entities.forEach(e => { if (e.userData.isPortalPad) set.add(e); });
+    } else {
+        targets.forEach(t => {
+            if (t.userData.isPortalPad) {
+                set.add(t);
+                if (t.userData.linkedPad) set.add(t.userData.linkedPad);
+            }
+        });
+    }
+    return [...set];
+}
+function ruleTransparencyValue(v) {
+    const n = parseFloat(v);
+    return isFinite(n) ? Math.min(100, Math.max(0, n)) : 50;
+}
+
+function executeAction(actionType, targetIds, paramUrl, paramMsg, paramValue) {
+    if (!actionType || actionType === 'none') return;
+    const targets = resolveTargets(targetIds);
+    const needsTargets = ['show_targets', 'hide_targets', 'toggle_targets', 'set_transparency', 'toggle_transparency', 'play_media', 'pause_media', 'toggle_media'];
+    if (needsTargets.includes(actionType) && targets.length === 0) return;
+
+    switch (actionType) {
+        case 'show_targets': targets.forEach(e => { e.visible = true; }); showToast('👁️ Objetos revelados'); break;
+        case 'hide_targets': targets.forEach(e => { e.visible = false; }); showToast('🙈 Objetos ocultados'); break;
+        case 'toggle_targets': targets.forEach(e => { e.visible = !e.visible; }); showToast('🔄 Visibilidad de objetos alternada'); break;
+        case 'set_transparency': {
+            const v = ruleTransparencyValue(paramValue);
+            targets.forEach(e => applyObjectTransparency(e, v));
+            showToast('🫥 Transparencia aplicada: ' + v + '%');
+            break;
+        }
+        case 'toggle_transparency': {
+            const v = ruleTransparencyValue(paramValue);
+            targets.forEach(e => {
+                const cur = e.userData.appliedTransparency ?? (e.userData.transparency || 0);
+                applyObjectTransparency(e, cur > 0.5 ? 0 : v);
+            });
+            showToast('🔄 Transparencia alternada');
+            break;
+        }
+        case 'unlock_portal': {
+            const pads = portalsFromTargets(targets);
+            if (!pads.length) break;
+            pads.forEach(p => { p.userData.isLocked = false; applyPortalVisual(p); });
+            showToast('🎉 ¡Teletransporte desbloqueado!');
+            break;
+        }
+        case 'lock_portal': {
+            const pads = portalsFromTargets(targets);
+            if (!pads.length) break;
+            pads.forEach(p => { p.userData.isLocked = true; applyPortalVisual(p); });
+            showToast('🔒 Teletransporte bloqueado');
+            break;
+        }
+        case 'play_media':
+        case 'pause_media':
+        case 'toggle_media': {
+            const media = targets.filter(t => t.userData.mediaElement);
+            if (!media.length) break;
+            media.forEach(t => {
+                const m = t.userData.mediaElement;
+                const wantPlay = actionType === 'play_media' ? true : actionType === 'pause_media' ? false : m.paused;
+                if (wantPlay) { const p = m.play(); if (p && p.catch) p.catch(() => {}); }
+                else m.pause();
+            });
+            showToast(actionType === 'pause_media' ? '⏸️ Pausado' : actionType === 'play_media' ? '▶️ Reproduciendo' : '⏯️ Reproducción alternada');
+            break;
+        }
+        case 'open_url': {
+            if (!paramUrl) break;
+            let url = paramUrl.trim();
+            if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+            const w = window.open(url, '_blank');
+            if (!w) showToast('🔗 El navegador bloqueó la ventana. Enlace: ' + url, 6000);
+            break;
+        }
+        case 'show_msg': showToast('📢 ' + (paramMsg || '¡Regla activada!'), 5000); break;
+    }
+}
+
+function registerGlobalProgress(ent, kind) {
+    const uid = ent.userData.uid;
+    globalRules.forEach(rule => {
+        if (rule.completed) return;
+        if (rule.trigger !== 'both' && rule.trigger !== kind) return;
+        if (!rule.requiredIds.includes(uid)) return;
+        if (rule.collected.includes(uid)) return;
+        rule.collected.push(uid);
+        const total = rule.requiredIds.filter(id => entityByUid(id)).length;
+        const done = rule.collected.filter(id => entityByUid(id)).length;
+        if (rule.mode === 'any' || done >= total) {
+            rule.completed = true;
+            executeAction(rule.action, rule.targetIds, rule.paramUrl, rule.paramMsg, rule.paramValue);
+            if (rule.action !== 'show_msg') showToast('🎉 ¡Regla cumplida: ' + rule.name + '!');
+        } else {
+            showToast('🧩 [' + rule.name + '] ' + done + '/' + total);
+        }
+    });
+}
+function onAvatarTouch(ent) {
+    const r = ent.userData.rules;
+    if (r && r.touchAction && r.touchAction !== 'none') executeAction(r.touchAction, r.targetIds, r.touchUrl, r.touchMsg, r.touchValue);
+    registerGlobalProgress(ent, 'touch');
+}
+function onAvatarClick(ent) {
+    const r = ent.userData.rules;
+    if (r && r.clickAction && r.clickAction !== 'none') {
+        executeAction(r.clickAction, r.targetIds, r.clickUrl, r.clickMsg, r.clickValue);
+    } else if (ent.userData.onClick) {
+        ent.userData.onClick();
+    }
+    registerGlobalProgress(ent, 'click');
+}
+
+/* ============ CLIC / MANITO ============ */
+const clickRay = new THREE.Raycaster();
+const centerVec = new THREE.Vector2(0, 0);
+function isEffectivelyVisible(o) {
+    let p = o;
+    while (p) { if (!p.visible) return false; p = p.parent; }
+    return true;
+}
+function pickEntityAt(ndc) {
+    clickRay.setFromCamera(ndc, camera);
+    clickRay.far = 10;
+    const candidates = entities.filter(e => e.visible);
+    const hits = clickRay.intersectObjects(candidates, true);
+    let root = null;
+    for (const h of hits) {
+        const o = h.object;
+        if (o.name === 'ColliderMesh' || (o.parent && o.parent.name === 'ColliderMesh')) continue;
+        if (!isEffectivelyVisible(o)) continue;
+        root = o;
+        break;
+    }
+    if (!root) return null;
+    while (root.parent && root.parent !== scene) root = root.parent;
+    if (!entities.includes(root)) return null;
+    return root;
+}
+function isInteractiveEntity(ent) {
+    const r = ent.userData.rules;
+    if (r && r.clickAction && r.clickAction !== 'none') return true;
+    if (ent.userData.onClick) return true;
+    const uid = ent.userData.uid;
+    return globalRules.some(g => !g.completed && (g.trigger === 'click' || g.trigger === 'both') && g.requiredIds.includes(uid));
+}
+const freeMouseNdc = new THREE.Vector2();
+let mouseOverCanvas = false;
+window.addEventListener('pointermove', (e) => {
+    mouseOverCanvas = (e.target.id === 'canvas3d');
+    freeMouseNdc.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+});
+const crosshairEl = $('crosshair');
+let hoverTick = 0;
+function updateHoverCursor() {
+    if (state !== 'play') { if (canvas.style.cursor) canvas.style.cursor = ''; crosshairEl.classList.remove('hot'); return; }
+    if ((++hoverTick) % 6) return;
+    let ndc = null;
+    if (fpsControls.isLocked) ndc = centerVec;
+    else if (!activeProfile().mouseLook && mouseOverCanvas) ndc = freeMouseNdc;
+    let hot = false;
+    if (ndc && entities.some(en => en.visible && isInteractiveEntity(en))) { const root = pickEntityAt(ndc); hot = !!root && isInteractiveEntity(root); }
+    canvas.style.cursor = (hot && !fpsControls.isLocked) ? 'pointer' : '';
+    crosshairEl.classList.toggle('hot', hot && fpsControls.isLocked);
+}
+window.addEventListener('pointerdown', (e) => {
+    if (state !== 'play' || e.button !== 0) return;
+    let root = null;
+    if (fpsControls.isLocked) root = pickEntityAt(centerVec);
+    else if (!activeProfile().mouseLook && e.target.id === 'canvas3d') {
+        root = pickEntityAt(new THREE.Vector2((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1));
+    }
+    if (root) onAvatarClick(root);
+});
+
+/* ============ FÍSICA ============ */
+const forwardRay = new THREE.Raycaster();
+const groundRay = new THREE.Raycaster();
+const downVector = new THREE.Vector3(0, -1, 0);
+const touchBox = new THREE.Box3();
+
+function updateTouchTriggers(body, feetY) {
+    const nowTouching = new Set();
+    const px = playerLogicalPos.x;
+    const pz = playerLogicalPos.z;
+    entities.forEach(ent => {
+        if (!ent.visible) return;
+        allColliders(ent).forEach(c => {
+            if (!c || !c.enabled || !c.mesh) return;
+            c.mesh.updateWorldMatrix(true, false);
+            touchBox.setFromObject(c.mesh);
+            if (touchBox.isEmpty()) return;
+            const reach = c.isTrigger ? body.radius * 0.75 : body.radius + 0.25;
+            const dx = Math.max(touchBox.min.x - px, 0, px - touchBox.max.x);
+            const dz = Math.max(touchBox.min.z - pz, 0, pz - touchBox.max.z);
+            const horiz = Math.hypot(dx, dz);
+            const vertOverlap = feetY <= touchBox.max.y + 0.15 && (feetY + body.height) >= touchBox.min.y;
+            if (horiz <= reach && vertOverlap) {
+                const uid = ent.userData.uid;
+                const alreadyCounted = nowTouching.has(uid);
+                nowTouching.add(uid);
+                if (!alreadyCounted && !touchingSet.has(uid)) onAvatarTouch(ent);
+            }
+        });
+    });
+    touchingSet = nowTouching;
+}
+
+// Zona de caída: vuelve al punto de inicio
+function respawnAtSpawn() {
+    velocity.set(0, 0, 0);
+    verticalVelocity = 0;
+    isGrounded = false;
+    ladderClimbing = false; ladderVel = 0;
+    const cpt = activeCheckpoint;
+    if (cpt) playerLogicalPos.set(cpt.x, cpt.y, cpt.z); else playerLogicalPos.copy(spawnConfig.pos);
+    camera.position.copy(playerLogicalPos);
+    camera.rotation.set(0, THREE.MathUtils.degToRad(cpt ? cpt.rotY : spawnConfig.rotY), 0);
+    syncPlayerCamera();
+    showToast(cpt ? '🚩 Caíste: volviste al último checkpoint' : '☠️ Caíste fuera del escenario: volviste al punto de inicio');
+}
+
+/* =================================================================
+   HERRAMIENTAS ESPECIALES: TRAMPOLÍN · ESCALERA · CHECKPOINT
+   Cada objeto puede llevar userData.special = { trampoline, force, ladder, climbSpeed, checkpoint }
+   ================================================================= */
+var activeCheckpoint = null;   // { uid, x, y, z, rotY } sitio de reaparición (y = altura de ojos)
+var ladderClimbing = false;
+var ladderVel = 0;
+var ladderCooldown = 0;
+var trampolineCooldown = 0;
+const specialFwd = new THREE.Vector3();
+
+function resetSpecialToolsState() {
+    activeCheckpoint = null;
+    ladderClimbing = false; ladderVel = 0; ladderCooldown = 0; trampolineCooldown = 0;
+}
+
+function specialTintHex(sp) {
+    if (!sp) return null;
+    if (sp.trampoline) return 0x2ecc71;
+    if (sp.ladder) return 0xc58b3c;
+    if (sp.checkpoint) return 0xe74c3c;
+    return null;
+}
+// Solo los cubos se tiñen (para reconocerlos); los modelos, imágenes, etc. conservan su aspecto
+function applySpecialLook(ent) {
+    if (!ent || !ent.userData || ent.userData.kind !== 'cube' || !ent.material || !ent.material.color) return;
+    const t = specialTintHex(ent.userData.special);
+    ent.material.color.setHex(t !== null ? t : (ent.userData.cubeColor !== undefined ? ent.userData.cubeColor : 0x828282));
+}
+
+// Cajas en mundo del objeto: sus mallas de colisión activas o, si no hay ninguna, el objeto completo
+function specialWorldBoxes(ent) {
+    const out = [];
+    allColliders(ent).forEach(c => {
+        if (!c || !c.enabled || !c.mesh) return;
+        c.mesh.updateWorldMatrix(true, false);
+        const b = new THREE.Box3().setFromObject(c.mesh);
+        if (!b.isEmpty()) out.push(b);
+    });
+    if (!out.length) {
+        ent.updateWorldMatrix(true, true);
+        const b = new THREE.Box3().setFromObject(ent);
+        if (!b.isEmpty()) out.push(b);
+    }
+    return out;
+}
+
+function updateSpecialTools(delta, moveDelta, body, prevEyeY, targetEyeY) {
+    if (trampolineCooldown > 0) trampolineCooldown -= delta;
+    if (ladderCooldown > 0) ladderCooldown -= delta;
+    const px = playerLogicalPos.x, pz = playerLogicalPos.z;
+    const eye = playerConfig.eyeHeight;
+    const feetY = playerLogicalPos.y - eye;
+    const radius = body.radius || 0.4, height = body.height || 1.8;
+    let bounce = 0, ladder = null;
+
+    for (const ent of entities) {
+        const sp = ent.userData.special;
+        if (!sp || !ent.visible || !(sp.trampoline || sp.ladder || sp.checkpoint)) continue;
+        for (const b of specialWorldBoxes(ent)) {
+            const dx = Math.max(b.min.x - px, 0, px - b.max.x);
+            const dz = Math.max(b.min.z - pz, 0, pz - b.max.z);
+            const horiz = Math.hypot(dx, dz);
+
+            // TRAMPOLÍN: el personaje pisa la cara superior del objeto
+            if (sp.trampoline && horiz <= radius * 0.6 && feetY <= b.max.y + 0.25 && feetY >= b.max.y - 0.6) {
+                bounce = Math.max(bounce, Number(sp.force) || 16);
+            }
+            // ESCALERA: el personaje está pegado al objeto y por debajo de su borde superior
+            if (sp.ladder && horiz <= radius + 0.4 && feetY < b.max.y - 0.05 && feetY + height > b.min.y + 0.05) {
+                if (!ladder || b.max.y > ladder.box.max.y) ladder = { box: b, speed: Number(sp.climbSpeed) || 4 };
+            }
+            // CHECKPOINT: al tocarlo se convierte en el punto de reaparición
+            if (sp.checkpoint && horiz <= radius + 0.25 && feetY <= b.max.y + 0.15 && feetY + height >= b.min.y) {
+                const uid = ent.userData.uid;
+                if (!activeCheckpoint || activeCheckpoint.uid !== uid) {
+                    camera.getWorldDirection(specialFwd);
+                    const yaw = THREE.MathUtils.radToDeg(Math.atan2(-specialFwd.x, -specialFwd.z));
+                    activeCheckpoint = {
+                        uid: uid,
+                        x: (b.min.x + b.max.x) / 2,
+                        y: b.max.y + eye + 0.1,
+                        z: (b.min.z + b.max.z) / 2,
+                        rotY: isFinite(yaw) ? yaw : 0
+                    };
+                    showToast('🚩 ¡Checkpoint guardado! Si caes, volverás aquí.');
+                }
+            }
+        }
+    }
+
+    // Impulso del trampolín
+    if (bounce > 0 && trampolineCooldown <= 0 && verticalVelocity <= 0.5) {
+        verticalVelocity = bounce;
+        isGrounded = false;
+        trampolineCooldown = 0.25;
+        ladderClimbing = false; ladderVel = 0;
+        playerLogicalPos.y += 0.05;
+        return;
+    }
+
+    // Escalera: avanzar (W) sube, retroceder (S) baja; sin tecla se queda sujeto
+    let up = !!moveState.fwd, down = !!moveState.bwd;
+    if (!up && !down && typeof vrActive !== 'undefined' && vrActive && moveDelta.lengthSq() > 1e-6) {
+        camera.getWorldDirection(specialFwd); specialFwd.y = 0;
+        if (specialFwd.lengthSq() > 1e-6) {
+            specialFwd.normalize();
+            const d = moveDelta.dot(specialFwd);
+            if (d > 0.002) up = true; else if (d < -0.002) down = true;
+        }
+    }
+    if (ladder && ladderCooldown <= 0) {
+        let canStart = ladderClimbing;
+        if (!canStart && up) {
+            // Para empezar hay que mirar hacia la escalera
+            const b = ladder.box;
+            const vx = Math.min(Math.max(px, b.min.x), b.max.x) - px;
+            const vz = Math.min(Math.max(pz, b.min.z), b.max.z) - pz;
+            const len = Math.hypot(vx, vz);
+            if (len < 0.01) canStart = true;
+            else {
+                camera.getWorldDirection(specialFwd); specialFwd.y = 0;
+                if (specialFwd.lengthSq() > 1e-6) {
+                    specialFwd.normalize();
+                    canStart = (specialFwd.x * vx + specialFwd.z * vz) / len > 0.35;
+                }
+            }
+        }
+        if (canStart) {
+            ladderClimbing = true;
+            const dir = (up ? 1 : 0) - (down ? 1 : 0);
+            // Aceleración suave para que la subida sea fluida
+            ladderVel += (dir * ladder.speed - ladderVel) * (1 - Math.exp(-12 * delta));
+            if (dir === 0 && Math.abs(ladderVel) < 0.02) ladderVel = 0;
+            const y = Math.max(prevEyeY + ladderVel * delta, targetEyeY);
+            playerLogicalPos.y = y;
+            verticalVelocity = 0;
+            isGrounded = false;
+            if (dir < 0 && y <= targetEyeY + 0.001) {
+                // Bajó hasta el suelo
+                ladderClimbing = false; ladderVel = 0; isGrounded = true;
+            } else if (dir > 0 && (y - eye) >= ladder.box.max.y - 0.05) {
+                // Llegó arriba: pasa por encima del borde y queda de pie sobre la parte superior del objeto
+                const tb = ladder.box;
+                const nx = Math.min(Math.max(playerLogicalPos.x, tb.min.x), tb.max.x);
+                const nz = Math.min(Math.max(playerLogicalPos.z, tb.min.z), tb.max.z);
+                const ix = (tb.min.x + tb.max.x) / 2 - nx, iz = (tb.min.z + tb.max.z) / 2 - nz;
+                const il = Math.hypot(ix, iz);
+                const inside = Math.min(0.35, il * 0.5);
+                playerLogicalPos.x = nx + (il > 1e-4 ? ix / il * inside : 0);
+                playerLogicalPos.z = nz + (il > 1e-4 ? iz / il * inside : 0);
+                playerLogicalPos.y = tb.max.y + eye + 0.02;
+                ladderClimbing = false; ladderVel = 0; ladderCooldown = 0.5;
+                verticalVelocity = 0; isGrounded = false;
+            }
+            return;
+        }
+    } else if (ladderClimbing) {
+        ladderClimbing = false; ladderVel = 0;
+    }
+}
+
+/* =================================================================
+   MODO JUEGO: animaciones, roles (NPC / enemigo) e ítems interactivos
+   userData.game = { anim, amp, speed, face, role, npcMode, text, range, lookAt,
+                     stomp, hp, item, power, duration }
+   Por defecto un objeto NO tiene ningún comportamiento. Solo actúa en modo Explorar / Visor.
+   ================================================================= */
+const GM = (function (isPlaying) {
+    const G = {
+        running: false, t: 0, list: [], base: new Map(), gone: new Set(), hp: new Map(), dying: [], stompCd: new Map(),
+        invuln: 0, weapon: null, wCool: 0, effects: {}, savedJump: null, flyV: 0, flyPower: 6,
+        keys: { up: false, down: false }, touch: { up: false, down: false },
+        nearNpc: null, dlgUid: null, dlgIdx: 0, bubbleKey: '', hudT: 0, fx: [], ghost: new Map(), ui: null
+    };
+    const Y_AXIS = new THREE.Vector3(0, 1, 0);
+    const qTmp = new THREE.Quaternion();
+    const rc = new THREE.Raycaster();
+    const rayTmp = new THREE.Ray();
+    const hitTmp = new THREE.Vector3();
+    const dirTmp = new THREE.Vector3();
+    const sideTmp = new THREE.Vector3();
+    let beamGeo = null;
+
+    const EFFECT_NAMES = { superjump: '🦘 Súper salto', fly: '🕊️ Vuelo', invis: '👻 Invisible' };
+
+    function isActive(g) { return !!g && (g.anim !== 'none' || g.role !== 'none' || g.item !== 'none'); }
+    function uidOf(ent) { return ent.userData.uid; }
+
+    // Cajas en mundo de un objeto: sus mallas de colisión activas o, si no hay, el objeto completo
+    function boxesOf(ent) {
+        const out = [];
+        allColliders(ent).forEach(c => {
+            if (!c || !c.enabled || !c.mesh) return;
+            c.mesh.updateWorldMatrix(true, false);
+            const b = new THREE.Box3().setFromObject(c.mesh);
+            if (!b.isEmpty()) out.push(b);
+        });
+        if (!out.length) {
+            ent.updateWorldMatrix(true, true);
+            const b = new THREE.Box3().setFromObject(ent);
+            if (!b.isEmpty()) out.push(b);
+        }
+        return out;
+    }
+
+    /* ---------- Interfaz (aviso de estado, globo de diálogo, botones) ---------- */
+    function ensureUI() {
+        if (G.ui) return G.ui;
+        const st = document.createElement('style');
+        st.textContent =
+            '#gm-hud{position:fixed;top:64px;right:12px;z-index:130;display:none;flex-direction:column;gap:4px;align-items:flex-end;pointer-events:none;font:700 12px system-ui,sans-serif}' +
+            '#gm-hud span{background:rgba(20,24,32,.88);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:14px;padding:4px 10px}' +
+            '#gm-bubble{position:fixed;left:50%;bottom:18%;transform:translateX(-50%);z-index:130;display:none;max-width:min(560px,86vw);background:rgba(20,24,32,.92);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:14px;padding:10px 16px;font:14px/1.4 system-ui,sans-serif;text-align:center;white-space:pre-wrap;box-shadow:0 6px 24px rgba(0,0,0,.5);user-select:none;-webkit-user-select:none}' +
+            '#gm-bubble b{color:#f1c40f;display:block;font-size:12px;margin-bottom:2px}' +
+            '#gm-bubble small{display:block;opacity:.65;margin-top:4px;font-size:11px}' +
+            '.gm-btn{position:fixed;right:16px;z-index:130;display:none;width:56px;height:56px;border-radius:50%;border:2px solid rgba(255,255,255,.6);background:rgba(20,24,32,.85);color:#fff;font-size:24px;line-height:1;padding:0;touch-action:none;user-select:none;-webkit-user-select:none;cursor:pointer}';
+        document.head.appendChild(st);
+        const mk = (tag, id, cls) => { const e = document.createElement(tag); if (id) e.id = id; if (cls) e.className = cls; document.body.appendChild(e); return e; };
+        const hud = mk('div', 'gm-hud');
+        const bubble = mk('div', 'gm-bubble');
+        const act = mk('button', 'gm-act', 'gm-btn'); act.style.bottom = '150px';
+        const up = mk('button', 'gm-up', 'gm-btn'); up.style.bottom = '220px'; up.textContent = '⬆️';
+        const down = mk('button', 'gm-down', 'gm-btn'); down.style.bottom = '290px'; down.textContent = '⬇️';
+        [act, up, down, bubble].forEach(el => {
+            ['mousedown', 'touchstart', 'click'].forEach(ev => el.addEventListener(ev, e => e.stopPropagation(), { passive: true }));
+        });
+        act.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); fire(); });
+        const hold = (el, key) => {
+            el.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); G.touch[key] = true; });
+            ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => el.addEventListener(ev, () => { G.touch[key] = false; }));
+        };
+        hold(up, 'up'); hold(down, 'down');
+        bubble.addEventListener('pointerdown', e => { e.preventDefault(); advanceDialog(); });
+        G.ui = { hud, bubble, act, up, down };
+        return G.ui;
+    }
+
+    function refreshHud() {
+        const ui = ensureUI();
+        const parts = [];
+        if (G.weapon) parts.push(G.weapon.icon + ' ' + G.weapon.name + ' · tecla F');
+        Object.keys(G.effects).forEach(k => parts.push((EFFECT_NAMES[k] || k) + ' ' + Math.max(0, Math.ceil(G.effects[k].left)) + ' s'));
+        ui.hud.textContent = '';
+        parts.forEach(p => { const s = document.createElement('span'); s.textContent = p; ui.hud.appendChild(s); });
+        ui.hud.style.display = parts.length ? 'flex' : 'none';
+        ui.act.style.display = G.weapon ? 'block' : 'none';
+        ui.act.textContent = G.weapon ? G.weapon.icon : '';
+        const fl = !!G.effects.fly;
+        ui.up.style.display = fl ? 'block' : 'none';
+        ui.down.style.display = fl ? 'block' : 'none';
+    }
+
+    function hideUI() {
+        if (!G.ui) return;
+        G.ui.hud.style.display = 'none'; G.ui.bubble.style.display = 'none';
+        G.ui.act.style.display = 'none'; G.ui.up.style.display = 'none'; G.ui.down.style.display = 'none';
+        G.touch.up = G.touch.down = false; G.keys.up = G.keys.down = false;
+    }
+
+    /* ---------- Diálogo de los NPC ---------- */
+    function linesOf(g) { return String(g.text || '').split('|').map(s => s.trim()).filter(Boolean); }
+
+    function renderBubble() {
+        const ui = ensureUI();
+        const npc = G.nearNpc;
+        if (!npc) { ui.bubble.style.display = 'none'; G.bubbleKey = ''; return; }
+        const g = npc.userData.game, lines = linesOf(g);
+        if (!lines.length) { ui.bubble.style.display = 'none'; G.bubbleKey = ''; return; }
+        const uid = uidOf(npc);
+        if (G.dlgUid !== uid) { G.dlgUid = uid; G.dlgIdx = 0; }
+        const dialog = g.npcMode === 'dialog' && lines.length > 1;
+        const idx = dialog ? Math.min(G.dlgIdx, lines.length - 1) : 0;
+        const key = uid + ':' + idx + ':' + (dialog ? 'd' : 's');
+        if (key === G.bubbleKey) return;
+        G.bubbleKey = key;
+        ui.bubble.textContent = '';
+        const name = document.createElement('b'); name.textContent = npc.name || 'NPC'; ui.bubble.appendChild(name);
+        ui.bubble.appendChild(document.createTextNode(dialog ? lines[idx] : lines.join('\n')));
+        if (dialog) {
+            const hint = document.createElement('small');
+            hint.textContent = '▶ E / toca aquí para continuar (' + (idx + 1) + '/' + lines.length + ')';
+            ui.bubble.appendChild(hint);
+        }
+        ui.bubble.style.pointerEvents = dialog ? 'auto' : 'none';
+        ui.bubble.style.display = 'block';
+    }
+
+    function advanceDialog() {
+        const npc = G.nearNpc;
+        if (!npc || !G.running) return;
+        const g = npc.userData.game, lines = linesOf(g);
+        if (g.npcMode !== 'dialog' || lines.length < 2) return;
+        G.dlgIdx = (G.dlgIdx + 1) % lines.length;
+        G.bubbleKey = '';
+        renderBubble();
+    }
+
+    /* ---------- Daño, muerte y jugador herido ---------- */
+    function kill(ent) {
+        const uid = uidOf(ent);
+        if (G.gone.has(uid)) return;
+        G.gone.add(uid);
+        G.dying.push({ ent, t: 0 });
+    }
+    function damage(ent, n) {
+        const uid = uidOf(ent);
+        if (G.gone.has(uid)) return;
+        const hp = (G.hp.has(uid) ? G.hp.get(uid) : 1) - n;
+        G.hp.set(uid, hp);
+        if (hp <= 0) { kill(ent); showToast('💥 ¡Enemigo eliminado!', 1500); }
+        else showToast('💢 ¡Golpe! Le quedan ' + hp + ' de vida', 1200);
+    }
+    // Devuelve al personaje al último checkpoint (o al inicio) con un aviso breve que se quita solo
+    function hurtPlayer() {
+        if (G.invuln > 0) return false;
+        G.invuln = 1.4;
+        respawnAtSpawn();
+        showToast(activeCheckpoint ? '👾 ¡Te atrapó un enemigo! Vuelves al último checkpoint' : '👾 ¡Te atrapó un enemigo! Vuelves al inicio', 2200);
+        return true;
+    }
+
+    /* ---------- Ítems ---------- */
+    function setGhost(on) {
+        if (on) {
+            avatarGroup.traverse(o => {
+                if (!o.isMesh || !o.material) return;
+                (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => {
+                    if (!G.ghost.has(m)) G.ghost.set(m, { t: m.transparent, o: m.opacity });
+                    m.transparent = true; m.opacity = 0.25;
+                });
+            });
+        } else {
+            G.ghost.forEach((s, m) => { m.transparent = s.t; m.opacity = s.o; });
+            G.ghost.clear();
+        }
+    }
+    function startEffect(type, secs, power) {
+        G.effects[type] = { left: Math.max(1, Number(secs) || 8) };
+        if (type === 'superjump') {
+            if (G.savedJump === null) G.savedJump = playerConfig.jumpForce;
+            playerConfig.jumpForce = G.savedJump * (Number(power) || 2);
+        } else if (type === 'fly') {
+            G.flyPower = Number(power) || 6;
+        } else if (type === 'invis') {
+            setGhost(true);
+        }
+    }
+    function endEffect(type, silent) {
+        if (!G.effects[type]) return;
+        delete G.effects[type];
+        if (type === 'superjump' && G.savedJump !== null) { playerConfig.jumpForce = G.savedJump; G.savedJump = null; }
+        if (type === 'invis') setGhost(false);
+        if (type === 'fly') G.flyV = 0;
+        if (!silent) showToast('⏱️ Se acabó el efecto: ' + (EFFECT_NAMES[type] || type), 1800);
+    }
+    function collect(ent, g) {
+        G.gone.add(uidOf(ent));
+        ent.visible = false;
+        const p = Math.max(1, Number(g.power) || 1);
+        switch (g.item) {
+            case 'laser':
+                G.weapon = { type: 'laser', icon: '🔫', name: 'Láser', dmg: p, cool: 0.35, range: 40 };
+                showToast('🔫 ¡Láser equipado! Dispara con F (o el botón)', 3500); break;
+            case 'sword_short':
+                G.weapon = { type: 'sword', icon: '🗡️', name: 'Espada corta', dmg: p, cool: 0.28, reach: 1.9, len: 0.6 };
+                showToast('🗡️ ¡Espada corta! Ataca con F (o el botón)', 3500); break;
+            case 'sword_long':
+                G.weapon = { type: 'sword', icon: '⚔️', name: 'Espada larga', dmg: p, cool: 0.55, reach: 3.4, len: 1.2 };
+                showToast('⚔️ ¡Espada larga! Ataca con F (o el botón)', 3500); break;
+            case 'superjump':
+                startEffect('superjump', g.duration, g.power);
+                showToast('🦘 ¡Súper salto por ' + Math.round(g.duration || 8) + ' s!', 2500); break;
+            case 'fly':
+                startEffect('fly', g.duration, g.power);
+                showToast('🕊️ ¡Vuelo por ' + Math.round(g.duration || 8) + ' s! Espacio sube · C / Shift baja', 3500); break;
+            case 'invis':
+                startEffect('invis', g.duration, 1);
+                showToast('👻 ¡Invisible por ' + Math.round(g.duration || 8) + ' s! Los enemigos no te ven', 2500); break;
+        }
+        refreshHud();
+    }
+
+    /* ---------- Armas ---------- */
+    function solidWithoutEnemies() {
+        const out = [];
+        entities.forEach(ent => {
+            if (!ent.visible) return;
+            const g = ent.userData.game;
+            if (g && g.role === 'enemy') return;
+            allColliders(ent).forEach(c => { if (c.enabled && !c.isTrigger && c.mesh) out.push(c.mesh); });
+        });
+        return out;
+    }
+    function addBeam(from, to) {
+        if (!beamGeo) beamGeo = new THREE.CylinderGeometry(0.025, 0.025, 1, 6);
+        const len = from.distanceTo(to);
+        if (len < 0.01) return;
+        const m = new THREE.Mesh(beamGeo, new THREE.MeshBasicMaterial({ color: 0xff3b30 }));
+        m.position.copy(from).add(to).multiplyScalar(0.5);
+        m.scale.set(1, len, 1);
+        m.quaternion.setFromUnitVectors(Y_AXIS, dirTmp.copy(to).sub(from).normalize());
+        scene.add(m);
+        G.fx.push({ kind: 'beam', mesh: m, life: 0.14 });
+    }
+    function addSwing(w) {
+        const m = new THREE.Mesh(new THREE.BoxGeometry(0.07, w.len, 0.03), new THREE.MeshBasicMaterial({ color: 0xdfe6ee, depthTest: false }));
+        m.renderOrder = 999;
+        scene.add(m);
+        G.fx.push({ kind: 'sword', mesh: m, life: 0.24, max: 0.24, len: w.len });
+    }
+    function fire() {
+        if (!G.running || !isPlaying() || !G.weapon || G.wCool > 0) return;
+        const w = G.weapon;
+        G.wCool = w.cool;
+        const px = playerLogicalPos.x, pz = playerLogicalPos.z;
+        const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
+        const body = (typeof getPlayerBody === 'function') ? getPlayerBody() : (typeof bodyCfg !== 'undefined' ? bodyCfg : { radius: 0.4, height: 1.8 });
+        const height = body.height || 1.8;
+        camera.getWorldDirection(dirTmp);
+        const fwd = dirTmp.clone();
+
+        if (w.type === 'laser') {
+            const origin = playerLogicalPos.clone();
+            rayTmp.set(origin, fwd);
+            let best = w.range, target = null;
+            G.list.forEach(ent => {
+                const g = ent.userData.game;
+                if (!g || g.role !== 'enemy' || !ent.visible || G.gone.has(uidOf(ent))) return;
+                boxesOf(ent).forEach(b => {
+                    if (rayTmp.intersectBox(b, hitTmp)) {
+                        const d = origin.distanceTo(hitTmp);
+                        if (d < best) { best = d; target = ent; }
+                    }
+                });
+            });
+            const walls = solidWithoutEnemies();
+            if (walls.length) {
+                rc.set(origin, fwd); rc.far = best;
+                const hits = rc.intersectObjects(walls, false);
+                if (hits.length && hits[0].distance < best) { best = hits[0].distance; target = null; }
+            }
+            sideTmp.crossVectors(fwd, Y_AXIS).normalize();
+            const from = origin.clone().addScaledVector(fwd, 0.5).addScaledVector(sideTmp, 0.18);
+            from.y -= 0.18;
+            addBeam(from, origin.clone().addScaledVector(fwd, best));
+            if (target) damage(target, w.dmg);
+        } else {
+            addSwing(w);
+            const fx = fwd.x, fz = fwd.z, fl = Math.hypot(fx, fz) || 1;
+            G.list.forEach(ent => {
+                const g = ent.userData.game;
+                if (!g || g.role !== 'enemy' || !ent.visible || G.gone.has(uidOf(ent))) return;
+                for (const b of boxesOf(ent)) {
+                    const dx = Math.max(b.min.x - px, 0, px - b.max.x);
+                    const dz = Math.max(b.min.z - pz, 0, pz - b.max.z);
+                    const horiz = Math.hypot(dx, dz);
+                    if (horiz > w.reach) continue;
+                    if (!(feetY <= b.max.y + 0.3 && feetY + height + 0.3 >= b.min.y)) continue;
+                    const cx = (b.min.x + b.max.x) / 2 - px, cz = (b.min.z + b.max.z) / 2 - pz;
+                    const cl = Math.hypot(cx, cz);
+                    const facing = cl < 0.8 ? 1 : ((cx * fx + cz * fz) / (cl * fl));
+                    if (facing >= 0.25) { damage(ent, w.dmg); break; }
+                }
+            });
+        }
+    }
+
+    /* ---------- Ciclo de vida ---------- */
+    function start() {
+        G.running = true; G.t = 0; G.list = []; G.base.clear(); G.gone.clear(); G.hp.clear(); G.dying = []; G.stompCd.clear();
+        G.invuln = 0; G.weapon = null; G.wCool = 0; G.effects = {}; G.flyV = 0; G.nearNpc = null; G.dlgUid = null; G.dlgIdx = 0; G.bubbleKey = '';
+        entities.forEach(ent => {
+            const g = ent.userData.game;
+            if (!isActive(g)) return;
+            G.list.push(ent);
+            G.base.set(uidOf(ent), { pos: ent.position.clone(), quat: ent.quaternion.clone(), scale: ent.scale.clone(), visible: ent.visible });
+            if (g.role === 'enemy') G.hp.set(uidOf(ent), Math.max(1, Math.round(Number(g.hp) || 1)));
+        });
+        ensureUI();
+        refreshHud();
+    }
+    function stop() {
+        if (!G.running) return;
+        G.running = false;
+        Object.keys(G.effects).slice().forEach(k => endEffect(k, true));
+        setGhost(false);
+        if (G.savedJump !== null) { playerConfig.jumpForce = G.savedJump; G.savedJump = null; }
+        G.fx.forEach(f => { scene.remove(f.mesh); if (f.kind === 'sword') f.mesh.geometry.dispose(); if (f.mesh.material) f.mesh.material.dispose(); });
+        G.fx = []; G.dying = [];
+        G.list.forEach(ent => {
+            const b = G.base.get(uidOf(ent));
+            if (!b) return;
+            ent.position.copy(b.pos); ent.quaternion.copy(b.quat); ent.scale.copy(b.scale); ent.visible = b.visible;
+            ent.updateMatrixWorld(true);
+        });
+        G.weapon = null; G.nearNpc = null; G.list = [];
+        hideUI();
+    }
+
+    /* ---------- Animaciones preestablecidas ---------- */
+    function runAnimations() {
+        for (const ent of G.list) {
+            const g = ent.userData.game, b = G.base.get(uidOf(ent));
+            if (!b || G.gone.has(uidOf(ent)) || g.anim === 'none') continue;
+            const amp = Math.max(0.1, Number(g.amp) || 1), sp = Math.max(0.05, Number(g.speed) || 1);
+            let yaw = null;
+            ent.position.copy(b.pos);
+            switch (g.anim) {
+                case 'jump':
+                    ent.position.y = b.pos.y + Math.abs(Math.sin(G.t * sp * Math.PI)) * amp; break;
+                case 'float':
+                    ent.position.y = b.pos.y + (1 + Math.sin(G.t * sp * 2)) * 0.5 * amp; break;
+                case 'walkX': case 'walkZ': {
+                    const u = ((G.t * sp) / (2 * amp)) % 1;
+                    const fwdLeg = u < 0.5;
+                    const off = (fwdLeg ? u * 2 : 2 - u * 2) * amp;
+                    if (g.anim === 'walkX') { ent.position.x = b.pos.x + off; yaw = fwdLeg ? Math.PI / 2 : -Math.PI / 2; }
+                    else { ent.position.z = b.pos.z + off; yaw = fwdLeg ? 0 : Math.PI; }
+                    if (!g.face) yaw = null;
+                    break;
+                }
+                case 'spin':
+                    yaw = G.t * sp * Math.PI; break;
+            }
+            if (yaw !== null) { qTmp.setFromAxisAngle(Y_AXIS, yaw); ent.quaternion.copy(b.quat).premultiply(qTmp); }
+            ent.updateMatrixWorld(true);
+        }
+    }
+
+    function updateFx(delta) {
+        for (let i = G.fx.length - 1; i >= 0; i--) {
+            const f = G.fx[i];
+            f.life -= delta;
+            if (f.kind === 'sword') {
+                const k = 1 - Math.max(0, f.life) / f.max;
+                camera.getWorldDirection(dirTmp);
+                sideTmp.crossVectors(dirTmp, Y_AXIS).normalize();
+                f.mesh.position.copy(camera.position).addScaledVector(dirTmp, 0.9).addScaledVector(sideTmp, 0.25);
+                f.mesh.position.y -= 0.15;
+                f.mesh.quaternion.copy(camera.quaternion);
+                qTmp.setFromAxisAngle(new THREE.Vector3(0, 0, 1), THREE.MathUtils.degToRad(70 - 140 * k));
+                f.mesh.quaternion.multiply(qTmp);
+            }
+            if (f.life <= 0) {
+                scene.remove(f.mesh);
+                if (f.kind === 'sword') f.mesh.geometry.dispose();
+                if (f.mesh.material) f.mesh.material.dispose();
+                G.fx.splice(i, 1);
+            }
+        }
+        for (let i = G.dying.length - 1; i >= 0; i--) {
+            const d = G.dying[i], b = G.base.get(uidOf(d.ent));
+            d.t += delta;
+            const s = Math.max(0.001, 1 - d.t / 0.25);
+            if (b) d.ent.scale.copy(b.scale).multiplyScalar(s);
+            if (d.t >= 0.25) { d.ent.visible = false; G.dying.splice(i, 1); }
+        }
+    }
+
+    function updateEffects(delta) {
+        Object.keys(G.effects).forEach(k => {
+            G.effects[k].left -= delta;
+            if (G.effects[k].left <= 0) { endEffect(k); refreshHud(); }
+        });
+    }
+
+    function updateFly(delta, prevEyeY, targetEyeY) {
+        if (!G.effects.fly) { G.flyV = 0; return; }
+        const dir = ((G.keys.up || G.touch.up) ? 1 : 0) - ((G.keys.down || G.touch.down) ? 1 : 0);
+        G.flyV += (dir * G.flyPower - G.flyV) * (1 - Math.exp(-8 * delta));
+        let y = prevEyeY + G.flyV * delta;
+        if (y <= targetEyeY) { y = targetEyeY; if (G.flyV < 0) G.flyV = 0; }
+        playerLogicalPos.y = y;
+        verticalVelocity = 0;
+        isGrounded = (y <= targetEyeY + 0.001);
+    }
+
+    /* ---------- Paso principal (se llama una vez por cuadro desde la física) ---------- */
+    function tick(delta, body, prevEyeY, targetEyeY) {
+        if (!isPlaying()) { if (G.running) stop(); return false; }
+        if (!G.running) start();
+        if (!G.list.length) return false;
+        G.t += delta;
+        if (G.invuln > 0) G.invuln -= delta;
+        if (G.wCool > 0) G.wCool -= delta;
+        G.stompCd.forEach((v, k) => { if (v - delta <= 0) G.stompCd.delete(k); else G.stompCd.set(k, v - delta); });
+
+        runAnimations();
+        updateEffects(delta);
+        updateFly(delta, prevEyeY, targetEyeY);
+        updateFx(delta);
+
+        const px = playerLogicalPos.x, pz = playerLogicalPos.z;
+        const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
+        const radius = body.radius || 0.4, height = body.height || 1.8;
+        let nearNpc = null, nearD = Infinity, hurt = false;
+
+        for (const ent of G.list) {
+            const g = ent.userData.game, uid = uidOf(ent);
+            if (!ent.visible || G.gone.has(uid)) continue;
+            if (g.role === 'none' && g.item === 'none') continue;
+            const boxes = boxesOf(ent);
+            for (const b of boxes) {
+                const dx = Math.max(b.min.x - px, 0, px - b.max.x);
+                const dz = Math.max(b.min.z - pz, 0, pz - b.max.z);
+                const horiz = Math.hypot(dx, dz);
+
+                // ÍTEM: se recoge al tocarlo
+                if (g.item !== 'none' && horiz <= radius + 0.35 && feetY <= b.max.y + 0.3 && feetY + height >= b.min.y - 0.1) {
+                    collect(ent, g);
+                    break;
+                }
+                // ENEMIGO: contacto, pisotón o golpe
+                if (g.role === 'enemy' && !G.effects.invis && horiz <= radius + 0.3 && feetY <= b.max.y + 0.2 && feetY + height >= b.min.y) {
+                    const onTop = feetY >= b.max.y - 0.3 && horiz <= radius * 0.95;
+                    if (onTop && g.stomp !== 'hurt') {
+                        if (!G.stompCd.has(uid)) {
+                            G.stompCd.set(uid, 0.45);
+                            verticalVelocity = Math.max(verticalVelocity, 7);
+                            isGrounded = false;
+                            playerLogicalPos.y += 0.05;
+                            damage(ent, 1);
+                        }
+                    } else if (hurtPlayer()) { hurt = true; }
+                    break;
+                }
+                // NPC: el más cercano dentro de su rango
+                if (g.role === 'npc' && horiz <= (Number(g.range) || 3.5) && feetY <= b.max.y + 3 && feetY + height >= b.min.y - 1 && horiz < nearD) {
+                    nearD = horiz; nearNpc = ent;
+                }
+            }
+            if (hurt) break;
+        }
+        if (hurt) { renderBubble(); return true; }
+
+        if (nearNpc !== G.nearNpc) { G.nearNpc = nearNpc; G.bubbleKey = ''; if (!nearNpc) G.dlgUid = null; }
+        if (nearNpc && nearNpc.userData.game.lookAt) {
+            const b = G.base.get(uidOf(nearNpc));
+            if (b) {
+                qTmp.setFromAxisAngle(Y_AXIS, Math.atan2(px - nearNpc.position.x, pz - nearNpc.position.z));
+                nearNpc.quaternion.copy(b.quat).premultiply(qTmp);
+                nearNpc.updateMatrixWorld(true);
+            }
+        }
+        renderBubble();
+
+        G.hudT -= delta;
+        if (G.hudT <= 0) { G.hudT = 0.2; if (Object.keys(G.effects).length) refreshHud(); }
+        return false;
+    }
+
+    /* ---------- Teclado y vigilancia de modo ---------- */
+    document.addEventListener('keydown', (e) => {
+        if (!G.running || !isPlaying()) return;
+        const tg = e.target && e.target.tagName;
+        if (tg === 'INPUT' || tg === 'TEXTAREA' || tg === 'SELECT') return;
+        if (e.code === 'KeyF') { fire(); }
+        else if (e.code === 'KeyE') { advanceDialog(); }
+        else if (e.code === 'Space') { G.keys.up = true; }
+        else if (e.code === 'KeyC' || e.code === 'ShiftLeft' || e.code === 'ShiftRight') { G.keys.down = true; }
+    });
+    document.addEventListener('keyup', (e) => {
+        if (e.code === 'Space') G.keys.up = false;
+        else if (e.code === 'KeyC' || e.code === 'ShiftLeft' || e.code === 'ShiftRight') G.keys.down = false;
+    });
+    // Al salir de Explorar todo vuelve a su lugar original (el editor nunca queda modificado)
+    setInterval(() => { if (G.running && !isPlaying()) stop(); }, 100);
+
+    return { tick, stop, warned: false };
+})(() => state === 'play');
+
+function updatePlayerPhysics(delta, moveDelta) {
+    const solidColliderMeshes = solidColliderMeshList();
+    const body = bodyCfg;
+    const currentFeetY = playerLogicalPos.y - playerConfig.eyeHeight;
+    let allowHorizontalMove = true;
+
+    if (!body.noclip && moveDelta.lengthSq() > 0.00001 && solidColliderMeshes.length > 0) {
+        const moveDir = moveDelta.clone().normalize();
+        const moveDist = moveDelta.length() + body.radius;
+        const probeHeights = [currentFeetY + body.height * 0.444, currentFeetY + body.height * 0.778];
+        for (let h of probeHeights) {
+            const rayOrigin = new THREE.Vector3(playerLogicalPos.x, h, playerLogicalPos.z);
+            forwardRay.set(rayOrigin, moveDir);
+            forwardRay.far = moveDist;
+            const hits = forwardRay.intersectObjects(solidColliderMeshes, false);
+            if (hits.length > 0) {
+                const hit = hits[0];
+                const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld);
+                const slopeAngleDeg = Math.acos(Math.max(-1, Math.min(1, worldNormal.y))) * (180 / Math.PI);
+                if (slopeAngleDeg > playerConfig.maxSlopeAngle || worldNormal.y < 0.1) { allowHorizontalMove = false; break; }
+            }
+        }
+    }
+    if (allowHorizontalMove) playerLogicalPos.add(moveDelta);
+
+    let groundY = floorCfg.enabled ? 0 : -Infinity;
+    if (solidColliderMeshes.length > 0) {
+        const rayHead = new THREE.Vector3(playerLogicalPos.x, playerLogicalPos.y + 1.2, playerLogicalPos.z);
+        groundRay.set(rayHead, downVector);
+        groundRay.far = 15.0;
+        const groundHits = groundRay.intersectObjects(solidColliderMeshes, false);
+        if (groundHits.length > 0) {
+            for (let hit of groundHits) {
+                const hitY = hit.point.y;
+                const worldNormal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld);
+                const slopeAngleDeg = Math.acos(Math.max(-1, Math.min(1, worldNormal.y))) * (180 / Math.PI);
+                if (hitY <= (currentFeetY + playerConfig.stepHeight + 1.2) && hitY >= (currentFeetY - 3.5)) {
+                    if (slopeAngleDeg <= playerConfig.maxSlopeAngle || hitY <= (currentFeetY + 0.05)) {
+                        groundY = Math.max(groundY, hitY);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    const targetEyeY = groundY + playerConfig.eyeHeight;
+    if (groundY === -Infinity) isGrounded = false;
+
+    const specialPrevEyeY = playerLogicalPos.y;
+    if (!isGrounded) {
+        verticalVelocity -= playerConfig.gravity * delta;
+        playerLogicalPos.y += verticalVelocity * delta;
+        if (playerLogicalPos.y <= targetEyeY) { playerLogicalPos.y = targetEyeY; verticalVelocity = 0; isGrounded = true; }
+    } else if (Math.abs(playerLogicalPos.y - targetEyeY) > 0.001) {
+        playerLogicalPos.y += (targetEyeY - playerLogicalPos.y) * 0.45;
+    }
+
+    updateSpecialTools(delta, moveDelta, body, specialPrevEyeY, targetEyeY);
+    try { if (GM.tick(delta, body, specialPrevEyeY, targetEyeY)) return; } catch (gmErr) { if (!GM.warned) { GM.warned = true; console.warn('Modo Juego:', gmErr); } }
+
+    if (!floorCfg.enabled && (playerLogicalPos.y - playerConfig.eyeHeight) < floorCfg.killY) {
+        respawnAtSpawn();
+        return;
+    }
+
+    updateTouchTriggers(body, playerLogicalPos.y - playerConfig.eyeHeight);
+
+    let isInsideAnyPortalPad = false;
+    entities.forEach(ent => {
+        if (ent.visible && ent.userData.isPortalPad) {
+            const padPos = ent.position;
+            const dist = new THREE.Vector2(playerLogicalPos.x, playerLogicalPos.z).distanceTo(new THREE.Vector2(padPos.x, padPos.z));
+            if (dist < 1.1 && Math.abs(currentFeetY - padPos.y) < 1.0) {
+                isInsideAnyPortalPad = true;
+                if (!portalActiveCooldown) {
+                    if (ent.userData.isLocked) {
+                        portalActiveCooldown = true;
+                        showToast('🔒 Portal Bloqueado. Cumple las reglas para activarlo.');
+                    } else if (roomPortalUse(ent)) {
+                        portalActiveCooldown = true;
+                    } else {
+                        const targetPad = ent.userData.linkedPad;
+                        if (targetPad && (ent.userData.padType === 'A' || ent.userData.bidirectional)) {
+                            portalActiveCooldown = true;
+                            playerLogicalPos.set(targetPad.position.x, targetPad.position.y + playerConfig.eyeHeight + 0.1, targetPad.position.z);
+                            showToast('🌀 ¡Teletransportado con éxito! (Sal del pad para volver a usar)');
+                        }
+                    }
+                }
+            }
+        }
+    });
+    if (!isInsideAnyPortalPad) portalActiveCooldown = false;
+
+    syncPlayerCamera();
+}
+
+/* ============ BIENVENIDA ============ */
+$('w-title').innerText = CFG.title || 'MyVR';
+let defaultNick = 'Visitante_' + Math.floor(Math.random() * 899 + 100);
+let savedHair = null;
+try {
+    const sn = localStorage.getItem('metaverso_visor_nick');
+    if (sn) $('w-nick').value = sn;
+    savedHair = localStorage.getItem('metaverso_visor_hair');
+} catch (err) { /* sin almacenamiento */ }
+if (!$('w-nick').value) $('w-nick').value = defaultNick;
+if (savedHair && /^#[0-9a-fA-F]{6}$/.test(savedHair)) avatarHairMat.color.set(savedHair);
+$('w-hair').value = '#' + avatarHairMat.color.getHexString();
+
+$('w-ch-glb').addEventListener('click', () => setAvatarChoice('glb'));
+$('w-ch-default').addEventListener('click', () => setAvatarChoice('default'));
+$('w-hair').addEventListener('input', (e) => avatarHairMat.color.set(e.target.value));
+$('w-face').addEventListener('change', (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const url = URL.createObjectURL(f);
+    textureLoader.load(url, (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        facePlaneMat.map = tex; facePlaneMat.needsUpdate = true; facePlane.visible = true;
+        $('face-preview').style.backgroundImage = 'url("' + url + '")';
+    });
+});
+$('w-nick').addEventListener('keydown', (e) => { e.stopPropagation(); if (e.key === 'Enter') $('btn-enter').click(); });
+
+function startExperience() {
+    let nick = ($('w-nick').value || '').trim().slice(0, 20) || defaultNick;
+    try { localStorage.setItem('metaverso_visor_nick', nick); localStorage.setItem('metaverso_visor_hair', $('w-hair').value); } catch (err) { /* sin almacenamiento */ }
+    setNickname(nick);
+    touchEnter();
+    mpEnter(nick);
+    $('welcome').style.display = 'none';
+    state = 'play';
+    clearInputStates();
+    tpsCamFactor = 1;
+    resetSpecialToolsState();
+    verticalVelocity = 0;
+    isGrounded = true;
+    playerLogicalPos.copy(spawnConfig.pos);
+    camera.position.copy(playerLogicalPos);
+    camera.rotation.set(0, THREE.MathUtils.degToRad(spawnConfig.rotY), 0);
+    avatarGroup.visible = (viewPerspective === 'avatar');
+    syncPlayerCamera();
+    entities.forEach(ent => {
+        const m = ent.userData.mediaElement;
+        if (m && ent.userData.autoplay) { const p = m.play(); if (p && p.catch) p.catch(() => {}); }
+    });
+    if (activeProfile().mouseLook) fpsControls.lock();
+    showToast('🎮 Abre «Controles» (arriba a la derecha) para ver o cambiar las teclas', 4500);
+}
+$('btn-enter').addEventListener('click', startExperience);
+
+/* ============ ARRANQUE ============ */
+async function boot() {
+    try {
+        loadControlPrefs();
+        buildCodeMap();
+        renderControlsMenu();
+
+        const total = (CFG.entities || []).length + 3;
+        let done = 0;
+        const tick = () => { done++; $('load-fill').style.width = Math.min(100, Math.round(done / total * 100)) + '%'; };
+
+        await setupEnvironment(); tick();
+        buildLights(); tick();
+        await buildAvatar(); tick();
+
+        const built = await Promise.all((CFG.entities || []).map(async (d) => {
+            try { return await buildEntity(d); }
+            catch (err) { console.warn('No se pudo cargar «' + d.name + '»', err); return null; }
+            finally { tick(); }
+        }));
+        built.forEach(obj => {
+            if (!obj) return;
+            scene.add(obj);
+            entities.push(obj);
+            entityByUidMap.set(obj.userData.uid, obj);
+        });
+        entities.forEach(obj => {
+            if (obj.userData.isPortalPad) {
+                obj.userData.linkedPad = entityByUid(obj.userData.linkedUid) || null;
+                applyPortalVisual(obj);
+            }
+        });
+
+        if (!CFG.avatar || !CFG.avatar.glb) $('w-ch-glb').style.display = 'none';
+        else $('w-ch-glb').style.display = '';
+        setAvatarChoice(avatarChoice);
+
+        tlViewerInit();
+        scene.updateMatrixWorld(true);
+        $('loading').style.display = 'none';
+        $('welcome').style.display = 'flex';
+        state = 'welcome';
+        avatarGroup.visible = true;
+    } catch (err) {
+        console.error(err);
+        $('loading-text').innerText = '⚠️ No se pudo cargar la experiencia. Revisa la consola del navegador.';
+    }
+}
+boot();
+
+/* =================================================================
+   SOPORTE WebXR / REALIDAD VIRTUAL (Meta Quest 2 y otras gafas)
+   - Botón «Entrar en VR» + detección de gafas + oferta nativa del navegador
+   - Vista inmersiva en 1ª persona; la cámara se controla con las gafas
+   - Mando izquierdo: caminar · Mando derecho: giro por pasos y salto (A)
+   - Gatillo de cualquier mando: clic sobre objetos interactivos
+   Todo el código de este bloque es nuevo y solo actúa dentro de una sesión VR.
+   ================================================================= */
+const vrHooks = {
+    isPlaying: () => state === 'play',
+    canStart: () => { if (state === 'loading') { showToast('⏳ Espera a que termine de cargar la experiencia.'); return false; } return true; },
+    prepare: () => { if (state === 'welcome') startExperience(); }
+};
+let vrActive = false;     // true mientras hay una sesión inmersiva abierta
+let animRaf = 0;          // id del requestAnimationFrame del bucle normal (se pausa en VR)
+const vrState = { supported: false, offered: false, secure: (window.isSecureContext !== false), isHeadset: /OculusBrowser|Quest|Oculus|Pico|Mobile VR|Wolvic|VIVE/i.test(navigator.userAgent || '') };
+const VR_SESSION_INIT = { optionalFeatures: ['local-floor', 'bounded-floor'] };
+const VR_DEADZONE = 0.18;
+const VR_SNAP_ANGLE = THREE.MathUtils.degToRad(30);
+
+renderer.xr.enabled = true;
+renderer.xr.setReferenceSpaceType('local-floor');
+renderer.xr.setFramebufferScaleFactor(1.0);
+
+// Plataforma del jugador: la cámara viaja dentro de este grupo mientras dura la sesión VR
+const vrDolly = new THREE.Group();
+vrDolly.name = 'VR Rig';
+const vrClock = new THREE.Clock();
+const vrRay = new THREE.Raycaster();
+const vrTmpMat = new THREE.Matrix4();
+const vrDir = new THREE.Vector3();
+const vrRight = new THREE.Vector3();
+const vrHead = new THREE.Vector3();
+const vrRel = new THREE.Vector3();
+const vrMove = new THREE.Vector3();
+const vrUp = new THREE.Vector3(0, 1, 0);
+let vrSnapLatched = false, vrJumpLatched = false, vrTick = 0, vrSavedCrosshair = '';
+
+const vrBtn = document.getElementById('btn-vr');
+const vrBanner = document.createElement('button');
+vrBanner.id = 'vr-banner';
+vrBanner.type = 'button';
+vrBanner.textContent = '🥽 Gafas VR detectadas · Entrar en VR';
+document.body.appendChild(vrBanner);
+
+function vrVisible(o) { let p = o; while (p) { if (!p.visible) return false; p = p.parent; } return true; }
+
+// Rayo láser de cada mando + gatillo = clic
+function vrBuildController(i) {
+    const c = renderer.xr.getController(i);
+    const geo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1)]);
+    const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x00d2ff }));
+    line.name = 'vrRayLine';
+    line.scale.z = 4;
+    c.add(line);
+    c.addEventListener('selectstart', () => { const root = vrPickFrom(c); if (root) onAvatarClick(root); });
+    vrDolly.add(c);
+    return c;
+}
+const vrControllers = [vrBuildController(0), vrBuildController(1)];
+// Modelos 3D de los mandos (opcional: si no cargan, se siguen viendo los rayos)
+import('three/addons/webxr/XRControllerModelFactory.js').then(m => {
+    const factory = new m.XRControllerModelFactory();
+    for (let i = 0; i < 2; i++) {
+        const grip = renderer.xr.getControllerGrip(i);
+        grip.add(factory.createControllerModel(grip));
+        vrDolly.add(grip);
+    }
+}).catch(err => console.warn('Modelos de mandos VR no disponibles:', err));
+
+// Objeto raíz (capa) apuntado por el mando, con el mismo criterio que la mira del modo Explorar
+function vrPickFrom(ctrl) {
+    ctrl.updateWorldMatrix(true, false);
+    vrTmpMat.identity().extractRotation(ctrl.matrixWorld);
+    vrRay.ray.origin.setFromMatrixPosition(ctrl.matrixWorld);
+    vrRay.ray.direction.set(0, 0, -1).applyMatrix4(vrTmpMat);
+    vrRay.far = 10;
+    const hits = vrRay.intersectObjects(entities.filter(e => e.visible), true);
+    for (const h of hits) {
+        const o = h.object;
+        if (o.userData && (o.userData.isVertexHandle || o.userData.isFaceHandle)) continue;
+        if (o.name === 'ColliderMesh' || (o.parent && o.parent.name === 'ColliderMesh')) continue;
+        if (!vrVisible(o)) continue;
+        let root = o;
+        while (root.parent && root.parent !== scene) root = root.parent;
+        return entities.includes(root) ? root : null;
+    }
+    return null;
+}
+
+function vrUpdateRays() {
+    vrControllers.forEach(c => {
+        const line = c.getObjectByName('vrRayLine');
+        if (!line) return;
+        const root = vrPickFrom(c);
+        line.material.color.setHex((root && isInteractiveEntity(root)) ? 0x2ecc71 : 0x00d2ff);
+    });
+}
+
+// Giro por pasos alrededor de la cabeza (cómodo, sin mareo)
+function vrSnapTurn(sign) {
+    const ang = sign * VR_SNAP_ANGLE;
+    camera.getWorldPosition(vrHead);
+    vrRel.set(vrDolly.position.x - vrHead.x, 0, vrDolly.position.z - vrHead.z).applyAxisAngle(vrUp, ang);
+    vrDolly.position.x = vrHead.x + vrRel.x;
+    vrDolly.position.z = vrHead.z + vrRel.z;
+    vrDolly.rotation.y += ang;
+    playerLogicalPos.x = vrDolly.position.x;
+    playerLogicalPos.z = vrDolly.position.z;
+}
+
+function vrLocomotion(delta) {
+    const session = renderer.xr.getSession();
+    if (!session) return;
+    let mx = 0, my = 0, turn = 0, jump = false;
+    for (const src of session.inputSources) {
+        const gp = src.gamepad;
+        if (!gp) continue;
+        const a = gp.axes;
+        const sx = a.length >= 4 ? a[2] : (a[0] || 0);   // Quest: el joystick está en los ejes 2 y 3
+        const sy = a.length >= 4 ? a[3] : (a[1] || 0);
+        if (src.handedness === 'right') {
+            turn = sx;
+            if (gp.buttons[4] && gp.buttons[4].pressed) jump = true;   // botón A
+        } else {
+            mx = sx; my = sy;
+        }
+    }
+
+    // Giro por pasos con el joystick derecho
+    if (Math.abs(turn) > 0.6) {
+        if (!vrSnapLatched) { vrSnapLatched = true; vrSnapTurn(turn > 0 ? -1 : 1); }
+    } else if (Math.abs(turn) < 0.3) {
+        vrSnapLatched = false;
+    }
+
+    // Salto con A (respeta la configuración de física del jugador)
+    if (jump) {
+        if (!vrJumpLatched) {
+            vrJumpLatched = true;
+            if (isGrounded && playerConfig.jumpEnabled) { verticalVelocity = playerConfig.jumpForce; isGrounded = false; }
+        }
+    } else {
+        vrJumpLatched = false;
+    }
+
+    // Caminar con el joystick izquierdo, en la dirección en la que mira la cabeza
+    vrMove.set(0, 0, 0);
+    const fx = Math.abs(mx) > VR_DEADZONE ? mx : 0;
+    const fy = Math.abs(my) > VR_DEADZONE ? my : 0;
+    if (fx || fy) {
+        camera.getWorldDirection(vrDir);
+        vrDir.y = 0;
+        if (vrDir.lengthSq() > 0.0001) vrDir.normalize(); else vrDir.set(-Math.sin(vrDolly.rotation.y), 0, -Math.cos(vrDolly.rotation.y));
+        vrRight.crossVectors(vrDir, vrUp).normalize();
+        const speed = Math.min(4, Math.max(1.5, playerConfig.speed * 0.2));   // velocidad cómoda para VR
+        vrMove.addScaledVector(vrDir, -fy * speed * delta).addScaledVector(vrRight, fx * speed * delta);
+    }
+    updatePlayerPhysics(delta, vrMove);   // misma física, colisiones, reglas y portales que en Explorar
+}
+
+// Un fotograma dentro de VR
+function vrFrame() {
+    const delta = Math.min(vrClock.getDelta(), 0.05);
+    if (avatarMixer) avatarMixer.update(delta);
+    updateGifAnimations();
+    tlViewerTick(delta);
+    mpTick(delta);
+    if (vrHooks.isPlaying()) vrLocomotion(delta);
+    vrDolly.position.set(playerLogicalPos.x, playerLogicalPos.y - playerConfig.eyeHeight, playerLogicalPos.z);
+    avatarGroup.visible = false;   // en 1ª persona inmersiva no se dibuja el cuerpo
+    if ((++vrTick % 4) === 0) vrUpdateRays();
+    renderer.render(scene, camera);
+}
+
+function vrUpdateUI() {
+    if (vrBtn) {
+        vrBtn.innerText = vrActive ? '🥽 Salir de VR' : '🥽 Entrar en VR';
+        vrBtn.classList.toggle('in-vr', vrActive);
+        vrBtn.classList.toggle('unsupported', !vrState.supported && !vrActive);
+    }
+    vrBanner.style.display = (vrState.supported && vrState.isHeadset && !vrActive) ? 'flex' : 'none';
+}
+
+function vrUnsupportedReason() {
+    if (!vrState.secure) return 'VR requiere una conexión segura (HTTPS).';
+    if (!navigator.xr) return 'Este navegador no soporta WebXR. Abre la página desde el navegador de tus gafas (Meta Quest Browser).';
+    return 'No se detectaron gafas VR compatibles en este dispositivo.';
+}
+
+vrBuildSessionStartEnd();
+function vrBuildSessionStartEnd() {
+    renderer.xr.addEventListener('sessionstart', () => {
+        vrActive = true;
+        try { if (fpsControls.isLocked) fpsControls.unlock(); } catch (e) { /* sin bloqueo de cursor */ }
+        const ch = document.getElementById('crosshair');
+        if (ch) { vrSavedCrosshair = ch.style.display; ch.style.display = 'none'; }
+        try { velocity.set(0, 0, 0); } catch (e) { /* sin velocidad */ }
+        vrSnapLatched = false; vrJumpLatched = false;
+        // La plataforma VR toma la posición y la orientación actuales del jugador
+        camera.getWorldDirection(vrDir);
+        vrDolly.rotation.set(0, Math.atan2(-vrDir.x, -vrDir.z), 0);
+        vrDolly.position.set(playerLogicalPos.x, playerLogicalPos.y - playerConfig.eyeHeight, playerLogicalPos.z);
+        scene.add(vrDolly);
+        vrDolly.add(camera);
+        vrClock.getDelta();
+        renderer.setAnimationLoop(vrFrame);
+        vrUpdateUI();
+    });
+    renderer.xr.addEventListener('sessionend', () => {
+        vrActive = false;
+        renderer.setAnimationLoop(null);
+        vrDolly.remove(camera);
+        scene.remove(vrDolly);
+        // La cámara vuelve a su estado normal de exploración, mirando hacia donde se estaba mirando
+        camera.position.set(playerLogicalPos.x, playerLogicalPos.y, playerLogicalPos.z);
+        camera.rotation.set(0, vrDolly.rotation.y, 0);
+        camera.scale.set(1, 1, 1);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        avatarGroup.visible = vrHooks.isPlaying() && (viewPerspective === 'avatar');
+        const ch = document.getElementById('crosshair');
+        if (ch) ch.style.display = vrSavedCrosshair;
+        try { velocity.set(0, 0, 0); } catch (e) { /* sin velocidad */ }
+        // Se reanuda el bucle normal (pausado mientras duró la sesión VR)
+        cancelAnimationFrame(animRaf);
+        animRaf = requestAnimationFrame(animate);
+        vrUpdateUI();
+        vrOffer();
+    });
+}
+
+async function vrBegin(session) {
+    renderer.xr.setReferenceSpaceType('local-floor');
+    await renderer.xr.setSession(session);
+}
+
+async function vrEnter() {
+    if (vrActive) { const s = renderer.xr.getSession(); if (s) s.end(); return; }
+    if (!vrState.supported) { showToast('🥽 ' + vrUnsupportedReason(), 6000); return; }
+    if (!vrHooks.canStart()) return;
+    vrHooks.prepare();   // se pasa a la vista de exploración antes de pedir la sesión
+    try {
+        const session = await navigator.xr.requestSession('immersive-vr', VR_SESSION_INIT);
+        await vrBegin(session);
+    } catch (err) {
+        console.warn('No se pudo iniciar la sesión VR:', err);
+        showToast('🥽 No se pudo iniciar VR: ' + ((err && err.message) || err), 6000);
+    }
+}
+
+// Oferta nativa: el navegador de las gafas muestra su propio «Entrar en VR» (si lo soporta)
+function vrOffer() {
+    if (!vrState.supported || vrActive || vrState.offered || !(navigator.xr && navigator.xr.offerSession)) return;
+    try {
+        vrState.offered = true;
+        navigator.xr.offerSession('immersive-vr', VR_SESSION_INIT).then(async (session) => {
+            vrState.offered = false;
+            if (!vrHooks.canStart()) { session.end(); return; }
+            vrHooks.prepare();
+            await vrBegin(session);
+        }).catch(() => { vrState.offered = false; });
+    } catch (e) { vrState.offered = false; }
+}
+
+async function vrDetect() {
+    let ok = false;
+    try { ok = !!(navigator.xr && navigator.xr.isSessionSupported && await navigator.xr.isSessionSupported('immersive-vr')); } catch (e) { ok = false; }
+    vrState.supported = ok;
+    vrUpdateUI();
+    if (ok) vrOffer();
+}
+
+if (vrBtn) vrBtn.addEventListener('click', (e) => { vrEnter(); e.currentTarget.blur(); });
+vrBanner.addEventListener('click', () => vrEnter());
+if (navigator.xr && navigator.xr.addEventListener) navigator.xr.addEventListener('devicechange', vrDetect);
+vrUpdateUI();
+vrDetect();
+// En unas gafas VR, «Entrar» pasa directamente a la vista inmersiva (el clic cuenta como gesto del usuario)
+$('btn-enter').addEventListener('click', () => { if (vrState.supported && vrState.isHeadset && !vrActive) vrEnter(); });
+
+
+/* ============ LÍNEA DE TIEMPO (reproducción de keyframes) ============ */
+/* =================================================================
+   LÍNEA DE TIEMPO · NÚCLEO COMPARTIDO (editor y visor exportado)
+   Modelo de datos (por objeto o luz):
+     obj.userData.tlAnim = { tracks: { <propiedad>: [ {t:seg, v:valor, e:'linear'|'smooth'|'in'|'out'|'hold'} ] }, colFollow: true|false }
+   Todo el código de este bloque es nuevo: no modifica ninguna función existente.
+   ================================================================= */
+const TL = { duration: 10, loop: true, autoplay: true, time: 0, playing: false, edTime: 0 };
+const TL_EASE = {
+    linear: (u) => u,
+    smooth: (u) => u * u * (3 - 2 * u),
+    in:     (u) => u * u,
+    out:    (u) => 1 - (1 - u) * (1 - u),
+    hold:   () => 0
+};
+const TL_BAD = /^(__proto__|constructor|prototype)$/;
+const TL_MAT_NUM = ['roughness', 'metalness', 'emissiveIntensity', 'envMapIntensity', 'reflectivity', 'clearcoat', 'clearcoatRoughness',
+    'transmission', 'thickness', 'ior', 'sheen', 'sheenRoughness', 'iridescence', 'specularIntensity', 'bumpScale', 'aoMapIntensity',
+    'lightMapIntensity', 'displacementScale', 'alphaTest'];
+const TL_MAT_COL = ['color', 'emissive', 'specularColor', 'sheenColor', 'attenuationColor'];
+let tlNoComp = () => false;   // el editor lo redefine (en modo Colisión no se compensa)
+
+const lightObjects = [];
+function tlAll() { return entities.concat(lightObjects); }
+function tlUid(o) { return o.userData.uid || (o.userData.isMainSun ? 'sun_main' : null); }
+function tlAnimOf(o, create) {
+    let A = o.userData.tlAnim;
+    if (!A && create) A = o.userData.tlAnim = { tracks: {}, colFollow: true, duration: TL.duration, loop: TL.loop, time: 0 };
+    return A || null;
+}
+function tlHasTracks(A) { if (!A) return false; for (const k in A.tracks) if (A.tracks[k] && A.tracks[k].length) return true; return false; }
+/* Cada objeto tiene SU PROPIA duración, bucle y cabezal (A.duration / A.loop / A.time); TL.duration y TL.loop son solo los valores por defecto */
+function tlDur(A) { return (A && isFinite(A.duration) && A.duration >= 0.1) ? A.duration : Math.max(0.1, TL.duration); }
+function tlLoopOf(A) { return (A && A.loop !== undefined) ? A.loop !== false : TL.loop; }
+let tlAfterApply = () => {};   // el editor lo redefine (detector de autokey)
+
+/* ---------- Materiales visibles del objeto (sin mallas de colisión ni ayudas de luz) ---------- */
+function tlMats(obj) {
+    const out = [], seen = new Set();
+    if (obj.userData.isLight) return out;
+    const cols = allColliders(obj);
+    (function walk(o) {
+        if (o.userData && o.userData.isColPivot) return;
+        if (cols.some(c => c.pivot === o)) return;
+        if (o.isMesh && o.material) {
+            (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { if (m && !seen.has(m)) { seen.add(m); out.push(m); } });
+        }
+        o.children.forEach(walk);
+    })(obj);
+    return out;
+}
+
+/* ---------- Ruta personalizada (cualquier propiedad numérica / color / booleana) ---------- */
+function tlResolve(o, expr) {
+    if (typeof expr !== 'string' || !expr || expr.length > 120) return null;
+    const segs = expr.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+    if (!segs.length) return null;
+    let roots = [o], rest = segs;
+    if (segs[0] === 'material' && !o.material) { roots = tlMats(o); rest = segs.slice(1); }
+    if (!rest.length) return null;
+    const list = [];
+    for (const r of roots) {
+        let cur = r, ok = true;
+        for (let i = 0; i < rest.length - 1; i++) {
+            if (TL_BAD.test(rest[i]) || cur == null) { ok = false; break; }
+            cur = cur[rest[i]];
+        }
+        const k = rest[rest.length - 1];
+        if (!ok || cur == null || TL_BAD.test(k) || (typeof cur !== 'object' && typeof cur !== 'function') || !(k in cur)) continue;
+        const v = cur[k];
+        if (typeof v === 'number' || typeof v === 'boolean' || (v && v.isColor)) list.push({ t: cur, k });
+    }
+    return list.length ? list : null;
+}
+
+/* ---------- Tipo de valor de una propiedad: 'num' | 'color' | 'bool' ---------- */
+function tlKind(key, o) {
+    if (key === 'visible') return 'bool';
+    if (key === 'light.color') return 'color';
+    if (key.startsWith('mat.') && TL_MAT_COL.includes(key.slice(4))) return 'color';
+    if (key.startsWith('path:')) {
+        const r = o ? tlResolve(o, key.slice(5)) : null;
+        if (r) { const v = r[0].t[r[0].k]; return (v && v.isColor) ? 'color' : (typeof v === 'boolean' ? 'bool' : 'num'); }
+    }
+    return 'num';
+}
+
+/* ---------- Transformación (compartida para el objeto y para el cálculo de la colisión fija) ---------- */
+function tlSetXf(p, e, s, key, v) {
+    const a = key.slice(key.indexOf('.') + 1);
+    if (key.startsWith('pos.')) p[a] = v;
+    else if (key.startsWith('rot.')) e[a] = THREE.MathUtils.degToRad(v);
+    else if (key.startsWith('turns.')) e[a] = v * Math.PI * 2;
+    else if (key.startsWith('scl.')) {
+        const k = Math.max(0.001, v);
+        if (a === 'u') s.set(k, k, k); else s[a] = k;
+    }
+}
+
+function tlGet(o, key) {
+    const ud = o.userData;
+    if (key === 'transp') return ud.transparency || 0;
+    if (key === 'visible') return (ud.isLight ? o.visible : !ud.userHidden) ? 1 : 0;
+    const a = key.slice(key.indexOf('.') + 1);
+    if (key.startsWith('pos.')) return o.position[a];
+    if (key.startsWith('rot.')) return THREE.MathUtils.radToDeg(o.rotation[a]);
+    if (key.startsWith('turns.')) return o.rotation[a] / (Math.PI * 2);
+    if (key.startsWith('scl.')) return a === 'u' ? o.scale.x : o.scale[a];
+    if (key.startsWith('light.')) {
+        const L = ud.light; if (!L) return undefined;
+        const v = L[a]; return (v && v.isColor) ? '#' + v.getHexString() : v;
+    }
+    if (key.startsWith('media.')) {
+        const m = ud.mediaElement; if (!m) return undefined;
+        return a === 'volume' ? m.volume : m.playbackRate;
+    }
+    if (key.startsWith('mat.')) {
+        for (const m of tlMats(o)) if (m[a] !== undefined && m[a] !== null) return m[a].isColor ? '#' + m[a].getHexString() : m[a];
+        return undefined;
+    }
+    if (key.startsWith('tex.')) {
+        for (const m of tlMats(o)) if (m.map) {
+            if (a === 'rotation') return THREE.MathUtils.radToDeg(m.map.rotation);
+            const [g, ax] = a.split('.'); return m.map[g][ax];
+        }
+        return undefined;
+    }
+    if (key.startsWith('path:')) {
+        const r = tlResolve(o, key.slice(5)); if (!r) return undefined;
+        const v = r[0].t[r[0].k];
+        return (v && v.isColor) ? '#' + v.getHexString() : (typeof v === 'boolean' ? (v ? 1 : 0) : v);
+    }
+    return undefined;
+}
+
+function tlSet(o, key, v) {
+    const ud = o.userData;
+    if (key === 'transp') {
+        v = Math.min(100, Math.max(0, v));
+        ud.transparency = v;
+        if (!ud.isLight) applyObjectTransparency(o, v);
+        return;
+    }
+    if (key === 'visible') {
+        const vis = v >= 0.5;
+        if (ud.isLight) o.visible = vis; else { ud.userHidden = !vis; o.visible = vis; }
+        return;
+    }
+    const a = key.slice(key.indexOf('.') + 1);
+    if (/^(pos|rot|turns|scl)\./.test(key)) { tlSetXf(o.position, o.rotation, o.scale, key, v); return; }
+    if (key.startsWith('light.')) {
+        const L = ud.light; if (!L) return;
+        if (a === 'color') { L.color.set(v); if (ud.helperMat) ud.helperMat.color.set(v); return; }
+        if (a === 'intensity') v = Math.max(0, v);
+        L[a] = v;
+        if ((a === 'width' || a === 'height') && ud.helper && L.isRectAreaLight) ud.helper.scale.set(L.width, L.height, 1);
+        return;
+    }
+    if (key.startsWith('media.')) {
+        const m = ud.mediaElement; if (!m) return;
+        if (a === 'volume') m.volume = Math.min(1, Math.max(0, v));
+        else m.playbackRate = Math.min(16, Math.max(0.0625, v));
+        return;
+    }
+    if (key.startsWith('mat.')) {
+        tlMats(o).forEach(m => { if (m[a] === undefined || m[a] === null) return; if (m[a].isColor) m[a].set(v); else m[a] = v; });
+        return;
+    }
+    if (key.startsWith('tex.')) {
+        tlMats(o).forEach(m => {
+            if (!m.map) return;
+            if (a === 'rotation') m.map.rotation = THREE.MathUtils.degToRad(v);
+            else { const [g, ax] = a.split('.'); m.map[g][ax] = v; }
+        });
+        return;
+    }
+    if (key.startsWith('path:')) {
+        const r = tlResolve(o, key.slice(5)); if (!r) return;
+        r.forEach(({ t, k }) => {
+            const cur = t[k];
+            if (cur && cur.isColor) cur.set(v);
+            else if (typeof cur === 'boolean') t[k] = v >= 0.5;
+            else t[k] = v;
+        });
+    }
+}
+
+/* ---------- Interpolación ---------- */
+const _tlC1 = new THREE.Color(), _tlC2 = new THREE.Color();
+function tlEvalTrack(tr, t) {
+    const n = tr.length;
+    if (!n) return undefined;
+    if (t <= tr[0].t) return tr[0].v;
+    if (t >= tr[n - 1].t) return tr[n - 1].v;
+    let i = 0;
+    while (i < n - 1 && tr[i + 1].t <= t) i++;
+    const a = tr[i], b = tr[i + 1];
+    const u = (t - a.t) / ((b.t - a.t) || 1);
+    const f = (TL_EASE[a.e] || TL_EASE.linear)(u);
+    if (typeof a.v === 'number' && typeof b.v === 'number') return a.v + (b.v - a.v) * f;
+    if (typeof a.v === 'string' && typeof b.v === 'string') {
+        if (a.e === 'hold') return a.v;
+        _tlC1.set(a.v); _tlC2.set(b.v); _tlC1.lerp(_tlC2, f); return '#' + _tlC1.getHexString();
+    }
+    return a.v;
+}
+
+/* ---------- Colisión que NO acompaña a la animación ---------- */
+const _tlP = new THREE.Vector3(), _tlQ = new THREE.Quaternion(), _tlS = new THREE.Vector3(), _tlE = new THREE.Euler();
+const _tlCur = new THREE.Matrix4(), _tlCurInv = new THREE.Matrix4(), _tlRef = new THREE.Matrix4(), _tlRest = new THREE.Matrix4(), _tlOut = new THREE.Matrix4();
+function tlCompensate(o, active) {
+    const cols = allColliders(o);
+    if (!cols.length) return;
+    let ready = false;
+    for (const c of cols) {
+        const pv = c.pivot; if (!pv) continue;
+        let r = pv.userData._tlRest;
+        if (!active) {
+            if (r) { pv.position.copy(r.p); pv.quaternion.copy(r.q); pv.scale.copy(r.s); delete pv.userData._tlRest; pv.updateMatrixWorld(true); }
+            continue;
+        }
+        if (!r) r = pv.userData._tlRest = { p: pv.position.clone(), q: pv.quaternion.clone(), s: pv.scale.clone() };
+        if (!ready) {
+            // Pose del objeto en el instante 0 (la propiedad sin animar conserva su valor actual)
+            _tlP.copy(o.position); _tlE.copy(o.rotation); _tlS.copy(o.scale);
+            const A = o.userData.tlAnim;
+            for (const key in A.tracks) if (A.tracks[key].length && /^(pos|rot|turns|scl)\./.test(key)) tlSetXf(_tlP, _tlE, _tlS, key, tlEvalTrack(A.tracks[key], 0));
+            _tlQ.setFromEuler(_tlE); _tlRef.compose(_tlP, _tlQ, _tlS);
+            _tlCur.compose(o.position, o.quaternion, o.scale); _tlCurInv.copy(_tlCur).invert();
+            ready = true;
+        }
+        _tlRest.compose(r.p, r.q, r.s);
+        _tlOut.copy(_tlCurInv).multiply(_tlRef).multiply(_tlRest);
+        _tlOut.decompose(pv.position, pv.quaternion, pv.scale);
+        pv.updateMatrixWorld(true);
+    }
+}
+function tlCompAll() {
+    const off = tlNoComp();
+    tlAll().forEach(o => {
+        const A = o.userData.tlAnim; if (!A) return;
+        tlCompensate(o, A.colFollow === false && !off && tlHasTracks(A));
+    });
+}
+function tlUncomp() { tlAll().forEach(o => { if (o.userData.tlAnim) tlCompensate(o, false); }); }
+
+/* ---------- Aplicar la animación en un instante / avanzar ---------- */
+function tlApplyAt(t) {
+    tlAll().forEach(o => {
+        const A = o.userData.tlAnim; if (!A) return;
+        let any = false;
+        for (const key in A.tracks) {
+            const tr = A.tracks[key]; if (!tr || !tr.length) continue;
+            const v = tlEvalTrack(tr, t);
+            if (v === undefined) continue;
+            try { tlSet(o, key, v); any = true; } catch (err) { /* propiedad no disponible en este objeto */ }
+        }
+        if (any) o.updateMatrixWorld(true);
+    });
+    tlCompAll();
+}
+/* Aplica el instante t SOLO a este objeto (los demás no se tocan) */
+function tlApplyObj(o, t) {
+    const A = o.userData.tlAnim; if (!A) return;
+    let any = false;
+    for (const key in A.tracks) {
+        const tr = A.tracks[key]; if (!tr || !tr.length) continue;
+        const v = tlEvalTrack(tr, t);
+        if (v === undefined) continue;
+        try { tlSet(o, key, v); any = true; } catch (err) { /* propiedad no disponible en este objeto */ }
+    }
+    if (any) { o.updateMatrixWorld(true); tlAfterApply(o); }
+}
+/* Cada objeto en SU instante */
+function tlApplyAll() {
+    tlAll().forEach(o => { const A = o.userData.tlAnim; if (A) tlApplyObj(o, A.time || 0); });
+    tlCompAll();
+}
+function tlResetTimes() { tlAll().forEach(o => { const A = o.userData.tlAnim; if (A) A.time = 0; }); }
+/* Cada objeto avanza con su propio reloj y su propia duración / bucle */
+function tlAdvance(dt) {
+    if (!TL.playing) return false;
+    let active = false;
+    tlAll().forEach(o => {
+        const A = o.userData.tlAnim; if (!A || !tlHasTracks(A)) return;
+        const D = tlDur(A), loop = tlLoopOf(A);
+        if (!(loop || (A.time || 0) < D)) return;   // sin bucle y ya terminó: se queda en su último fotograma
+        A.time = (A.time || 0) + dt;
+        if (A.time >= D) { if (loop) A.time = A.time % D; else A.time = D; }
+        tlApplyObj(o, A.time);
+        if (loop || A.time < D) active = true;
+    });
+    if (!active) TL.playing = false;
+    tlCompAll();
+    return true;
+}
+
+/* ---------- Guardado ---------- */
+function tlSerialize() {
+    const items = [];
+    tlAll().forEach(o => {
+        const A = o.userData.tlAnim; if (!A) return;
+        if (!tlHasTracks(A) && A.colFollow !== false) return;
+        const tracks = {};
+        for (const k in A.tracks) if (A.tracks[k] && A.tracks[k].length) tracks[k] = A.tracks[k].map(kf => ({ t: Math.round(kf.t * 1e4) / 1e4, v: (typeof kf.v === 'number') ? Math.round(kf.v * 1e5) / 1e5 : kf.v, e: kf.e || 'linear' }));
+        items.push({ uid: tlUid(o), li: lightObjects.indexOf(o), colFollow: A.colFollow !== false, duration: tlDur(A), loop: tlLoopOf(A), time: Math.round((A.time || 0) * 1e4) / 1e4, tracks });
+    });
+    return { duration: TL.duration, loop: TL.loop, autoplay: TL.autoplay, time: TL.time, items };
+}
+
+function tlViewerInit() {
+    const T = CFG.timeline; if (!T) return;
+    if (isFinite(T.duration) && T.duration >= 0.1) TL.duration = T.duration;
+    TL.loop = T.loop !== false; TL.autoplay = T.autoplay !== false;
+    (T.items || []).forEach(it => {
+        const tgt = (it.li >= 0) ? lightObjects[it.li] : entityByUidMap.get(it.uid);
+        if (!tgt) return;
+        tgt.userData.tlAnim = { tracks: it.tracks || {}, colFollow: it.colFollow !== false,
+            duration: (isFinite(it.duration) && it.duration >= 0.1) ? it.duration : TL.duration,
+            loop: (it.loop !== undefined) ? it.loop !== false : TL.loop, time: 0 };
+    });
+    TL.time = 0; tlResetTimes(); tlApplyAll();
+}
+function tlViewerTick(delta) {
+    if (state !== 'play') return;
+    if (!TL.started) { TL.started = true; TL.time = 0; TL.playing = !!TL.autoplay; tlResetTimes(); tlApplyAll(); }
+    tlAdvance(delta);
+}
+
+/* ============ MULTIUSUARIO P2P (Trystero) ============
+   - Red P2P por WebRTC sin servidor propio. Señalización por trackers WebTorrent (Trystero "torrent").
+   - Si en ~9 s no aparece nadie, se activan automáticamente señalizadores de respaldo (nostr, luego mqtt).
+   - Transporte local (BroadcastChannel) para pestañas del mismo navegador (útil para probar).
+   - Máximo de usuarios configurable (MP.maxUsers). Los mensajes de otros usuarios se validan siempre. */
+const MP_LIBS = {
+    torrent: [
+        'https://cdn.jsdelivr.net/npm/trystero@0.19.0/trystero-torrent.min.js',
+        'https://esm.run/trystero@0.19.0/torrent',
+        'https://esm.sh/trystero@0.19.0/torrent',
+        'https://esm.sh/trystero/torrent'
+    ],
+    nostr: [
+        'https://cdn.jsdelivr.net/npm/trystero@0.19.0/trystero-nostr.min.js',
+        'https://esm.run/trystero@0.19.0/nostr',
+        'https://esm.sh/trystero@0.19.0/nostr',
+        'https://esm.sh/trystero/nostr'
+    ],
+    mqtt: [
+        'https://cdn.jsdelivr.net/npm/trystero@0.19.0/trystero-mqtt.min.js',
+        'https://esm.run/trystero@0.19.0/mqtt',
+        'https://esm.sh/trystero@0.19.0/mqtt',
+        'https://esm.sh/trystero/mqtt'
+    ]
+};
+const MP_ICE = [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' },
+    { urls: 'stun:global.stun.twilio.com:3478' },
+    { urls: 'stun:stun.cloudflare.com:3478' },
+    // Relé TURN público de respaldo para redes restrictivas (puede no estar siempre disponible)
+    { urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp'], username: 'openrelayproject', credential: 'openrelayproject' }
+];
+const MP = {
+    appId: 'myvr-p2p-v1',
+    uid: 'u' + Math.random().toString(36).slice(2, 10),
+    profile: { nick: 'Visitante', color: '#4772b3', hair: '#3a2010', face: null },
+    room: 'myvr-sala', maxUsers: 8, useLocal: true,
+    host: { getLocal: null, isActive: () => true, onRoster: null, onStatus: null },
+    remotes: new Map(), transports: [], joined: [], errors: [],
+    started: false, blocked: false, status: 'Sin conexión',
+    timers: [], sendAcc: 0, lastSent: null, lastSentT: 0, libs: {}, usedJoin: new Set(), unloadHooked: false
+};
+
+function mpStatus(txt) { MP.status = txt; if (MP.host.onStatus) MP.host.onStatus(txt); }
+function mpRoster() { if (MP.host.onRoster) MP.host.onRoster(); }
+function mpRealRemotes() {
+    let n = 0;
+    MP.remotes.forEach(r => { r.links.forEach(l => { if (l.t.name !== 'local') { n++; } }); });
+    return n;
+}
+function mpRefreshStatus() {
+    if (MP.blocked) return;
+    const n = MP.remotes.size + 1;
+    if (!MP.started) return mpStatus('Sin conexión');
+    if (MP.remotes.size) mpStatus('🟢 Conectado · ' + n + '/' + MP.maxUsers + ' usuarios');
+    else mpStatus('🔎 Buscando otros usuarios… (' + (MP.joined.join(' + ') || 'iniciando') + ')');
+}
+
+/* ---------- Carga de la librería con varias fuentes de respaldo ---------- */
+function mpWithTimeout(p, ms) {
+    return new Promise((res, rej) => {
+        const t = setTimeout(() => rej(new Error('tiempo agotado')), ms);
+        p.then(v => { clearTimeout(t); res(v); }, e => { clearTimeout(t); rej(e); });
+    });
+}
+function mpScriptTag(src) {
+    return new Promise((res, rej) => {
+        const s = document.createElement('script');
+        s.src = src; s.async = true;
+        s.onload = () => res(); s.onerror = () => rej(new Error('No se pudo cargar ' + src));
+        document.head.appendChild(s);
+    });
+}
+function mpPickJoin(mod) {
+    const cands = [mod, mod && mod.default, globalThis.trystero, globalThis.Trystero, globalThis];
+    for (const o of cands) { if (o && typeof o.joinRoom === 'function') return o.joinRoom; }
+    return null;
+}
+function mpLoadLib(name) {
+    if (MP.libs[name]) return MP.libs[name];
+    MP.libs[name] = (async () => {
+        for (const url of MP_LIBS[name]) {
+            try {
+                const mod = await mpWithTimeout(import(url), 12000);
+                const jr = mpPickJoin(mod);
+                if (jr && !MP.usedJoin.has(jr)) { MP.usedJoin.add(jr); return jr; }
+            } catch (e) { console.warn('[MP] import falló', url, e && e.message); }
+            try {
+                await mpWithTimeout(mpScriptTag(url), 12000);
+                const jr = mpPickJoin(null);
+                if (jr && !MP.usedJoin.has(jr)) { MP.usedJoin.add(jr); return jr; }
+            } catch (e) { console.warn('[MP] script falló', url, e && e.message); }
+        }
+        return null;
+    })();
+    return MP.libs[name];
+}
+function mpPreload() { mpLoadLib('torrent'); }   // calienta la librería principal mientras se ve la pantalla de bienvenida
+
+/* ---------- Validación de datos recibidos (nunca se confía en otros usuarios) ---------- */
+const MP_HEX = /^#[0-9a-fA-F]{6}$/;
+const MP_FACE = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/;
+function mpNum(v, lim) { v = Number(v); return Number.isFinite(v) ? Math.max(-lim, Math.min(lim, v)) : 0; }
+function mpCleanNick(s) { return String(s == null ? '' : s).replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, 20) || 'Visitante'; }
+
+/* ---------- Mensajes ---------- */
+function mpHelloMsg(withFace) {
+    const p = MP.profile, l = MP.host.getLocal ? MP.host.getLocal() : null;
+    const m = { t: 'hi', u: MP.uid, n: p.nick, c: p.color, h: p.hair };
+    if (l) { m.p = [+l.x.toFixed(2), +l.y.toFixed(2), +l.z.toFixed(2)]; m.r = +l.yaw.toFixed(3); }
+    if (withFace && p.face) m.f = p.face;
+    return m;
+}
+function mpBroadcast(msg) { MP.transports.forEach(t => { try { t.send(msg); } catch (e) { /* transporte caído */ } }); }
+
+function mpOnMessage(m, t, peerKey) {
+    if (!m || typeof m !== 'object' || MP.blocked) return;
+    const uid = typeof m.u === 'string' ? m.u.slice(0, 24) : '';
+    if (!uid || uid === MP.uid) return;
+    if (m.t === 'fu') { mpBlock(Number(m.max) || 0); return; }
+    if (m.t === 'bye') { mpRemove(uid); return; }
+    if (m.t === 'rq') { t.send(mpHelloMsg(true), peerKey); return; }
+    if (m.t === 'hi') {
+        let r = MP.remotes.get(uid), isNew = false;
+        if (!r) {
+            if (MP.remotes.size + 1 >= MP.maxUsers) { t.send({ t: 'fu', u: MP.uid, max: MP.maxUsers }, peerKey); return; }
+            r = mpCreateRemote(uid); isNew = true;
+        }
+        r.links.set(t.name + ':' + peerKey, { t, peerKey });
+        r.seen = performance.now();
+        mpApplyProfile(r, m);
+        if (Array.isArray(m.p)) mpSetTarget(r, m.p, m.r, 0);
+        if (isNew) { t.send(mpHelloMsg(true), peerKey); mpRoster(); mpRefreshStatus(); }
+        return;
+    }
+    if (m.t === 'st') {
+        const r = MP.remotes.get(uid);
+        if (!r) { t.send({ t: 'rq', u: MP.uid }, peerKey); return; }   // no lo conozco todavía: pido su perfil
+        r.links.set(t.name + ':' + peerKey, { t, peerKey });
+        r.seen = performance.now();
+        if (Array.isArray(m.p)) mpSetTarget(r, m.p, m.r, m.k);
+    }
+}
+function mpSetTarget(r, p, yaw, pitch) {
+    r.tp.set(mpNum(p[0], 1e5), mpNum(p[1], 1e5), mpNum(p[2], 1e5));
+    r.ty = mpNum(yaw, 100);
+    r.tpitch = Math.max(-0.9, Math.min(0.9, mpNum(pitch, 2)));
+    r.hasPos = true;
+}
+
+/* ---------- Avatares remotos ---------- */
+const MP_GEO = {
+    torso: new THREE.BoxGeometry(0.5, 0.7, 0.3), head: new THREE.BoxGeometry(0.35, 0.35, 0.35),
+    hair: new THREE.BoxGeometry(0.37, 0.12, 0.37), face: new THREE.PlaneGeometry(0.32, 0.32),
+    ring: new THREE.TorusGeometry(0.34, 0.025, 8, 32)
+};
+const MP_SKIN = new THREE.MeshStandardMaterial({ color: 0xffeaa7 });
+function mpMakeLabel(text, color) {
+    const c = document.createElement('canvas');
+    c.width = 512; c.height = 112;
+    const g = c.getContext('2d');
+    g.font = 'bold 44px "Segoe UI", system-ui, sans-serif';
+    const tw = Math.min(g.measureText(text).width + 92, 504);
+    const x = (512 - tw) / 2, y = 20, h = 72, rad = 24;
+    g.fillStyle = 'rgba(10,12,16,0.7)';
+    g.strokeStyle = color; g.lineWidth = 5;
+    g.beginPath();
+    g.moveTo(x + rad, y); g.arcTo(x + tw, y, x + tw, y + h, rad); g.arcTo(x + tw, y + h, x, y + h, rad);
+    g.arcTo(x, y + h, x, y, rad); g.arcTo(x, y, x + tw, y, rad); g.closePath(); g.fill(); g.stroke();
+    g.fillStyle = color; g.beginPath(); g.arc(x + 30, y + h / 2, 12, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#ffffff'; g.textAlign = 'left'; g.textBaseline = 'middle';
+    g.fillText(text, x + 54, y + h / 2 + 2, tw - 70);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
+    sp.scale.set(1.5, 0.33, 1);
+    sp.position.set(0, 2.15, 0);
+    sp.renderOrder = 10;
+    return sp;
+}
+function mpCreateRemote(uid) {
+    const r = {
+        uid, nick: '', color: '', hair: '', links: new Map(), seen: performance.now(), hasPos: false, first: true,
+        tp: new THREE.Vector3(), ty: 0, tpitch: 0, group: new THREE.Group(), label: null, faceKey: ''
+    };
+    r.bodyMat = new THREE.MeshStandardMaterial({ color: 0x4772b3, roughness: 0.5 });
+    r.hairMat = new THREE.MeshStandardMaterial({ color: 0x3a2010, roughness: 0.7 });
+    r.faceMat = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, transparent: true });
+    const torso = new THREE.Mesh(MP_GEO.torso, r.bodyMat); torso.position.y = 0.85;
+    r.head = new THREE.Group(); r.head.position.y = 1.38;
+    const head = new THREE.Mesh(MP_GEO.head, MP_SKIN);
+    const hair = new THREE.Mesh(MP_GEO.hair, r.hairMat); hair.position.y = 0.17;
+    const face = new THREE.Mesh(MP_GEO.face, r.faceMat); face.position.z = 0.18;
+    r.head.add(head, hair, face);
+    r.ring = new THREE.Mesh(MP_GEO.ring, new THREE.MeshBasicMaterial({ color: 0xffffff }));   // anillo del color identificativo en el suelo
+    r.ring.rotation.x = Math.PI / 2; r.ring.position.y = 0.03;
+    r.group.add(torso, r.head, r.ring);
+    r.group.visible = false;
+    scene.add(r.group);
+    MP.remotes.set(uid, r);
+    return r;
+}
+function mpApplyProfile(r, m) {
+    const nick = mpCleanNick(m.n);
+    const color = MP_HEX.test(m.c) ? m.c : '#4772b3';
+    const hair = MP_HEX.test(m.h) ? m.h : '#3a2010';
+    if (nick !== r.nick || color !== r.color) {
+        if (r.label) { r.group.remove(r.label); r.label.material.map.dispose(); r.label.material.dispose(); }
+        r.label = mpMakeLabel(nick, color);
+        r.group.add(r.label);
+        r.nick = nick;
+    }
+    if (color !== r.color) { r.color = color; r.bodyMat.color.set(color); r.ring.material.color.set(color); }
+    if (hair !== r.hair) { r.hair = hair; r.hairMat.color.set(hair); }
+    if (typeof m.f === 'string' && m.f.length < 30000 && MP_FACE.test(m.f) && m.f !== r.faceKey) {
+        r.faceKey = m.f;
+        const img = new Image();
+        img.onload = () => {
+            if (!MP.remotes.has(r.uid) || r.faceKey !== m.f) return;
+            const tex = new THREE.Texture(img); tex.colorSpace = THREE.SRGBColorSpace; tex.needsUpdate = true;
+            if (r.faceMat.map) r.faceMat.map.dispose();
+            r.faceMat.map = tex; r.faceMat.needsUpdate = true;
+        };
+        img.src = m.f;
+    }
+}
+function mpRemove(uid) {
+    const r = MP.remotes.get(uid);
+    if (!r) return;
+    scene.remove(r.group);
+    [r.bodyMat, r.hairMat, r.faceMat, r.ring.material].forEach(mt => { if (mt.map) mt.map.dispose(); mt.dispose(); });
+    if (r.label) { r.label.material.map.dispose(); r.label.material.dispose(); }
+    MP.remotes.delete(uid);
+    mpRoster(); mpRefreshStatus();
+}
+function mpDropPeer(t, peerKey) {
+    const key = t.name + ':' + peerKey, gone = [];
+    MP.remotes.forEach((r, uid) => { if (r.links.delete(key) && r.links.size === 0) gone.push(uid); });
+    gone.forEach(mpRemove);
+}
+
+/* ---------- Transportes ---------- */
+function mpMakeLocalTransport() {
+    if (!window.BroadcastChannel) return null;
+    const ch = new BroadcastChannel('myvr-local-' + MP.room);
+    const t = {
+        name: 'local',
+        send(msg, peer) { ch.postMessage({ from: MP.uid, to: peer || null, m: msg }); },
+        leave() { try { ch.close(); } catch (e) { /* ya cerrado */ } }
+    };
+    ch.onmessage = (e) => {
+        const d = e.data;
+        if (!d || d.from === MP.uid || (d.to && d.to !== MP.uid) || !d.m || typeof d.m !== 'object') return;
+        d.m.u = d.from;   // en local la identidad es la del canal
+        mpOnMessage(d.m, t, d.from);
+    };
+    return t;
+}
+async function mpJoinStrategy(name) {
+    if (MP.joined.includes(name) || MP.blocked || !MP.started) return;
+    MP.joined.push(name); mpRefreshStatus();
+    const joinRoom = await mpLoadLib(name);
+    if (!joinRoom) {
+        MP.errors.push(name);
+        MP.joined = MP.joined.filter(n => n !== name);
+        console.warn('[MP] No se pudo cargar la librería de señalización «' + name + '»');
+        if (MP.started && !MP.joined.length) mpStatus('⚠️ No se pudo cargar la red P2P (revisa tu conexión)');
+        return;
+    }
+    if (!MP.started || MP.blocked) return;
+    try {
+        const room = joinRoom({ appId: MP.appId, rtcConfig: { iceServers: MP_ICE } }, MP.room);
+        const [sendMv, onMv] = room.makeAction('mv');
+        const t = {
+            name,
+            send(msg, peer) { try { sendMv(msg, peer || undefined); } catch (e) { /* par desconectado */ } },
+            leave() { try { room.leave(); } catch (e) { /* ya salió */ } }
+        };
+        room.onPeerJoin(peerId => { t.send(mpHelloMsg(true), peerId); });
+        room.onPeerLeave(peerId => mpDropPeer(t, peerId));
+        onMv((data, peerId) => mpOnMessage(data, t, peerId));
+        MP.transports.push(t);
+        mpRefreshStatus();
+    } catch (err) {
+        console.warn('[MP] joinRoom falló (' + name + ')', err);
+        MP.errors.push(name);
+        MP.joined = MP.joined.filter(n => n !== name);
+    }
+}
+function mpEscalate(name) {
+    if (!MP.started || MP.blocked) return;
+    if (mpRealRemotes() > 0) return;     // ya hay conexión real: no hace falta otro señalizador
+    mpJoinStrategy(name);
+}
+
+/* ---------- Ciclo de vida ---------- */
+function mpStart() {
+    if (MP.started) return;
+    MP.started = true; MP.blocked = false; MP.errors = [];
+    mpStatus('Conectando…');
+    if (MP.useLocal) {
+        const lt = mpMakeLocalTransport();
+        if (lt) { MP.transports.push(lt); lt.send(mpHelloMsg(true)); }
+    }
+    mpJoinStrategy('torrent');
+    MP.timers = [setTimeout(() => mpEscalate('nostr'), 9000), setTimeout(() => mpEscalate('mqtt'), 20000)];
+    if (!MP.unloadHooked) { MP.unloadHooked = true; window.addEventListener('pagehide', () => mpStop(true)); }
+}
+function mpRetry() {
+    if (!MP.started) return;
+    if (MP.blocked) return;
+    ['torrent', 'nostr', 'mqtt'].forEach(n => { MP.libs[n] = MP.libs[n] && MP.errors.includes(n) ? null : MP.libs[n]; mpJoinStrategy(n); });
+    mpStatus('🔄 Reintentando con todos los señalizadores…');
+}
+function mpStop(silent) {
+    if (!MP.started) return;
+    try { mpBroadcast({ t: 'bye', u: MP.uid }); } catch (e) { /* sin red */ }
+    MP.timers.forEach(clearTimeout); MP.timers = [];
+    MP.transports.forEach(t => t.leave());
+    MP.transports = []; MP.joined = []; MP.started = false;
+    Array.from(MP.remotes.keys()).forEach(mpRemove);
+    if (!silent) mpStatus('Sin conexión');
+}
+function mpBlock(max) {
+    if (MP.blocked) return;
+    MP.blocked = true;
+    mpStop(true);
+    MP.blocked = true;
+    mpStatus('⛔ Sala llena (máx. ' + (max || MP.maxUsers) + ' usuarios)');
+    if (typeof showToast === 'function') showToast('⛔ La sala está llena (máx. ' + (max || MP.maxUsers) + '). Prueba otra sala.', 6000);
+}
+
+/* ---------- Bucle: interpolación + envío de estado (~10 Hz) ---------- */
+function mpTick(delta) {
+    if (!MP.started) return;
+    const active = MP.host.isActive();
+    const now = performance.now(), stale = [];
+    const k = 1 - Math.exp(-12 * delta);
+    MP.remotes.forEach((r, uid) => {
+        r.group.visible = active && r.hasPos;
+        if (r.hasPos) {
+            if (r.first) { r.group.position.copy(r.tp); r.group.rotation.y = r.ty; r.first = false; }
+            r.group.position.lerp(r.tp, k);
+            const dy = Math.atan2(Math.sin(r.ty - r.group.rotation.y), Math.cos(r.ty - r.group.rotation.y));
+            r.group.rotation.y += dy * k;
+            r.head.rotation.x += (-r.tpitch - r.head.rotation.x) * k;
+        }
+        if (now - r.seen > 15000) stale.push(uid);
+    });
+    stale.forEach(mpRemove);
+    if (!active || !MP.host.getLocal || !MP.remotes.size) return;
+    MP.sendAcc += delta;
+    if (MP.sendAcc < 0.1) return;
+    MP.sendAcc = 0;
+    const l = MP.host.getLocal(), s = MP.lastSent;
+    const moved = !s || Math.abs(l.x - s.x) + Math.abs(l.y - s.y) + Math.abs(l.z - s.z) > 0.01 || Math.abs(l.yaw - s.yaw) > 0.01 || Math.abs(l.pitch - s.pitch) > 0.01;
+    if (moved || now - MP.lastSentT > 1000) {
+        MP.lastSent = { x: l.x, y: l.y, z: l.z, yaw: l.yaw, pitch: l.pitch }; MP.lastSentT = now;
+        mpBroadcast({ t: 'st', u: MP.uid, p: [+l.x.toFixed(2), +l.y.toFixed(2), +l.z.toFixed(2)], r: +l.yaw.toFixed(3), k: +l.pitch.toFixed(3) });
+    }
+}
+// Foto de rostro reducida (96×96) para enviarla a los demás
+function mpCaptureFace(tex) {
+    try {
+        const img = tex && tex.image;
+        if (!img) return null;
+        const c = document.createElement('canvas'); c.width = 96; c.height = 96;
+        const g = c.getContext('2d');
+        const w = img.videoWidth || img.naturalWidth || img.width, h = img.videoHeight || img.naturalHeight || img.height;
+        if (!w || !h) return null;
+        const s = Math.min(w, h);
+        g.drawImage(img, (w - s) / 2, (h - s) / 2, s, s, 0, 0, 96, 96);
+        return c.toDataURL('image/jpeg', 0.7);
+    } catch (e) { return null; }   // imagen no legible (CORS): se omite
+}
+
+/* ===== Conexión del multijugador con el visor ===== */
+const MPC = CFG.mp || {};
+MP.maxUsers = Math.max(2, Math.min(10, parseInt(MPC.maxUsers, 10) || 8));
+const mpCleanRoom = (s) => String(s || '').replace(/[^\w-]/g, '').slice(0, 40);
+let mpDefaultRoom = mpCleanRoom(MPC.room) || ('myvr-' + (mpCleanRoom(String(CFG.title || 'sala').toLowerCase()) || 'sala'));
+try { const q = mpCleanRoom(new URLSearchParams(location.search).get('sala')); if (q) mpDefaultRoom = q; } catch (err) { /* sin parámetros */ }
+const mpDirTmp = new THREE.Vector3();
+MP.host.getLocal = () => {
+    camera.getWorldDirection(mpDirTmp);
+    return {
+        x: playerLogicalPos.x, y: playerLogicalPos.y - playerConfig.eyeHeight, z: playerLogicalPos.z,
+        yaw: Math.atan2(mpDirTmp.x, mpDirTmp.z), pitch: Math.asin(THREE.MathUtils.clamp(mpDirTmp.y, -1, 1))
+    };
+};
+MP.host.isActive = () => state === 'play';
+(function mpWelcomeInit() {
+    if (MPC.enabled === false) { $('w-mp-box').style.display = 'none'; return; }
+    $('w-room').value = mpDefaultRoom;
+    $('w-mp-info').innerText = 'Hasta ' + MP.maxUsers + ' usuarios a la vez. Quien entre a la misma sala te verá.';
+    $('w-room').addEventListener('keydown', (e) => { e.stopPropagation(); if (e.key === 'Enter') $('btn-enter').click(); });
+    let savedBody = null;
+    try { savedBody = localStorage.getItem('metaverso_visor_body'); } catch (err) { /* sin almacenamiento */ }
+    if (savedBody && MP_HEX.test(savedBody)) avatarBodyMat.color.set(savedBody);
+    $('w-color').value = '#' + avatarBodyMat.color.getHexString();
+    $('w-color').addEventListener('input', (e) => {
+        avatarBodyMat.color.set(e.target.value);
+        try { localStorage.setItem('metaverso_visor_body', e.target.value); } catch (err) { /* sin almacenamiento */ }
+    });
+    mpPreload();   // descarga la librería P2P mientras se ve la bienvenida
+})();
+function mpRenderPanel() {
+    const list = $('mp-list');
+    list.textContent = '';
+    const add = (nick, color, me) => {
+        const row = document.createElement('div'); row.className = 'mp-row';
+        const dot = document.createElement('span'); dot.className = 'mp-dot'; dot.style.background = color;
+        const nm = document.createElement('span'); nm.textContent = nick + (me ? ' (Tú)' : '');
+        row.append(dot, nm); list.appendChild(row);
+    };
+    add(MP.profile.nick, MP.profile.color, true);
+    MP.remotes.forEach(r => add(r.nick || '…', r.color || '#888888', false));
+    $('btn-mp').innerText = '👥 ' + (MP.remotes.size + 1);
+    $('mp-status').innerText = MP.status;
+}
+MP.host.onRoster = mpRenderPanel;
+MP.host.onStatus = mpRenderPanel;
+$('btn-mp').addEventListener('click', () => $('mp-panel').classList.toggle('open'));
+$('mp-retry').addEventListener('click', () => { if (MP.blocked) { MP.blocked = false; MP.started = false; } if (!MP.started) mpStart(); else mpRetry(); mpRenderPanel(); });
+$('mp-copy').addEventListener('click', async () => {
+    let txt = MP.room;
+    if (location.protocol === 'http:' || location.protocol === 'https:') txt = location.origin + location.pathname + '?sala=' + encodeURIComponent(MP.room);
+    try { await navigator.clipboard.writeText(txt); showToast('🔗 Copiado: ' + txt, 4000); }
+    catch (err) { window.prompt('Copia este enlace / código de sala:', txt); }
+});
+function mpEnter(nick) {
+    if (MPC.enabled === false || !$('w-mp-on').checked) return;
+    MP.room = mpCleanRoom($('w-room').value) || mpDefaultRoom;
+    MP.profile = {
+        nick, color: '#' + avatarBodyMat.color.getHexString(), hair: '#' + avatarHairMat.color.getHexString(),
+        face: mpCaptureFace(facePlaneMat.map)
+    };
+    $('mp-room-show').value = MP.room;
+    $('btn-mp').style.display = '';
+    mpRenderPanel();
+    mpStart();
+    showToast('🌐 Conectando a la sala «' + MP.room + '»… (máx. ' + MP.maxUsers + ' usuarios)', 4500);
+}
+
+/* ============ BUCLE ============ */
+const clock = new THREE.Clock();
+let previewAngle = 0;
+function animate() {
+    if (vrActive) return; // en una sesión VR el bucle lo lleva WebXR (vrFrame)
+    animRaf = requestAnimationFrame(animate);
+    const delta = Math.min(clock.getDelta(), 0.05);
+    if (avatarMixer) avatarMixer.update(delta);
+    updateGifAnimations();
+    tlViewerTick(delta);
+    mpTick(delta);
+
+    if (state === 'welcome') {
+        // Vista previa del avatar frente a la cámara, orbitando suavemente
+        previewAngle += delta * 0.35;
+        const feetY = spawnConfig.pos.y - playerConfig.eyeHeight;
+        const ax = spawnConfig.pos.x, az = spawnConfig.pos.z;
+        avatarGroup.position.set(ax, feetY, az);
+        avatarGroup.rotation.y = Math.sin(previewAngle) * 0.6;
+        camera.position.set(ax - 1.2 + Math.sin(previewAngle * 0.7) * 0.25, feetY + 1.45, az + 3.4);
+        camera.lookAt(ax - 1.2, feetY + 1.0, az);
+    } else if (state === 'play') {
+        if (viewActive()) {
+            applyKeyboardLook(delta);
+            const friction = Math.exp(-10.0 * delta);
+            velocity.x *= friction;
+            velocity.z *= friction;
+            direction.z = Number(moveState.fwd) - Number(moveState.bwd);
+            direction.x = Number(moveState.rgt) - Number(moveState.lft);
+            direction.normalize();
+            if (moveState.fwd || moveState.bwd) velocity.z -= direction.z * playerConfig.speed * delta * 8.0;
+            if (moveState.lft || moveState.rgt) velocity.x -= direction.x * playerConfig.speed * delta * 8.0;
+
+            const moveDelta = new THREE.Vector3();
+            const camDir = new THREE.Vector3();
+            camera.getWorldDirection(camDir);
+            camDir.y = 0;
+            if (camDir.lengthSq() > 0.0001) camDir.normalize();
+            const camSide = new THREE.Vector3().crossVectors(camera.up, camDir).normalize();
+            moveDelta.addScaledVector(camDir, -velocity.z * delta);
+            moveDelta.addScaledVector(camSide, velocity.x * delta);
+            updatePlayerPhysics(delta, moveDelta);
+        } else {
+            syncPlayerCamera();
+        }
+    }
+    updateHoverCursor();
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* ===== MISIONES v17 (módulo aditivo: panel, contadores, efectos, panel VR) ===== */
+const MS = (function (isPlaying) {
+    const el = (t, p, par) => { const e = document.createElement(t); if (p) Object.assign(e, p); if (p && p.st) e.style.cssText = p.st; if (par) par.appendChild(e); return e; };
+    el('style', { textContent:
+        '#ms-wrap{position:fixed;bottom:16px;left:12px;z-index:900;font:13px system-ui,sans-serif;color:#fff;display:none;flex-direction:column;align-items:flex-start;gap:6px}' +
+        '#ms-btn{background:rgba(28,32,40,.94);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit}' +
+        '#ms-panel{background:rgba(28,32,40,.94);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 12px;min-width:220px;max-width:300px}' +
+        '.ms-it{margin:7px 0}.ms-it.done{opacity:.7}.ms-it b{color:#f1c40f}.ms-bar{height:5px;background:#444;border-radius:3px;margin-top:3px}.ms-bar i{display:block;height:100%;background:#2ecc71;border-radius:3px}' +
+        '#ms-gif{position:fixed;inset:0;z-index:950;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;pointer-events:none}' +
+        '#ms-gif img{max-width:60vw;max-height:50vh}#ms-gif div{font:800 34px system-ui;color:#fff;text-shadow:0 2px 8px #000;text-align:center;padding:0 12px}' +
+        '#ms-flash{position:fixed;inset:0;z-index:940;background:#fff;opacity:0;pointer-events:none}#ms-conf{position:fixed;inset:0;z-index:945;pointer-events:none}'
+    }, document.head);
+    const wrap = el('div', { id: 'ms-wrap' }, document.body);
+    const btn = el('button', { id: 'ms-btn', textContent: '📋 Misiones' }, wrap);
+    const panel = el('div', { id: 'ms-panel' }, wrap);
+    const gifBox = el('div', { id: 'ms-gif' }, document.body), gifImg = el('img', {}, gifBox), gifTxt = el('div', {}, gifBox);
+    const flashEl = el('div', { id: 'ms-flash' }, document.body), conf = el('canvas', { id: 'ms-conf' }, document.body);
+    let open = true, vrShown = true, vrOn = false, vrMsg = null, sig = '', gifTimer = 0;
+    btn.addEventListener('click', () => { open = !open; panel.style.display = open ? 'block' : 'none'; });
+
+    const items = () => globalRules.filter(r => r.mission && r.mission.on);
+    const prog = r => {
+        const tot = r.mode === 'any' ? 1 : Math.max(1, r.requiredIds.filter(id => entityByUid(id)).length);
+        const dn = r.completed ? tot : (r.mode === 'any' ? 0 : Math.min(tot, r.collected.filter(id => entityByUid(id)).length));
+        return [dn, tot];
+    };
+    function render() {
+        panel.textContent = '';
+        items().forEach((r, i) => {
+            const [d, t] = prog(r), m = r.mission;
+            const it = el('div', { className: 'ms-it' + (r.completed ? ' done' : '') }, panel);
+            const h = el('div', {}, it); el('b', { textContent: 'Misión ' + (i + 1) + ': ' }, h);
+            h.appendChild(document.createTextNode((m.title || r.name) + (r.completed ? ' ✅' : '')));
+            el('div', { textContent: (m.label || 'Progreso') + ': ' + d + '/' + t }, it);
+            el('div', { className: 'ms-bar' }, it).appendChild(el('i', { st: 'width:' + Math.round(d / t * 100) + '%' }));
+        });
+    }
+    /* ---- Panel dentro de VR: plano con textura de canvas pegado a la cabeza ---- */
+    const cv = el('canvas', { width: 512, height: 512 }), cx = cv.getContext('2d'), tex = new THREE.CanvasTexture(cv);
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.36, 0.36), new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false }));
+    mesh.frustumCulled = false; mesh.renderOrder = 999; mesh.visible = false; mesh.matrixAutoUpdate = false;
+    const _p = new THREE.Vector3(), _q = new THREE.Quaternion(), _s = new THREE.Vector3(), _o = new THREE.Vector3();
+    mesh.onBeforeRender = function () {
+        const xc = renderer.xr.getCamera(); if (!xc) return;
+        xc.matrixWorld.decompose(_p, _q, _s);
+        _o.set(-0.32, -0.12, -0.9).applyQuaternion(_q).add(_p);
+        mesh.matrixWorld.compose(_o, _q, _s.set(1, 1, 1));
+    };
+    function drawVR() {
+        cx.clearRect(0, 0, 512, 512);
+        cx.fillStyle = 'rgba(28,32,40,.92)'; cx.fillRect(0, 0, 512, 512);
+        cx.fillStyle = '#f1c40f'; cx.font = 'bold 34px sans-serif'; cx.fillText('📋 Misiones', 20, 48);
+        let y = 100;
+        items().slice(0, 4).forEach((r, i) => {
+            const [d, t] = prog(r), m = r.mission;
+            cx.fillStyle = '#fff'; cx.font = 'bold 26px sans-serif';
+            cx.fillText(('Misión ' + (i + 1) + ': ' + (m.title || r.name) + (r.completed ? ' ✅' : '')).slice(0, 30), 20, y);
+            cx.font = '24px sans-serif'; cx.fillText(((m.label || 'Progreso') + ': ' + d + '/' + t).slice(0, 34), 20, y + 32);
+            cx.fillStyle = '#444'; cx.fillRect(20, y + 44, 472, 10); cx.fillStyle = '#2ecc71'; cx.fillRect(20, y + 44, 472 * d / t, 10);
+            y += 86;
+        });
+        if (vrMsg && vrMsg.until > Date.now()) { cx.fillStyle = 'rgba(0,0,0,.85)'; cx.fillRect(0, 400, 512, 112); cx.fillStyle = '#fff'; cx.font = 'bold 36px sans-serif'; cx.textAlign = 'center'; cx.fillText(vrMsg.text.slice(0, 26), 256, 466); cx.textAlign = 'left'; }
+        tex.needsUpdate = true;
+    }
+    let xBtn = false, pollId = 0;
+    function pollVR() {
+        const s = renderer.xr.getSession(); if (!s) return;
+        for (const src of s.inputSources) {
+            if (src.handedness !== 'left' || !src.gamepad) continue;
+            const b = src.gamepad.buttons[4];   // botón X del mando izquierdo: mostrar/ocultar
+            if (b && b.pressed && !xBtn) { vrShown = !vrShown; mesh.visible = vrOn && vrShown; }
+            xBtn = !!(b && b.pressed);
+        }
+    }
+    renderer.xr.addEventListener('sessionstart', () => { vrOn = true; scene.add(mesh); mesh.visible = vrShown; sig = ''; pollId = setInterval(pollVR, 100); });
+    renderer.xr.addEventListener('sessionend', () => { vrOn = false; mesh.visible = false; clearInterval(pollId); });
+
+    /* ---- Efectos al completar ---- */
+    function confetti() {
+        conf.width = innerWidth; conf.height = innerHeight; const g = conf.getContext('2d'), t0 = performance.now();
+        const ps = Array.from({ length: 140 }, () => ({ x: Math.random() * conf.width, y: -20 - Math.random() * conf.height * .4, vx: (Math.random() - .5) * 4, vy: 2 + Math.random() * 4, c: 'hsl(' + (Math.random() * 360 | 0) + ',90%,60%)', s: 5 + Math.random() * 6 }));
+        (function f(now) {
+            g.clearRect(0, 0, conf.width, conf.height);
+            if (now - t0 > 3200) return;
+            ps.forEach(p => { p.x += p.vx; p.y += p.vy; g.fillStyle = p.c; g.fillRect(p.x, p.y, p.s, p.s * .6); });
+            requestAnimationFrame(f);
+        })(t0);
+    }
+    function celebrate(r) {
+        const m = r.mission || {}, msg = m.finalMsg || '¡Lo lograste!', ms = Math.max(500, +m.gifMs || 3500);
+        showToast('🏆 ' + msg, ms);
+        if (m.flash) flashEl.animate([{ opacity: .85 }, { opacity: 0 }], { duration: 700 });
+        if (m.confetti) confetti();
+        gifTxt.textContent = msg; gifImg.style.display = m.gif ? 'block' : 'none';
+        gifImg.src = ''; if (m.gif) gifImg.src = m.gif;          // se reasigna para que el GIF arranque desde el primer cuadro
+        gifBox.style.display = 'flex'; clearTimeout(gifTimer);
+        gifTimer = setTimeout(() => { gifBox.style.display = 'none'; gifImg.src = ''; }, ms);
+        vrMsg = { text: msg, until: Date.now() + ms }; sig = '';
+    }
+    function refresh() {
+        const list = items();
+        wrap.style.display = (isPlaying() && list.length && !renderer.xr.isPresenting) ? 'flex' : 'none';
+        const s = list.map(r => r.name + '|' + r.mission.title + '|' + r.mission.label + '|' + prog(r).join('/')).join(';') + (vrMsg && vrMsg.until > Date.now() ? 'm' : '');
+        if (s !== sig) { sig = s; render(); if (vrOn) drawVR(); }
+    }
+    setInterval(refresh, 250);
+    return { celebrate, refresh };
+})(() => state === 'play');
+{   // Engancha el progreso de reglas sin modificar la función original
+    const _rgp = registerGlobalProgress;
+    registerGlobalProgress = function (ent, kind) {
+        const was = globalRules.map(r => r.completed);
+        _rgp(ent, kind);
+        globalRules.forEach((r, i) => { if (!was[i] && r.completed && r.mission && r.mission.on) MS.celebrate(r); });
+        MS.refresh();
+    };
+}
+
+{   // El mezclador avanza en cada fotograma (Explorar, editor y VR) sin tocar los bucles existentes
+    const _r = renderer.render.bind(renderer);
+    renderer.render = function (a, b) { try { mvTickAnim(); } catch (e) { /* nada */ } _r(a, b); };
+}
+/* ===== AVATAR PERSONALIZABLE (v22): cuerpo articulado con caminata, manos, cabello y rostro ===== */
+const MVA = (function (isDefault) {
+    const cfg = { enabled: false, head: 'round', hair: 'short', hairColor: '#3a2010', skin: '#f1c27d', torso: '#4772b3', eyes: 'open', mouth: 'happy', brows: 'normal', nose: 'small' };
+    const root = new THREE.Group(); root.name = 'AvatarPersonalizable'; root.visible = false; avatarGroup.add(root);
+    let rig = null, feat = null, phase = 0, amp = 0, demoOn = false, lastT = performance.now(), hasLast = false;
+    const lastP = new THREE.Vector3(), wp = new THREE.Vector3();
+    const ink = new THREE.MeshBasicMaterial({ color: 0x1b1b1b });
+    const mat = (c) => new THREE.MeshStandardMaterial({ color: new THREE.Color(c), roughness: 0.6 });
+    const add = (par, geo, m, x, y, z) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = true; par.add(o); return o; };
+    function build() {
+        if (facePlane.parent === root) defaultAvatarMesh.add(facePlane);          // la foto nunca se destruye al reconstruir
+        root.children.slice().forEach(c => { root.remove(c); c.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material && o.material !== ink) o.material.dispose(); }); });
+        const skin = mat(cfg.skin), hairM = mat(cfg.hairColor), top = mat(cfg.torso), pants = mat(new THREE.Color(cfg.torso).multiplyScalar(0.55));
+        add(root, new THREE.BoxGeometry(0.5, 0.7, 0.3), top, 0, 0.85, 0);
+        const arms = [], legs = [];
+        [-1, 1].forEach(s => {
+            const leg = new THREE.Group(); leg.position.set(s * 0.13, 0.5, 0); root.add(leg);
+            add(leg, new THREE.BoxGeometry(0.2, 0.5, 0.22), pants, 0, -0.25, 0); legs.push(leg);
+            const arm = new THREE.Group(); arm.position.set(s * 0.33, 1.15, 0); root.add(arm);
+            add(arm, new THREE.BoxGeometry(0.11, 0.5, 0.11), skin, 0, -0.25, 0);
+            add(arm, new THREE.SphereGeometry(0.065, 14, 10), skin, 0, -0.55, 0);   // mano (esfera del color de piel)
+            arms.push(arm);
+        });
+        rig = { arms, legs };
+        const round = cfg.head === 'round', R = 0.19, FZ = round ? 0.172 : 0.178, HY = 1.38;
+        add(root, round ? new THREE.SphereGeometry(R, 24, 18) : new THREE.BoxGeometry(0.35, 0.35, 0.35), skin, 0, HY, 0);
+        if (cfg.hair !== 'bald') {
+            if (round) add(root, new THREE.SphereGeometry(R * 1.07, 24, 12, 0, Math.PI * 2, 0, Math.PI * 0.55), hairM, 0, HY, -0.005);
+            else add(root, new THREE.BoxGeometry(0.37, 0.1, 0.37), hairM, 0, HY + 0.185, 0);
+            if (cfg.hair === 'long') {
+                add(root, new THREE.BoxGeometry(0.39, 0.46, 0.09), hairM, 0, HY - 0.1, -0.15);
+                add(root, new THREE.BoxGeometry(0.05, 0.36, 0.3), hairM, -0.19, HY - 0.06, -0.02);
+                add(root, new THREE.BoxGeometry(0.05, 0.36, 0.3), hairM, 0.19, HY - 0.06, -0.02);
+            }
+        }
+        feat = new THREE.Group(); feat.position.set(0, HY, 0); root.add(feat);
+        const ez = FZ + 0.004, fz = round ? 0.158 : ez;
+        const eye = (x, kind) => {
+            if (kind === 'closed') add(feat, new THREE.BoxGeometry(0.07, 0.012, 0.012), ink, x, 0.022, ez);
+            else { const e = add(feat, new THREE.SphereGeometry(0.03, 12, 8), ink, x, 0.025, ez - 0.012); e.scale.set(kind === 'half' ? 1.25 : 1, kind === 'half' ? 0.4 : 1, 0.5); }
+        };
+        eye(-0.075, cfg.eyes === 'closed' ? 'closed' : cfg.eyes === 'half' ? 'half' : 'open');
+        eye(0.075, cfg.eyes === 'closed' || cfg.eyes === 'wink' ? 'closed' : cfg.eyes === 'half' ? 'half' : 'open');
+        if (cfg.mouth === 'serious') add(feat, new THREE.BoxGeometry(0.1, 0.014, 0.012), ink, 0, -0.075, ez);
+        else {
+            const happy = cfg.mouth === 'happy', angry = cfg.mouth === 'angry';
+            const m = add(feat, new THREE.TorusGeometry(angry ? 0.04 : 0.055, angry ? 0.012 : 0.008, 6, 16, Math.PI), ink, 0, happy ? -0.055 : -0.095, fz);
+            m.rotation.z = happy ? Math.PI : 0; m.scale.z = 0.5;
+        }
+        if (cfg.brows !== 'none') [-1, 1].forEach(s => {
+            const b = add(feat, new THREE.BoxGeometry(0.075, 0.015, 0.012), ink, s * 0.075, cfg.brows === 'raised' ? 0.11 : 0.078, fz);
+            if (cfg.brows === 'angry') b.rotation.z = s * 0.5; else if (cfg.brows === 'raised') b.rotation.z = -s * 0.15;
+        });
+        if (cfg.nose !== 'none') {
+            const big = cfg.nose === 'big';
+            add(feat, new THREE.BoxGeometry(big ? 0.05 : 0.032, big ? 0.07 : 0.045, big ? 0.06 : 0.04), mat(new THREE.Color(cfg.skin).multiplyScalar(0.88)), 0, -0.02, FZ + 0.014);
+        }
+    }
+    function tick() {
+        const now = performance.now(), dt = Math.min(0.1, (now - lastT) / 1000); lastT = now;
+        const on = cfg.enabled && isDefault();
+        root.visible = on;
+        if (!on) { hasLast = false; if (facePlane.parent === root) defaultAvatarMesh.add(facePlane); return; }
+        defaultAvatarMesh.visible = false;
+        root.position.copy(defaultAvatarMesh.position); root.quaternion.copy(defaultAvatarMesh.quaternion); root.scale.copy(defaultAvatarMesh.scale);
+        if (facePlane.parent !== root) root.add(facePlane);
+        if (feat) feat.visible = !facePlane.visible;             // con foto, la foto sustituye al rostro dibujado
+        avatarGroup.getWorldPosition(wp);
+        let speed = 0;
+        if (demoOn) speed = 2.5;
+        else if (hasLast && dt > 0) { speed = Math.hypot(wp.x - lastP.x, wp.z - lastP.z) / dt; if (speed > 25) speed = 0; }
+        lastP.copy(wp); hasLast = true;
+        amp += (Math.min(1, speed / 3) - amp) * Math.min(1, dt * 10);
+        phase += speed * dt * 2.4;
+        if (rig) { const a = Math.sin(phase) * 0.8 * amp; rig.arms[0].rotation.x = a; rig.arms[1].rotation.x = -a; rig.legs[0].rotation.x = -a; rig.legs[1].rotation.x = a; }
+    }
+    build();
+    {   const _r = renderer.render.bind(renderer); renderer.render = function (a, b) { try { tick(); } catch (e) { /* nada */ } _r(a, b); }; }
+    return { cfg, get: () => JSON.parse(JSON.stringify(cfg)), set: (p) => { Object.assign(cfg, p || {}); build(); }, demo: (b) => { demoOn = !!b; } };
+})(() => avatarChoice === 'default');
+
+if (AV.custom) MVA.set(AV.custom);
+</script>
+</body>
+</html>
