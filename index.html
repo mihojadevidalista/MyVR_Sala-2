@@ -163,7 +163,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 
-const CFG = {"title":"MyVR","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":1.7396,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[2.27472,2.27472,2.27472]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,0.93621,-2.42508],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,1.51429,-0.39817],[-0.4661,1.51429,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,1.51429,0.39817],[-0.4661,1.51429,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,-0.41107,0.10622],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.41107,-2.57237],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"viewer":{"chat":true,"chatMax":140},"admin":{"pub":{"x":"tRgdl4gfULubiDmGb9Z4NGhpenlyqDQ5lQhYugLQbjU","y":"_KEKpXhbbBhnx94G9l_5pRWhgfDB_HCMpGEHZcA35vw"},"global":{"screen":false,"voice":false,"cam":false,"chat":true}},"mp":{"enabled":true,"room":"myvr-rb10kp","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
+const CFG = {"title":"MyVR","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":0.7102,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1.66545,1.66545,1.66545]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,2.10714,-2.42508],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,1.51429,-0.39817],[-0.4661,1.51429,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,1.51429,0.39817],[-0.4661,1.51429,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,-0.41107,0.10622],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.41107,-2.57237],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"viewer":{"chat":true,"chatMax":140},"admin":{"pub":{"x":"tRgdl4gfULubiDmGb9Z4NGhpenlyqDQ5lQhYugLQbjU","y":"_KEKpXhbbBhnx94G9l_5pRWhgfDB_HCMpGEHZcA35vw"},"global":{"screen":true,"voice":false,"cam":false,"chat":true}},"mp":{"enabled":true,"room":"myvr-rb10kp","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
 const $ = (id) => document.getElementById(id);
 document.title = CFG.title || 'MyVR';
 
@@ -3702,7 +3702,7 @@ function mpaBuildUI() {
             cb.addEventListener('change', () => MPA.setGlobal(k, cb.checked));
             mk('span', { textContent: MPA_LABEL[k][0] + ' Permitir ' + MPA_LABEL[k][1].toLowerCase() }, lb);
         });
-        mk('div', { className: 'n', textContent: MPA.isRoot ? 'Tú (admin) no estás sujeto a estas restricciones. Pantalla, voz y cámara aún no existen en esta versión: sus permisos quedan registrados y listos.' : 'Solo el dueño del espacio cambia las restricciones globales.' }, panel);
+        mk('div', { className: 'n', textContent: MPA.isRoot ? 'Tú (admin) no estás sujeto a estas restricciones. La pantalla compartida ya funciona; voz y cámara aún no existen en esta versión: sus permisos quedan registrados y listos.' : 'Solo el dueño del espacio cambia las restricciones globales.' }, panel);
         mk('div', { className: 's', textContent: 'USUARIOS CONECTADOS' }, panel);
         if (!MP.remotes.size) mk('div', { className: 'n', textContent: conn ? 'No hay otros usuarios conectados.' : 'Sin conexión.' }, panel);
         MP.remotes.forEach((r, uid) => {
@@ -3867,6 +3867,618 @@ mpaInit({
     baseChat: () => !(CFG.viewer && CFG.viewer.chat === false),
     unlock: () => { try { if (fpsControls.isLocked) fpsControls.unlock(); } catch (e) { /* sin bloqueo */ } }
 });
+
+/* =================================================================
+   COMPARTIR PANTALLA (modo Explorar y Visor exportado)
+   - Disponible para el administrador y para los usuarios con el permiso «🖥️ Compartir pantalla»
+     (el interruptor global y los botones 🖥️ por usuario del panel 👑 Admin).
+   - La pantalla es un panel 3D que se coloca apuntando: «Pegar a pared / cara» la ajusta a la superficie
+     apuntada; se escala (rueda / deslizador), se gira (Z / X / deslizador) y se mueve volviendo a colocarla.
+   - Al detener y volver a compartir, regresa al último lugar donde quedó. «Resetear ubicación» la devuelve
+     a su sitio por defecto, delante de ti.
+   - El video viaja por la misma red P2P (WebRTC) que el multiusuario; las posiciones, como mensajes { t: 'sc' }.
+   - Este bloque no modifica las funciones existentes: se engancha envolviéndolas.
+   ================================================================= */
+(function screenShareInit() {
+    'use strict';
+    if (typeof MPA === 'undefined' || typeof mpBroadcast !== 'function' || typeof mpOnMessage !== 'function') return;
+
+    const SCR_LS = 'myvr_screen_state_v1';
+    const ZERO = new THREE.Vector3(), UPY = new THREE.Vector3(0, 1, 0), AXZ = new THREE.Vector3(0, 0, 1);
+    const DEF = { w: 3.2, roll: 0, off: 0.04, dist: 4 };
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const num = (v, d) => { v = Number(v); return Number.isFinite(v) ? v : d; };
+    const r3 = (v) => Math.round(v * 1000) / 1000;
+    const playing = () => { try { return !!(MPA.host && MPA.host.isPlaying()); } catch (e) { return false; } };
+    const toast = (t, ms) => { try { showToast(t, ms || 3500); } catch (e) { /* sin aviso */ } };
+    const coarse = () => !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+    const hasCapture = () => !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia);
+
+    /* ---------- Estado propio (se recuerda entre sesiones) ---------- */
+    const my = {
+        on: false, placed: false,
+        p0: new THREE.Vector3(), n: new THREE.Vector3(0, 0, 1), up: new THREE.Vector3(0, 1, 0),
+        w: DEF.w, roll: DEF.roll, snap: true, off: DEF.off, dist: DEF.dist, aspect: 16 / 9,
+        pos: new THREE.Vector3(), quat: new THREE.Quaternion()
+    };
+    const SCR = { stream: null, rooms: new Map(), streams: new Map(), pending: new Map(), vol: 1, muted: false, screens: new Map(), rate: new Map() };
+    const PM = { on: false, backup: null, lastSend: 0, lastNdc: new THREE.Vector2(0, 0) };
+    const ptr = { x: 0, y: 0, over: false };
+
+    function composePose() {
+        let u = my.up.lengthSq() > 1e-6 ? my.up.clone().normalize() : UPY.clone();
+        if (Math.abs(u.dot(my.n)) > 0.999) u.set(0, 0, -1);
+        const m = new THREE.Matrix4();
+        m.lookAt(my.n, ZERO, u);                       // el eje +Z del panel apunta hacia afuera de la superficie
+        my.quat.setFromRotationMatrix(m);
+        my.quat.multiply(new THREE.Quaternion().setFromAxisAngle(AXZ, THREE.MathUtils.degToRad(my.roll)));
+        my.pos.copy(my.p0).addScaledVector(my.n, my.off);
+    }
+    function persist() {
+        try {
+            localStorage.setItem(SCR_LS, JSON.stringify({
+                p0: my.p0.toArray(), n: my.n.toArray(), up: my.up.toArray(),
+                w: my.w, roll: my.roll, snap: my.snap, off: my.off, dist: my.dist, placed: my.placed
+            }));
+        } catch (e) { /* sin almacenamiento */ }
+    }
+    (function loadSaved() {
+        try {
+            const d = JSON.parse(localStorage.getItem(SCR_LS));
+            if (!d || typeof d !== 'object') return;
+            const v3 = (a, v) => { if (Array.isArray(a) && a.length >= 3) v.set(num(a[0], v.x), num(a[1], v.y), num(a[2], v.z)); };
+            v3(d.p0, my.p0); v3(d.n, my.n); v3(d.up, my.up);
+            if (my.n.lengthSq() < 1e-6) my.n.set(0, 0, 1); my.n.normalize();
+            my.w = clamp(num(d.w, DEF.w), 0.5, 16);
+            my.roll = clamp(num(d.roll, 0), -180, 180);
+            my.snap = d.snap !== false;
+            my.off = clamp(num(d.off, DEF.off), 0, 0.6);
+            my.dist = clamp(num(d.dist, DEF.dist), 1, 25);
+            my.placed = !!d.placed;
+            composePose();
+        } catch (e) { /* sin datos guardados */ }
+    })();
+
+    // Ubicación por defecto: delante del jugador, mirándolo, a la altura de los ojos
+    function defaultPlacement() {
+        const f = new THREE.Vector3();
+        camera.getWorldDirection(f); f.y = 0;
+        if (f.lengthSq() < 1e-4) f.set(0, 0, -1);
+        f.normalize();
+        my.dist = DEF.dist;
+        my.p0.copy(camera.position).addScaledVector(f, my.dist);
+        my.n.copy(f).negate();
+        my.up.copy(UPY);
+        my.w = DEF.w; my.roll = DEF.roll; my.off = DEF.off;
+        my.placed = true;
+        composePose();
+    }
+
+    /* ---------- Paneles 3D (el propio y los de los demás) ---------- */
+    const FRAME_MAT = new THREE.MeshBasicMaterial({ color: 0x14171c });
+    const FRAME_GEO = new THREE.BoxGeometry(1, 1, 1);
+    const PLANE_GEO = new THREE.PlaneGeometry(1, 1);
+    function layout(s) {
+        const w = s.w, h = s.w / s.aspect;
+        s.plane.scale.set(w, h, 1); s.plane.position.z = 0.027;
+        s.frame.scale.set(w + 0.14, h + 0.14, 0.05);
+        if (s.label) s.label.position.set(0, h / 2 + 0.42, 0.05);
+    }
+    function makeScreen(uid) {
+        const g = new THREE.Group(); g.name = 'ScreenShare'; g.userData.isScreenShare = true;
+        const frame = new THREE.Mesh(FRAME_GEO, FRAME_MAT);
+        const mat = new THREE.MeshBasicMaterial({ color: 0x23272f, toneMapped: false });
+        const plane = new THREE.Mesh(PLANE_GEO, mat);
+        g.add(frame, plane);
+        g.visible = false;
+        scene.add(g);
+        const s = {
+            uid, group: g, frame, plane, mat, label: null, labelKey: '', video: null, tex: null, stream: null,
+            w: DEF.w, aspect: 16 / 9, tp: new THREE.Vector3(), tq: new THREE.Quaternion(), hasPose: false, seen: performance.now()
+        };
+        SCR.screens.set(uid, s);
+        layout(s);
+        return s;
+    }
+    function detachVideo(s) {
+        if (s.video) { try { s.video.pause(); s.video.srcObject = null; s.video.remove(); } catch (e) { /* ya liberado */ } s.video = null; }
+        if (s.tex) { s.tex.dispose(); s.tex = null; }
+        s.mat.map = null; s.mat.color.set(0x23272f); s.mat.needsUpdate = true;
+        s.stream = null;
+    }
+    function removeScreen(uid) {
+        const s = SCR.screens.get(uid);
+        if (!s) return;
+        detachVideo(s);
+        scene.remove(s.group);
+        if (s.label) { s.label.material.map.dispose(); s.label.material.dispose(); }
+        s.mat.dispose();
+        SCR.screens.delete(uid);
+        SCR.streams.delete(uid);
+    }
+    function setLabel(s, text, color) {
+        const key = text + '|' + color;
+        if (s.labelKey === key) return;
+        if (s.label) { s.group.remove(s.label); s.label.material.map.dispose(); s.label.material.dispose(); s.label = null; }
+        if (typeof mpMakeLabel === 'function') {
+            s.label = mpMakeLabel(text, color || '#4772b3');
+            s.group.add(s.label);
+            layout(s);
+        }
+        s.labelKey = key;
+    }
+    function attachStream(s, stream, local) {
+        detachVideo(s);
+        const v = document.createElement('video');
+        v.playsInline = true; v.autoplay = true; v.muted = !!local || SCR.muted;
+        v.srcObject = stream;
+        v.style.cssText = 'position:fixed;left:-10px;top:-10px;width:2px;height:2px;opacity:0;pointer-events:none;';
+        document.body.appendChild(v);
+        const tex = new THREE.VideoTexture(v);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+        s.video = v; s.tex = tex; s.stream = stream;
+        s.mat.map = tex; s.mat.color.set(0xffffff); s.mat.needsUpdate = true;
+        v.addEventListener('loadedmetadata', () => {
+            if (!v.videoWidth || !v.videoHeight) return;
+            const a = clamp(v.videoWidth / v.videoHeight, 0.2, 6);
+            if (local) { my.aspect = a; s.aspect = a; layout(s); sendState(); } else { s.aspect = a; layout(s); }
+        });
+        const p = v.play();
+        if (p && p.catch) p.catch(() => {   // el navegador bloquea el sonido sin gesto: se inicia sin audio
+            if (!v.muted) { v.muted = true; v.play().catch(() => { /* sin reproducción */ }); toast('🔇 Pantalla compartida sin sonido: pulsa 🔊 en el panel 🖥️ para activarlo', 5000); }
+        });
+    }
+
+    /* ---------- Mensajes de posición ---------- */
+    function sendState() {
+        if (!my.on) return;
+        mpBroadcast({
+            t: 'sc', u: MP.uid, on: 1,
+            p: my.pos.toArray().map(r3), q: my.quat.toArray().map(v => Math.round(v * 10000) / 10000),
+            w: +my.w.toFixed(2), a: +my.aspect.toFixed(3)
+        });
+    }
+    function onScMessage(m) {
+        const uid = typeof m.u === 'string' ? m.u.slice(0, 24) : '';
+        if (!uid || uid === MP.uid || MP.blocked) return;
+        if (MPA.banned.has(uid) && MPA.banned.get(uid) > Date.now()) return;
+        const sent = MPA.sent.get(uid);
+        if (sent && sent.screen === false) return;                 // este admin le quitó el permiso
+        if (!MP.remotes.has(uid)) return;                          // solo usuarios ya presentes en la sala
+        const now = performance.now();
+        if (m.on === 0 || m.on === false) { removeScreen(uid); return; }   // detener nunca se limita
+        if (now - (SCR.rate.get(uid) || 0) < 40) return;          // límite de frecuencia de las actualizaciones
+        SCR.rate.set(uid, now);
+        if (!Array.isArray(m.p) || !Array.isArray(m.q) || m.p.length < 3 || m.q.length < 4) return;
+        let s = SCR.screens.get(uid);
+        const fresh = !s;
+        if (!s) s = makeScreen(uid);
+        s.tp.set(num(m.p[0], 0), num(m.p[1], 0), num(m.p[2], 0));
+        s.tp.x = clamp(s.tp.x, -1e5, 1e5); s.tp.y = clamp(s.tp.y, -1e5, 1e5); s.tp.z = clamp(s.tp.z, -1e5, 1e5);
+        s.tq.set(clamp(num(m.q[0], 0), -1, 1), clamp(num(m.q[1], 0), -1, 1), clamp(num(m.q[2], 0), -1, 1), clamp(num(m.q[3], 1), -1, 1));
+        if (s.tq.lengthSq() < 1e-6) s.tq.identity(); else s.tq.normalize();
+        s.w = clamp(num(m.w, DEF.w), 0.3, 40);
+        s.aspect = clamp(num(m.a, 16 / 9), 0.2, 6);
+        s.seen = now;
+        const r = MP.remotes.get(uid);
+        setLabel(s, '🖥️ ' + (r.nick || 'Pantalla'), r.color || '#4772b3');
+        layout(s);
+        if (fresh || !s.hasPose) { s.group.position.copy(s.tp); s.group.quaternion.copy(s.tq); s.hasPose = true; }
+    }
+
+    /* ---------- Enganches (envolviendo funciones existentes, sin editarlas) ---------- */
+    const origOnMessage = mpOnMessage;
+    mpOnMessage = function (m, t, peerKey) {
+        if (m && typeof m === 'object' && m.t === 'sc') { try { onScMessage(m); } catch (e) { console.warn('[Pantalla]', e); } return; }
+        return origOnMessage.apply(this, arguments);
+    };
+    if (typeof mpRemove === 'function') {
+        const origRemove = mpRemove;
+        mpRemove = function (uid) { try { removeScreen(uid); } catch (e) { /* nada que quitar */ } return origRemove.apply(this, arguments); };
+    }
+    if (typeof mpLoadLib === 'function') {
+        const origLoad = mpLoadLib, wrapped = new Map();
+        mpLoadLib = function (name) {
+            return origLoad.apply(this, arguments).then(jr => {
+                if (typeof jr !== 'function') return jr;
+                if (wrapped.has(jr)) return wrapped.get(jr);
+                const w = function () {
+                    const room = jr.apply(this, arguments);
+                    try { registerRoom(room, name); } catch (e) { console.warn('[Pantalla] sala sin vídeo', e); }
+                    return room;
+                };
+                wrapped.set(jr, w);
+                return w;
+            });
+        };
+    }
+    function registerRoom(room, name) {
+        if (!room) return;
+        SCR.rooms.set(room, { name, sent: new Map() });
+        const leave = room.leave;
+        if (typeof leave === 'function') room.leave = function () { SCR.rooms.delete(room); return leave.apply(this, arguments); };
+        if (typeof room.onPeerStream === 'function') room.onPeerStream((stream, peerId) => onRemoteStream(name, peerId, stream));
+    }
+    function onRemoteStream(name, peerId, stream) {
+        const key = name + ':' + peerId;
+        let found = null;
+        MP.remotes.forEach((r, uid) => { if (!found && r.links.has(key)) found = uid; });
+        if (found) SCR.streams.set(found, stream); else SCR.pending.set(key, stream);
+    }
+    // Envía el video a cada par conectado (también a los que llegan después)
+    function pushStream() {
+        const st = SCR.stream;
+        if (!st) return;
+        SCR.rooms.forEach((info, room) => {
+            let peers = null;
+            try { peers = room.getPeers ? Object.keys(room.getPeers()) : null; } catch (e) { SCR.rooms.delete(room); return; }
+            if (!peers) return;
+            peers.forEach(pid => {
+                if (info.sent.get(pid) === st.id) return;
+                info.sent.set(pid, st.id);
+                try { Promise.resolve(room.addStream(st, pid)).catch(() => info.sent.delete(pid)); } catch (e) { info.sent.delete(pid); }
+            });
+            Array.from(info.sent.keys()).forEach(pid => { if (!peers.includes(pid)) info.sent.delete(pid); });
+        });
+    }
+    function bindStreams() {
+        SCR.pending.forEach((stream, key) => {
+            MP.remotes.forEach((r, uid) => { if (SCR.pending.has(key) && r.links.has(key)) { SCR.streams.set(uid, stream); SCR.pending.delete(key); } });
+        });
+        SCR.screens.forEach((s, uid) => {
+            if (uid === MP.uid) return;
+            const st = SCR.streams.get(uid);
+            if (st && s.stream !== st && (!s.stream || !s.stream.active)) attachStream(s, st, false);
+        });
+    }
+
+    /* ---------- Compartir / detener ---------- */
+    const canShare = () => !!(MP.started && MPA.can && MPA.can('screen'));
+    async function startShare() {
+        if (my.on) return;
+        if (!canShare()) { toast('🖥️ No tienes permiso para compartir pantalla en este espacio'); return; }
+        if (!hasCapture()) { toast('⚠️ Este navegador o dispositivo no permite compartir pantalla', 5000); return; }
+        let stream = null;
+        const video = { width: { ideal: 1280 }, height: { ideal: 720 }, frameRate: { ideal: 20, max: 30 } };
+        try { stream = await navigator.mediaDevices.getDisplayMedia({ video, audio: true }); }
+        catch (e) {
+            if (e && e.name === 'NotAllowedError') { toast('🖥️ No se compartió la pantalla'); return; }
+            try { stream = await navigator.mediaDevices.getDisplayMedia({ video }); } catch (e2) { toast('🖥️ No se pudo compartir la pantalla'); return; }
+        }
+        if (!stream) return;
+        if (!canShare()) { stream.getTracks().forEach(t => t.stop()); return; }
+        const vt = stream.getVideoTracks()[0];
+        if (vt) { try { vt.contentHint = 'detail'; } catch (e) { /* sin pista de contenido */ } vt.onended = () => stopShare(); }
+        SCR.stream = stream;
+        my.on = true;
+        const firstTime = !my.placed;
+        if (firstTime) defaultPlacement();
+        composePose();
+        let s = SCR.screens.get(MP.uid);
+        if (!s) s = makeScreen(MP.uid);
+        s.w = my.w; s.aspect = my.aspect; s.hasPose = true;
+        s.group.position.copy(my.pos); s.group.quaternion.copy(my.quat);
+        layout(s);
+        attachStream(s, stream, true);
+        persist(); sendState(); pushStream();
+        refresh();
+        if (firstTime) { startPlacement(); toast('🖥️ Apunta a una pared o cara y haz clic (o Enter) para colocarla', 6000); }
+        else toast('🖥️ Compartiendo en el último lugar donde la dejaste', 4000);
+    }
+    function stopShare(silent) {
+        if (!my.on && !SCR.stream) return;
+        const st = SCR.stream;
+        SCR.stream = null; my.on = false;
+        if (PM.on) { PM.on = false; PM.backup = null; barEl.style.display = 'none'; }
+        if (st) {
+            SCR.rooms.forEach((info, room) => { try { if (room.removeStream) room.removeStream(st); } catch (e) { /* par ya desconectado */ } info.sent.clear(); });
+            st.getTracks().forEach(t => { try { t.onended = null; t.stop(); } catch (e) { /* ya detenida */ } });
+        }
+        const stopMsg = { t: 'sc', u: MP.uid, on: 0 };
+        try { mpBroadcast(stopMsg); setTimeout(() => { try { mpBroadcast(stopMsg); } catch (e) { /* sin red */ } }, 700); } catch (e) { /* sin red */ }
+        removeScreen(MP.uid);
+        persist();
+        refresh();
+        if (!silent) toast('🖥️ Pantalla detenida. Al volver a compartir regresará a este lugar.', 4000);
+    }
+    function resetLocation() {
+        defaultPlacement();
+        persist();
+        if (my.on) { sendState(); }
+        refresh();
+        toast('↺ Ubicación de la pantalla restablecida');
+    }
+
+    /* ---------- Colocar (apuntar y pegar a pared / cara) ---------- */
+    const rayPick = new THREE.Raycaster();
+    function pickSurface(ray) {
+        const objs = entities.filter(e => e.visible);
+        if (typeof floor !== 'undefined' && floor && floor.parent && floor.visible) objs.push(floor);
+        const hits = ray.intersectObjects(objs, true);
+        const camFwd = ray.ray.direction;
+        for (const h of hits) {
+            const o = h.object;
+            if (!h.face || o.isSprite || o.isLine || o.isPoints) continue;
+            if (o.name === 'ColliderMesh' || (o.parent && o.parent.name === 'ColliderMesh')) continue;
+            let vis = true, p = o;
+            while (p) { if (!p.visible) { vis = false; break; } p = p.parent; }
+            if (!vis) continue;
+            const n = h.face.normal.clone().transformDirection(o.matrixWorld);
+            if (n.dot(camFwd) > 0) n.negate();                      // siempre mirando hacia quien apunta
+            return { point: h.point.clone(), normal: n };
+        }
+        return null;
+    }
+    function aimNdc() {
+        if ((typeof fpsControls !== 'undefined' && fpsControls.isLocked) || coarse()) return PM.lastNdc.set(0, 0);
+        if (ptr.over) PM.lastNdc.set((ptr.x / window.innerWidth) * 2 - 1, -(ptr.y / window.innerHeight) * 2 + 1);
+        return PM.lastNdc;
+    }
+    function aimPose() {
+        const ndc = aimNdc();
+        rayPick.setFromCamera(ndc, camera);
+        rayPick.far = 80;
+        const hit = my.snap ? pickSurface(rayPick) : null;
+        if (hit) {
+            my.p0.copy(hit.point); my.n.copy(hit.normal);
+            if (Math.abs(my.n.y) > 0.9) {                           // suelo o techo: el «arriba» del panel apunta lejos de quien mira
+                const f = new THREE.Vector3(); camera.getWorldDirection(f); f.y = 0;
+                if (f.lengthSq() < 1e-4) f.set(0, 0, -1);
+                my.up.copy(f.normalize());
+                if (my.n.y < 0) my.up.negate();
+            } else my.up.copy(UPY);
+        } else {
+            const d = rayPick.ray.direction;
+            my.p0.copy(rayPick.ray.origin).addScaledVector(d, my.dist);
+            my.n.set(camera.position.x - my.p0.x, 0, camera.position.z - my.p0.z);
+            if (my.n.lengthSq() < 1e-4) my.n.set(0, 0, 1);
+            my.n.normalize(); my.up.copy(UPY);
+        }
+        composePose();
+    }
+    function startPlacement() {
+        if (!my.on || PM.on) return;
+        PM.on = true;
+        PM.backup = { p0: my.p0.clone(), n: my.n.clone(), up: my.up.clone(), w: my.w, roll: my.roll, off: my.off, snap: my.snap, dist: my.dist };
+        panelWrap.classList.remove('open');
+        barEl.style.display = 'flex';
+        syncBar(); refresh();
+    }
+    function endPlacement(confirm) {
+        if (!PM.on) return;
+        PM.on = false;
+        if (!confirm && PM.backup) { Object.assign(my, { w: PM.backup.w, roll: PM.backup.roll, off: PM.backup.off, snap: PM.backup.snap, dist: PM.backup.dist }); my.p0.copy(PM.backup.p0); my.n.copy(PM.backup.n); my.up.copy(PM.backup.up); composePose(); }
+        PM.backup = null;
+        barEl.style.display = 'none';
+        if (confirm) my.placed = true;
+        persist(); sendState(); refresh();
+        if (confirm) toast('📌 Pantalla colocada', 2500);
+    }
+    const scaleBy = (f) => { my.w = clamp(my.w * f, 0.5, 16); composePose(); };
+    const rollBy = (d) => { my.roll = ((my.roll + d + 540) % 360) - 180; composePose(); };
+
+    /* ---------- Interfaz ---------- */
+    const mk = (tag, props, parent) => { const e = document.createElement(tag); if (props) Object.assign(e, props); if (parent) parent.appendChild(e); return e; };
+    const topPx = (MPA.editor ? 62 : 100) + 40;
+    mk('style', { textContent:
+        '#scr-wrap{position:fixed;right:12px;top:' + topPx + 'px;width:min(310px,calc(100vw - 24px));z-index:319;display:none;flex-direction:column;align-items:flex-end;gap:6px;font:12px system-ui,sans-serif;color:#fff;pointer-events:none}' +
+        '#scr-wrap>*{pointer-events:auto}' +
+        '#scr-btn{background:rgba(28,32,40,.94);border:1px solid #3498db;color:#7fc4f5;border-radius:8px;padding:6px 10px;cursor:grab;font:inherit;font-weight:700;touch-action:none;user-select:none}' +
+        '#scr-panel{display:none;width:100%;box-sizing:border-box;max-height:60vh;overflow-y:auto;background:rgba(28,32,40,.96);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 10px;flex-direction:column;gap:6px}' +
+        '#scr-wrap.open #scr-panel{display:flex}' +
+        '#scr-panel .h{cursor:grab;touch-action:none;user-select:none;font-weight:700;color:#7fc4f5;display:flex;justify-content:space-between;align-items:center;gap:8px}' +
+        '#scr-panel .s{font-size:10px;font-weight:700;color:#8c96a8;border-top:1px solid rgba(255,255,255,.1);padding-top:5px;margin-top:2px}' +
+        '#scr-panel .n{font-size:10px;color:#8c96a8;line-height:1.35}' +
+        '#scr-panel button,#scr-bar button{background:#2a2f3a;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:4px 8px;cursor:pointer;font:inherit}' +
+        '#scr-panel button:disabled{opacity:.35;cursor:default}' +
+        '#scr-panel button.go{background:#1e6b3a;border-color:#2ecc71}#scr-panel button.stop{background:#7b2a2a;border-color:#e74c3c}' +
+        '#scr-panel label{display:flex;align-items:center;gap:6px}' +
+        '#scr-panel .sl{display:grid;grid-template-columns:78px 1fr 46px;gap:6px;align-items:center}#scr-panel .sl input{width:100%;min-width:0}#scr-panel .sl .v{text-align:right;color:#8c96a8}' +
+        '#scr-bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:330;display:none;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;max-width:calc(100vw - 20px);padding:8px 10px;background:rgba(20,24,32,.92);border:1px solid #3498db;border-radius:12px;font:12px system-ui,sans-serif;color:#fff}' +
+        '#scr-bar .hint{flex:1 1 100%;text-align:center;font-size:10px;color:#9aa8bd}' +
+        '#scr-bar button.ok{background:#1e6b3a;border-color:#2ecc71;font-weight:700}#scr-bar button.on{background:#1c4e75;border-color:#3498db}' }, document.head);
+    const panelWrap = mk('div', { id: 'scr-wrap' }, document.body);
+    const btn = mk('button', { id: 'scr-btn', textContent: '⠿ 🖥️ Pantalla' }, panelWrap);
+    const panel = mk('div', { id: 'scr-panel' }, panelWrap);
+    const barEl = mk('div', { id: 'scr-bar' }, document.body);
+    const stopEv = (e) => e.stopPropagation();
+    ['pointerdown', 'click', 'mousedown', 'touchstart', 'keydown', 'wheel'].forEach(ev => { panelWrap.addEventListener(ev, stopEv); barEl.addEventListener(ev, stopEv); });
+
+    // Arrastrar el botón / panel
+    const POS_LS = 'myvr_screen_pos_v1';
+    const place = (x, y) => {
+        x = Math.max(0, Math.min(window.innerWidth - panelWrap.offsetWidth, x));
+        y = Math.max(0, Math.min(window.innerHeight - 40, y));
+        panelWrap.style.left = x + 'px'; panelWrap.style.top = y + 'px'; panelWrap.style.right = 'auto';
+    };
+    let moved = false;
+    const startDrag = (e) => {
+        if (e.button !== undefined && e.button !== 0) return;
+        if (e.currentTarget !== btn && e.target.closest && e.target.closest('button')) return;
+        const r = panelWrap.getBoundingClientRect(), ox = e.clientX - r.left, oy = e.clientY - r.top, sx = e.clientX, sy = e.clientY, id = e.pointerId, el = e.currentTarget;
+        moved = false;
+        try { el.setPointerCapture(id); } catch (err) { /* sin captura */ }
+        const mv = (ev) => { if (ev.pointerId !== id) return; if (!moved && Math.hypot(ev.clientX - sx, ev.clientY - sy) < 4) return; moved = true; place(ev.clientX - ox, ev.clientY - oy); };
+        const up = (ev) => {
+            if (ev.pointerId !== id) return;
+            el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); el.removeEventListener('pointercancel', up);
+            if (moved) { try { localStorage.setItem(POS_LS, JSON.stringify({ x: parseFloat(panelWrap.style.left), y: parseFloat(panelWrap.style.top) })); } catch (err) { /* sin almacenamiento */ } }
+        };
+        el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+    };
+    btn.addEventListener('pointerdown', startDrag);
+    try { const p = JSON.parse(localStorage.getItem(POS_LS)); if (p && isFinite(p.x) && isFinite(p.y)) { panelWrap.style.display = 'flex'; place(p.x, p.y); panelWrap.style.display = 'none'; } } catch (err) { /* sin posición guardada */ }
+    window.addEventListener('resize', () => { if (panelWrap.style.left) place(parseFloat(panelWrap.style.left), parseFloat(panelWrap.style.top)); });
+    btn.addEventListener('click', () => {
+        if (moved) { moved = false; return; }
+        const open = !panelWrap.classList.contains('open');
+        panelWrap.classList.toggle('open', open);
+        if (open && MPA.host && MPA.host.unlock) MPA.host.unlock();
+        refresh();
+    });
+
+    // Barra de colocación
+    let barPin = null;
+    const barDist = [];
+    function syncBar() {
+        if (barPin) barPin.classList.toggle('on', my.snap);
+        barDist.forEach(b => { b.style.display = my.snap ? 'none' : ''; });
+    }
+    const distBy = (f) => { my.dist = clamp(my.dist * f, 1, 25); };
+    (function buildBar() {
+        const add = (label, title, fn, cls) => { const b = mk('button', { textContent: label, title, className: cls || '' }, barEl); b.addEventListener('click', fn); return b; };
+        add('✅ Colocar', 'Fijar la pantalla aquí (clic o Enter)', () => endPlacement(true), 'ok');
+        add('⟲', 'Girar a la izquierda (Z)', () => rollBy(-15));
+        add('⟳', 'Girar a la derecha (X)', () => rollBy(15));
+        add('➖', 'Más pequeña (rueda del ratón)', () => scaleBy(0.9));
+        add('➕', 'Más grande (rueda del ratón)', () => scaleBy(1.1));
+        barPin = add('📌 Pegar', 'Pegar a pared / cara: activado, la pantalla se ajusta a la superficie apuntada', () => { my.snap = !my.snap; syncBar(); }, 'on');
+        barDist.push(add('🔭 Cerca', 'Acercar la pantalla (Shift + rueda)', () => distBy(0.9)));
+        barDist.push(add('🔭 Lejos', 'Alejar la pantalla (Shift + rueda)', () => distBy(1.1)));
+        add('✖ Cancelar', 'Dejarla como estaba', () => endPlacement(false));
+        mk('div', { className: 'hint', textContent: 'Apunta a una pared o cara · clic / Enter = colocar · rueda = tamaño · Z / X = girar · sin pegar: Shift + rueda = distancia' }, barEl);
+    })();
+
+    let saveT = null;
+    const liveChange = () => { composePose(); sendState(); clearTimeout(saveT); saveT = setTimeout(persist, 400); };
+    function refresh() {
+        btn.textContent = '⠿ 🖥️ Pantalla' + (my.on ? ' 🔴' : '');
+        panel.textContent = '';
+        const h = mk('div', { className: 'h' }, panel);
+        h.addEventListener('pointerdown', startDrag);
+        mk('span', { textContent: '🖥️ Compartir pantalla' }, h);
+        const can = canShare();
+        if (can || my.on) {
+            if (!hasCapture()) mk('div', { className: 'n', style: 'color:#f39c12', textContent: '⚠️ Este navegador o dispositivo no permite compartir pantalla (en celulares casi nunca está disponible). Sí puedes ver las pantallas de los demás.' }, panel);
+            const b = mk('button', { textContent: my.on ? '⏹️ Detener pantalla' : '▶️ Compartir mi pantalla', className: my.on ? 'stop' : 'go', disabled: !my.on && !hasCapture() }, panel);
+            b.addEventListener('click', () => { if (my.on) stopShare(); else startShare(); });
+            if (my.on) {
+                const pb = mk('button', { textContent: '📌 Colocar / mover la pantalla', title: 'Apunta a una pared o cara y haz clic' }, panel);
+                pb.addEventListener('click', () => startPlacement());
+                const lb = mk('label', {}, panel);
+                const cb = mk('input', { type: 'checkbox', checked: my.snap }, lb);
+                cb.addEventListener('change', () => { my.snap = cb.checked; persist(); refresh(); });
+                mk('span', { textContent: '📌 Pegar a pared / cara' }, lb);
+                const slider = (label, min, max, step, get, set, fmt) => {
+                    const row = mk('label', { className: 'sl' }, panel);
+                    mk('span', { textContent: label }, row);
+                    const inp = mk('input', { type: 'range', min, max, step, value: get() }, row);
+                    const val = mk('span', { className: 'v', textContent: fmt(get()) }, row);
+                    inp.addEventListener('input', () => { const v = parseFloat(inp.value); set(v); val.textContent = fmt(v); liveChange(); });
+                };
+                slider('Tamaño', 0.5, 16, 0.1, () => my.w, v => { my.w = v; }, v => v.toFixed(1) + ' m');
+                slider('Giro', -180, 180, 1, () => my.roll, v => { my.roll = v; }, v => Math.round(v) + '°');
+                if (my.snap) slider('Separación', 0, 0.6, 0.01, () => my.off, v => { my.off = v; }, v => v.toFixed(2));
+            } else {
+                mk('div', { className: 'n', textContent: my.placed ? 'Al compartir, la pantalla volverá al último lugar donde la dejaste.' : 'Al compartir podrás colocarla apuntando a una pared o cara.' }, panel);
+            }
+            const rb = mk('button', { textContent: '↺ Resetear ubicación', title: 'Vuelve a ponerla delante de ti con el tamaño por defecto' }, panel);
+            rb.addEventListener('click', resetLocation);
+        } else {
+            mk('div', { className: 'n', textContent: !MP.started ? '🔌 Conéctate a una sala para compartir pantalla.' : 'No tienes permiso para compartir pantalla. Pídeselo a un administrador (panel 👑 Admin).' }, panel);
+        }
+        let others = 0;
+        SCR.screens.forEach((s, uid) => { if (uid !== MP.uid) others++; });
+        if (others) {
+            mk('div', { className: 's', textContent: 'PANTALLAS DE OTROS (' + others + ')' }, panel);
+            const lb = mk('label', {}, panel);
+            const cb = mk('input', { type: 'checkbox', checked: !SCR.muted }, lb);
+            cb.addEventListener('change', () => { SCR.muted = !cb.checked; applyVolumes(true); });
+            mk('span', { textContent: '🔊 Sonido de las pantallas' }, lb);
+            const row = mk('label', { className: 'sl' }, panel);
+            mk('span', { textContent: 'Volumen' }, row);
+            const vi = mk('input', { type: 'range', min: 0, max: 1, step: 0.05, value: SCR.vol }, row);
+            const vv = mk('span', { className: 'v', textContent: Math.round(SCR.vol * 100) + '%' }, row);
+            vi.addEventListener('input', () => { SCR.vol = parseFloat(vi.value); vv.textContent = Math.round(SCR.vol * 100) + '%'; applyVolumes(false); });
+            mk('div', { className: 'n', textContent: 'El volumen baja con la distancia a la pantalla.' }, panel);
+        }
+    }
+
+    function applyVolumes(unmute) {
+        SCR.screens.forEach((s, uid) => {
+            if (uid === MP.uid || !s.video) return;
+            const d = s.group.position.distanceTo(camera.position);
+            const near = 1 - clamp((d - 4) / 36, 0, 1);
+            s.video.volume = clamp(SCR.vol * near, 0, 1);
+            if (s.video.muted !== SCR.muted) { s.video.muted = SCR.muted; if (unmute && !SCR.muted) s.video.play().catch(() => { /* sin gesto */ }); }
+        });
+    }
+
+    /* ---------- Entradas durante la colocación ---------- */
+    const isCanvasTarget = (t) => t === document.body || t === document.documentElement || (t && t.id === 'canvas3d');
+    window.addEventListener('pointermove', (e) => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.over = !!(e.target && e.target.id === 'canvas3d'); }, true);
+    window.addEventListener('pointerdown', (e) => {
+        if (!PM.on || e.button !== 0 || !isCanvasTarget(e.target)) return;
+        e.preventDefault(); e.stopImmediatePropagation();          // no dispara los clics sobre objetos mientras se coloca
+        endPlacement(true);
+    }, true);
+    window.addEventListener('wheel', (e) => {
+        if (!PM.on || !isCanvasTarget(e.target)) return;
+        e.preventDefault();
+        const dy = e.deltaY || e.deltaX;
+        if (e.shiftKey && !my.snap) distBy(dy < 0 ? 1.1 : 0.91); else scaleBy(dy < 0 ? 1.08 : 0.926);
+    }, { passive: false, capture: true });
+    window.addEventListener('keydown', (e) => {
+        if (!PM.on) return;
+        const t = e.target;
+        if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+        let used = true;
+        switch (e.code) {
+            case 'Enter': case 'NumpadEnter': endPlacement(true); break;
+            case 'Escape': endPlacement(false); break;
+            case 'KeyZ': rollBy(-15); break;
+            case 'KeyX': rollBy(15); break;
+            case 'Equal': case 'NumpadAdd': scaleBy(1.1); break;
+            case 'Minus': case 'NumpadSubtract': scaleBy(0.9); break;
+            default: used = false;
+        }
+        if (used) { e.preventDefault(); e.stopImmediatePropagation(); }
+    }, true);
+
+    /* ---------- Bucles ---------- */
+    let lastT = performance.now();
+    function frame(now) {
+        requestAnimationFrame(frame);
+        const dt = Math.min(0.1, (now - lastT) / 1000); lastT = now;
+        const act = playing();
+        if (PM.on && (!act || !my.on)) endPlacement(false);
+        if (PM.on) {
+            aimPose();
+            if (now - PM.lastSend > 100) { PM.lastSend = now; sendState(); }
+        }
+        const k = 1 - Math.exp(-14 * dt);
+        SCR.screens.forEach((s, uid) => {
+            s.group.visible = act && s.hasPose;
+            if (uid === MP.uid) {
+                if (s.w !== my.w || s.aspect !== my.aspect) { s.w = my.w; s.aspect = my.aspect; layout(s); }
+                s.group.position.copy(my.pos); s.group.quaternion.copy(my.quat);
+            } else if (s.hasPose) {
+                s.group.position.lerp(s.tp, k); s.group.quaternion.slerp(s.tq, k);
+            }
+        });
+    }
+    requestAnimationFrame(frame);
+
+    let sig = '';
+    setInterval(() => {
+        const act = playing();
+        // Si te quitan el permiso (o se apaga el modo admin / se pierde la conexión) la pantalla se detiene sola
+        if (my.on && !canShare()) { stopShare(true); toast('🖥️ Ya no tienes permiso para compartir pantalla'); }
+        sendState(); pushStream(); bindStreams(); applyVolumes(false);
+        const now = performance.now();
+        SCR.screens.forEach((s, uid) => { if (uid !== MP.uid && now - s.seen > 12000) removeScreen(uid); });   // el que compartía desapareció
+        let others = 0; SCR.screens.forEach((s, uid) => { if (uid !== MP.uid) others++; });
+        const show = act && (canShare() || my.on || others > 0);
+        panelWrap.style.display = show ? 'flex' : 'none';
+        if (!show) panelWrap.classList.remove('open');
+        const s2 = [canShare() ? 1 : 0, my.on ? 1 : 0, PM.on ? 1 : 0, others, MP.started ? 1 : 0, SCR.muted ? 1 : 0].join(':');
+        if (s2 !== sig) { sig = s2; refresh(); }
+    }, 1000);
+    window.addEventListener('pagehide', () => { if (my.on) { try { mpBroadcast({ t: 'sc', u: MP.uid, on: 0 }); } catch (e) { /* sin red */ } } });
+    refresh();
+})();
+
 
 /* =================================================================
    CHAT ENTRE USUARIOS
