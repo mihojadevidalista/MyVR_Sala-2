@@ -87,6 +87,7 @@ input[type=text]:focus { border-color:var(--accent); }
     <button id="btn-ctl" title="Configurar controles">🎮 Controles</button>
     <button id="btn-vr" title="Entrar en realidad virtual (WebXR · Meta Quest 2 y otras gafas)">🥽 Entrar en VR</button>
     <button id="btn-fs" title="Pantalla completa / salir">⛶ Pantalla completa</button>
+    <button id="btn-fs-auto" style="display:none;" title="En celular la experiencia arranca en pantalla completa y horizontal. Pulsa para desactivarlo / reactivarlo">📱 Auto pantalla: Sí</button>
 </div>
 
 <div id="ctl-menu">
@@ -163,7 +164,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 
-const CFG = {"title":"MyVR","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":0.7102,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1.66545,1.66545,1.66545]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,2.10714,-2.42508],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,1.51429,-0.39817],[-0.4661,1.51429,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,1.51429,0.39817],[-0.4661,1.51429,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,-0.41107,0.10622],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.41107,-2.57237],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"viewer":{"chat":true,"chatMax":140},"admin":{"pub":{"x":"tRgdl4gfULubiDmGb9Z4NGhpenlyqDQ5lQhYugLQbjU","y":"_KEKpXhbbBhnx94G9l_5pRWhgfDB_HCMpGEHZcA35vw"},"global":{"screen":true,"voice":false,"cam":false,"chat":true}},"mp":{"enabled":true,"room":"myvr-rb10kp","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
+const CFG = {"title":"MyVR","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":0.2014,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1.07509,1.07509,1.07509]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,0.64641,6.17954],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,0.31486,-0.39817],[-0.4661,0.31486,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,0.31486,0.39817],[-0.4661,0.31486,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,0.41355,0.07509],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.94299,-1.28762],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"viewer":{"chat":true,"chatMax":140},"admin":{"pub":{"x":"ORkfQjZIK9uqtRf5JNx811Ax9PPnBXSdAplZ1-7Q0W0","y":"8-1YwZFegioBd7jMora5mUHo_vWigJVCgFcGmp0U__8"},"global":{"screen":false,"voice":false,"cam":false}},"mp":{"enabled":true,"room":"myvr-voe01n","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
 const $ = (id) => document.getElementById(id);
 document.title = CFG.title || 'MyVR';
 
@@ -425,6 +426,7 @@ function buildLights() {
         if (d.main) {
             const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.7, 16, 16), new THREE.MeshBasicMaterial({ color: color }));
             g.userData.helperMat = sphere.material;
+            sphere.visible = false;   // el Sol solo ilumina: su esfera no se ve en el visor
             g.add(sphere);
         }
         applyXform(g, d.xform);
@@ -807,7 +809,7 @@ const customProfile = {
     mouseLook: false,
     keys: cloneKeys(PROFILE_2.keys)
 };
-const controlSettings = { profileId: (CFG.controls && CFG.controls.profileId) || 1, turnSpeed: (CFG.controls && CFG.controls.turnSpeed) || 110 };
+const controlSettings = { profileId: (CFG.controls && CFG.controls.profileId) || 2, turnSpeed: (CFG.controls && CFG.controls.turnSpeed) || 110 };
 let customDirty = false;
 let capturingAction = null;
 const codeToAction = new Map();
@@ -1041,6 +1043,42 @@ window.addEventListener('click', (e) => {
 });
 
 /* ============ CONTROLES TÁCTILES (celular / tablet) ============ */
+/* ============ CELULAR: PANTALLA COMPLETA + HORIZONTAL POR DEFECTO ============ */
+// Siempre arranca activado al cargar (no se guarda el «No»). El navegador exige un toque del usuario para permitirlo:
+// se aplica en el primer toque en la pantalla (aunque aún no se haya pulsado «Entrar») y de nuevo al entrar.
+var touchFsAuto = true;
+function touchFsLandscape() {
+    try {
+        const el = document.documentElement, req = el.requestFullscreen || el.webkitRequestFullscreen;
+        const lock = () => { try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); } catch (e) { /* sin bloqueo */ } };
+        if (document.fullscreenElement || document.webkitFullscreenElement) { lock(); return; }
+        if (!req) return;
+        const p = req.call(el);
+        if (p && p.then) p.then(lock).catch(() => {}); else lock();
+    } catch (e) { /* sin pantalla completa */ }
+}
+function touchFsRefreshBtn() { const b = $('btn-fs-auto'); if (b) b.innerText = touchFsAuto ? '📱 Auto pantalla: Sí' : '📱 Auto pantalla: No'; }
+(function touchFsInit() {
+    if (!TOUCH.on) return;
+    const b = $('btn-fs-auto'); if (!b) return;
+    b.style.display = ''; touchFsRefreshBtn();
+    b.addEventListener('click', (e) => {
+        touchFsAuto = !touchFsAuto; touchFsRefreshBtn();
+        if (touchFsAuto) { touchFsLandscape(); }
+        else {
+            try { if (document.fullscreenElement || document.webkitFullscreenElement) (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (err) { /* ya salió */ }
+            try { screen.orientation && screen.orientation.unlock && screen.orientation.unlock(); } catch (err) { /* sin bloqueo */ }
+        }
+        e.currentTarget.blur();
+    });
+    const first = (e) => {
+        if (e.target && e.target.id === 'btn-fs-auto') return;   // ese botón decide por sí mismo
+        window.removeEventListener('pointerup', first, true);
+        if (touchFsAuto) touchFsLandscape();
+    };
+    window.addEventListener('pointerup', first, true);
+})();
+
 function touchShow(on) { $('touch-ui').style.display = (on && TOUCH.on) ? 'block' : 'none'; }
 function touchEnter() {
     if (!TOUCH.on) return;
@@ -1048,7 +1086,7 @@ function touchEnter() {
     // Pantalla completa + horizontal (el navegador lo permite solo tras un toque del usuario: el botón Entrar)
     try {
         const el = document.documentElement, req = el.requestFullscreen || el.webkitRequestFullscreen;
-        if (req && !(document.fullscreenElement || document.webkitFullscreenElement)) {
+        if (touchFsAuto && req && !(document.fullscreenElement || document.webkitFullscreenElement)) {
             const p = req.call(el);
             const lock = () => { try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); } catch (e) { /* sin bloqueo */ } };
             if (p && p.then) p.then(lock).catch(() => {}); else lock();
@@ -2207,7 +2245,7 @@ function updatePlayerPhysics(delta, moveDelta) {
     if (allowHorizontalMove) playerLogicalPos.add(moveDelta);
     if (!body.noclip && solidColliderMeshes.length > 0) resolveDynamicCollisions(solidColliderMeshes, body);   // reacciona a objetos que se escalan / animan
 
-    let groundY = floorCfg.enabled ? 0 : -Infinity;
+    let groundY = (floorCfg.enabled && Math.abs(playerLogicalPos.x) <= 50 * floorCfg.scale && Math.abs(playerLogicalPos.z) <= 50 * floorCfg.scale) ? 0 : -Infinity;   // el piso es un plano de 100 × 100 m (× escala): fuera de sus bordes no hay suelo y se cae
     if (solidColliderMeshes.length > 0) {
         const rayHead = new THREE.Vector3(playerLogicalPos.x, playerLogicalPos.y + 1.2, playerLogicalPos.z);
         groundRay.set(rayHead, downVector);
@@ -2242,7 +2280,7 @@ function updatePlayerPhysics(delta, moveDelta) {
     updateSpecialTools(delta, moveDelta, body, specialPrevEyeY, targetEyeY);
     try { if (GM.tick(delta, body, specialPrevEyeY, targetEyeY)) return; } catch (gmErr) { if (!GM.warned) { GM.warned = true; console.warn('Modo Juego:', gmErr); } }
 
-    if (!floorCfg.enabled && (playerLogicalPos.y - playerConfig.eyeHeight) < floorCfg.killY) {
+    if ((playerLogicalPos.y - playerConfig.eyeHeight) < floorCfg.killY) {
         respawnAtSpawn();
         return;
     }
@@ -3726,7 +3764,7 @@ function mpaBuildUI() {
     };
     let sig = '';
     setInterval(() => {
-        const show = MPA.editor ? true : !!(MPA.host && MPA.host.isPlaying() && (MPA.adminOn || MPA.isRoot));
+        const show = MPA.editor ? !!(MPA.host && MPA.host.isPlaying()) : !!(MPA.host && MPA.host.isPlaying() && (MPA.adminOn || MPA.isRoot));
         wrap.style.display = show ? 'flex' : 'none';
         if (!show) wrap.classList.remove('open');
         const now = (MP.started ? 1 : 0) + ':' + (MPA.adminOn ? 1 : 0) + ':' + (MPA.isRoot ? 1 : 0);
@@ -4469,12 +4507,33 @@ mpaInit({
         const now = performance.now();
         SCR.screens.forEach((s, uid) => { if (uid !== MP.uid && now - s.seen > 12000) removeScreen(uid); });   // el que compartía desapareció
         let others = 0; SCR.screens.forEach((s, uid) => { if (uid !== MP.uid) others++; });
-        const show = act && (canShare() || my.on || others > 0);
+        const show = act && (canShare() || my.on);
         panelWrap.style.display = show ? 'flex' : 'none';
         if (!show) panelWrap.classList.remove('open');
         const s2 = [canShare() ? 1 : 0, my.on ? 1 : 0, PM.on ? 1 : 0, others, MP.started ? 1 : 0, SCR.muted ? 1 : 0].join(':');
         if (s2 !== sig) { sig = s2; refresh(); }
     }, 1000);
+    // Tiempo real: cuando el admin da / quita un permiso o el rol, el botón de pantalla y el panel de admin aparecen o desaparecen al instante
+    function syncNow() {
+        try {
+            const act = playing();
+            if (my.on && !canShare()) { stopShare(true); toast('🖥️ Ya no tienes permiso para compartir pantalla'); }
+            let others = 0; SCR.screens.forEach((s, uid) => { if (uid !== MP.uid) others++; });
+            const show = act && (canShare() || my.on);
+            panelWrap.style.display = show ? 'flex' : 'none';
+            if (!show) panelWrap.classList.remove('open');
+            const s2 = [canShare() ? 1 : 0, my.on ? 1 : 0, PM.on ? 1 : 0, others, MP.started ? 1 : 0, SCR.muted ? 1 : 0].join(':');
+            if (s2 !== sig) { sig = s2; refresh(); }
+            const aw = document.getElementById('mpa-wrap');
+            if (aw) {
+                const sa = MPA.editor ? !!(MPA.host && MPA.host.isPlaying()) : !!(MPA.host && MPA.host.isPlaying() && (MPA.adminOn || MPA.isRoot));
+                aw.style.display = sa ? 'flex' : 'none';
+                if (!sa) aw.classList.remove('open');
+            }
+        } catch (e) { /* interfaz aún no lista */ }
+    }
+    { const _mr = MPA.refresh; MPA.refresh = function () { const r = _mr.apply(this, arguments); syncNow(); return r; }; }
+    setInterval(syncNow, 250);
     window.addEventListener('pagehide', () => { if (my.on) { try { mpBroadcast({ t: 'sc', u: MP.uid, on: 0 }); } catch (e) { /* sin red */ } } });
     refresh();
 })();
