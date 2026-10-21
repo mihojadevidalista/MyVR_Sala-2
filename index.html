@@ -77,6 +77,15 @@ input[type=text]:focus { border-color:var(--accent); }
 .mp-dot { width:12px; height:12px; border-radius:50%; flex:none; border:1px solid rgba(255,255,255,.4); }
 .mini { font-size:11px; color:var(--muted); line-height:1.4; }
 
+
+/* Bienvenida adaptable: sala, casilla de multijugador y botón Entrar siempre visibles; solo se desplaza la personalización */
+#welcome { align-items:center; padding:12px 5vw; }
+#welcome .card { overflow:hidden; max-height:calc(100vh - 24px); max-height:calc(100dvh - 24px); gap:10px; }
+#welcome .card .w-scroll { flex:1 1 auto; min-height:72px; overflow-y:auto; display:flex; flex-direction:column; gap:14px; padding-right:4px; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
+#welcome .card h1, #welcome .card #w-mp-box, #welcome .card #btn-enter { flex:none; }
+@media (max-height:700px) { #welcome .card { padding:14px; } #welcome h1 { font-size:17px; } #welcome .card #btn-enter { padding:10px; } }
+@media (max-height:330px) { #welcome .card { overflow-y:auto; } #welcome .card .w-scroll { flex:none; overflow:visible; } }
+@media (max-width:480px) { #welcome { justify-content:center; padding:8px; } #welcome .card { width:100%; } }
 </style>
 </head>
 <body>
@@ -132,6 +141,7 @@ input[type=text]:focus { border-color:var(--accent); }
 <div id="welcome">
     <div class="card">
         <h1 id="w-title">Bienvenido</h1>
+        <div class="w-scroll">
         <div>
             <h2>Tu apodo</h2>
             <input type="text" id="w-nick" maxlength="20" placeholder="Escribe tu nickname" autocomplete="off">
@@ -161,6 +171,7 @@ input[type=text]:focus { border-color:var(--accent); }
             <div class="row" style="margin-top:8px;"><span style="flex:1;">Nariz</span><select id="w-nose"><option value="small">Pequeña</option><option value="big">Grande</option><option value="none">Sin nariz</option></select></div>
             <div class="row" style="margin-top:8px;"><button id="w-myviri-reset" style="flex:1;" title="Vuelve a los valores iniciales de tu MyViri">🔄 Restablecer mi MyViri</button></div>
             <div class="mini" style="margin-top:4px;">💾 Tu MyViri se guarda en este navegador: no tendrás que configurarlo de nuevo, aunque cambies de espacio.</div>
+        </div>
         </div>
         <div id="w-mp-box">
             <h2>🌐 Multijugador</h2>
