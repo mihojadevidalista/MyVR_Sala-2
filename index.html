@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyVR</title>
+<title>MyVR Visor</title>
 <script type="importmap">
 { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
 </script>
@@ -141,16 +141,26 @@ input[type=text]:focus { border-color:var(--accent); }
             <h2>Elige tu avatar</h2>
             <div class="choice" id="w-choice">
                 <button id="w-ch-glb" style="display:none;">🤖<span>Avatar de la experiencia</span></button>
-                <button id="w-ch-default" class="active">🧍<span>Avatar por defecto</span></button>
+                <button id="w-ch-preset" style="display:none;">⭐<span id="w-ch-preset-name">MyViri preestablecido</span></button>
+                <button id="w-ch-default" class="active">🧍<span>Mi propio MyViri</span></button>
             </div>
         </div>
         <div id="w-default-opts">
-            <h2>Personaliza tu avatar</h2>
+            <h2>Personaliza tu MyViri</h2>
             <div class="row" style="margin-bottom:8px;">
                 <div id="face-preview"></div>
                 <label class="file-btn">📷 Cambiar foto de rostro<input type="file" id="w-face" accept="image/*"></label>
             </div>
             <div class="row"><span style="flex:1;">💇 Color de cabello</span><input type="color" id="w-hair" value="#3a2010"></div>
+            <div class="row" style="margin-top:8px;"><span style="flex:1;">🧑 Color de piel</span><input type="color" id="w-skin" value="#f1c27d"></div>
+            <div class="row" style="margin-top:8px;"><span style="flex:1;">Cabeza</span><select id="w-head"><option value="square">⬜ Cuadrada</option><option value="round">⚪ Circular</option></select></div>
+            <div class="row" style="margin-top:8px;"><span style="flex:1;">Cabello</span><select id="w-hairstyle"><option value="short">Corto</option><option value="long">Largo</option><option value="bald">Calvo</option></select></div>
+            <div class="row" style="margin-top:8px;"><span style="flex:1;">Ojos</span><select id="w-eyes"><option value="open">Abiertos</option><option value="closed">Cerrados</option><option value="half">Entrecerrados</option><option value="wink">Guiño</option></select></div>
+            <div class="row" style="margin-top:8px;"><span style="flex:1;">Boca</span><select id="w-mouth"><option value="happy">Feliz</option><option value="sad">Triste</option><option value="serious">Serio</option><option value="angry">Mal genio</option></select></div>
+            <div class="row" style="margin-top:8px;"><span style="flex:1;">Cejas</span><select id="w-brows"><option value="normal">Normales</option><option value="angry">Enojadas</option><option value="raised">Levantadas</option><option value="none">Sin cejas</option></select></div>
+            <div class="row" style="margin-top:8px;"><span style="flex:1;">Nariz</span><select id="w-nose"><option value="small">Pequeña</option><option value="big">Grande</option><option value="none">Sin nariz</option></select></div>
+            <div class="row" style="margin-top:8px;"><button id="w-myviri-reset" style="flex:1;" title="Vuelve a los valores iniciales de tu MyViri">🔄 Restablecer mi MyViri</button></div>
+            <div class="mini" style="margin-top:4px;">💾 Tu MyViri se guarda en este navegador: no tendrás que configurarlo de nuevo, aunque cambies de espacio.</div>
         </div>
         <div id="w-mp-box">
             <h2>🌐 Multijugador</h2>
@@ -167,9 +177,9 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 
-const CFG = {"title":"MyVR","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":0.2014,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1.07509,1.07509,1.07509]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,0.64641,6.17954],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,0.31486,-0.39817],[-0.4661,0.31486,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,0.31486,0.39817],[-0.4661,0.31486,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,0.41355,0.07509],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.94299,-1.28762],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"viewer":{"chat":true,"chatMax":140},"admin":{"pub":{"x":"ORkfQjZIK9uqtRf5JNx811Ax9PPnBXSdAplZ1-7Q0W0","y":"8-1YwZFegioBd7jMora5mUHo_vWigJVCgFcGmp0U__8"},"global":{"screen":false,"voice":false,"cam":false,"chat":true}},"mp":{"enabled":true,"room":"myvr-voe01n","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
+const CFG = {"title":"MyVR Visor","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":0.2014,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1.07509,1.07509,1.07509]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}},{"name":"Colisión por forma","enabled":true,"isTrigger":false,"verts":[[-8.61123,0,9.3793],[-8.61123,0.29867,9.3793],[-8.61123,0,-14.43873],[-8.61123,0.29867,-14.43873],[13.51076,0,9.3793],[13.51076,0.29867,9.3793],[13.51076,0,-14.43873],[13.51076,0.29867,-14.43873],[-7.64408,0.35171,8.42105],[-7.64408,6.95556,8.42105],[-7.64408,0.35171,7.67128],[-7.64408,6.95556,7.67128],[6.03906,0.35171,8.42105],[6.03906,6.95556,8.42105],[6.03906,0.35171,7.67128],[6.03906,6.95556,7.67128],[-7.5599,0.29867,7.56879],[-7.5599,9.11705,7.56879],[-7.5599,0.29867,-13.65216],[-7.5599,9.11705,-13.65216],[-6.8611,0.29867,7.56879],[-6.8611,9.11705,7.56879],[-6.8611,0.29867,-13.65216],[-6.8611,9.11705,-13.65216],[-6.70091,0.29867,-12.28523],[-6.70091,8.38481,-12.28523],[-6.70091,0.29867,-13.7653],[-6.70091,8.38481,-13.7653],[12.88227,0.29867,-12.28523],[12.88227,8.38481,-12.28523],[12.88227,0.29867,-13.7653],[12.88227,8.38481,-13.7653],[10.59885,0.29866,8.27551],[10.59885,8.70672,8.27551],[10.59885,0.29866,-11.9289],[10.59885,8.70672,-11.9289],[12.27077,0.29866,8.27551],[12.27077,8.70672,8.27551],[12.27077,0.29866,-11.9289],[12.27077,8.70672,-11.9289],[-7.35499,9.11705,9.10315],[-7.35499,9.71963,9.10315],[-7.35499,9.11705,-13.1055],[-7.35499,9.71963,-13.1055],[11.94136,9.11705,9.10315],[11.94136,9.71963,9.10315],[11.94136,9.11705,-13.1055],[11.94136,9.71963,-13.1055]],"indices":[0,1,3,0,3,2,2,3,7,2,7,6,6,7,5,6,5,4,4,5,1,4,1,0,2,6,4,2,4,0,7,3,1,7,1,5,8,9,11,8,11,10,10,11,15,10,15,14,14,15,13,14,13,12,12,13,9,12,9,8,10,14,12,10,12,8,15,11,9,15,9,13,16,17,19,16,19,18,18,19,23,18,23,22,22,23,21,22,21,20,20,21,17,20,17,16,18,22,20,18,20,16,23,19,17,23,17,21,24,25,27,24,27,26,26,27,31,26,31,30,30,31,29,30,29,28,28,29,25,28,25,24,26,30,28,26,28,24,31,27,25,31,25,29,32,33,35,32,35,34,34,35,39,34,39,38,38,39,37,38,37,36,36,37,33,36,33,32,34,38,36,34,36,32,39,35,33,39,33,37,40,41,43,40,43,42,42,43,47,42,47,46,46,47,45,46,45,44,44,45,41,44,41,40,42,46,44,42,44,40,47,43,41,47,41,45],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,0.64641,6.17954],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,0.31486,-0.39817],[-0.4661,0.31486,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,0.31486,0.39817],[-0.4661,0.31486,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,0.41355,0.07509],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.94299,-1.28762],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"short","hairColor":"#39e12d","skin":"#f5b85b","torso":"#2054a2","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"preset":{"enabled":true,"name":""},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"viewer":{"chat":true,"chatMax":140},"admin":{"pub":{"x":"ORkfQjZIK9uqtRf5JNx811Ax9PPnBXSdAplZ1-7Q0W0","y":"8-1YwZFegioBd7jMora5mUHo_vWigJVCgFcGmp0U__8"},"global":{"screen":false,"voice":false,"cam":false,"chat":true}},"mp":{"enabled":true,"room":"myvr-voe01n","maxUsers":8},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
 const $ = (id) => document.getElementById(id);
-document.title = CFG.title || 'MyVR';
+document.title = CFG.title || 'MyVR Visor';
 
 /* ============ ESCENA Y RENDER ============ */
 const canvas = $('canvas3d');
@@ -750,9 +760,12 @@ async function buildAvatar() {
 
 function setAvatarChoice(choice) {
     if (choice === 'glb' && !customAvatarModel) choice = 'default';
+    if (choice === 'preset' && !(window.__myv && window.__myv.presetOn)) choice = 'default';
     avatarChoice = choice;
-    defaultAvatarMesh.visible = (choice === 'default');
+    defaultAvatarMesh.visible = (choice === 'default' || choice === 'preset');
     if (customAvatarModel) customAvatarModel.visible = (choice === 'glb');
+    if (window.__myv) window.__myv.apply(choice);
+    { const bp = $('w-ch-preset'); if (bp) bp.classList.toggle('active', choice === 'preset'); }
     $('w-ch-glb').classList.toggle('active', choice === 'glb');
     $('w-ch-default').classList.toggle('active', choice === 'default');
     $('w-default-opts').style.display = (choice === 'default') ? 'block' : 'none';
@@ -2321,7 +2334,7 @@ function updatePlayerPhysics(delta, moveDelta) {
 }
 
 /* ============ BIENVENIDA ============ */
-$('w-title').innerText = CFG.title || 'MyVR';
+$('w-title').innerText = CFG.title || 'MyVR Visor';
 let defaultNick = 'Visitante_' + Math.floor(Math.random() * 899 + 100);
 let savedHair = null;
 try {
@@ -2335,6 +2348,7 @@ $('w-hair').value = '#' + avatarHairMat.color.getHexString();
 
 $('w-ch-glb').addEventListener('click', () => setAvatarChoice('glb'));
 $('w-ch-default').addEventListener('click', () => setAvatarChoice('default'));
+$('w-ch-preset').addEventListener('click', () => setAvatarChoice('preset'));
 $('w-hair').addEventListener('input', (e) => avatarHairMat.color.set(e.target.value));
 $('w-face').addEventListener('change', (e) => {
     const f = e.target.files[0];
@@ -2377,6 +2391,123 @@ function startExperience() {
 }
 $('btn-enter').addEventListener('click', startExperience);
 
+/* ============ MyViri: PREESTABLECIDO DEL ADMIN + MyViri PROPIO (se guarda en el navegador) ============
+   · «Preestablecido»: el MyViri configurado por el administrador en MyVR Editor (modo Avatar), tal cual se exportó.
+   · «Mi propio MyViri»: el usuario lo personaliza (colores, rostro, cabello, foto…) y queda guardado en localStorage,
+     así no se pierde ni hay que repetirlo al volver o al cambiar de espacio (mismo navegador y sitio). */
+const MYV = (function () {
+    const LS = 'myvr_myviri_v1';
+    const HEX = /^#[0-9a-fA-F]{6}$/;
+    const pick = (v, list, d) => (list.indexOf(v) >= 0 ? v : d);
+    const presetOn = !(AV.preset && AV.preset.enabled === false);
+    const presetName = (AV.preset && AV.preset.name) ? String(AV.preset.name).slice(0, 24) : 'MyViri preestablecido';
+    const preset = { body: HEX.test(AV.bodyColor) ? AV.bodyColor : '#4772b3', hair: HEX.test(AV.hairColor) ? AV.hairColor : '#3a2010', mva: null, tex: null };
+    const own = { body: '#4772b3', hair: '#3a2010', skin: '#f1c27d', head: 'square', hairStyle: 'short', eyes: 'open', mouth: 'happy', brows: 'normal', nose: 'small' };
+    let ownFace = null, ownTex = null, ready = false, timer = 0;
+    const IDS = { body: 'w-color', hair: 'w-hair', skin: 'w-skin', head: 'w-head', hairStyle: 'w-hairstyle', eyes: 'w-eyes', mouth: 'w-mouth', brows: 'w-brows', nose: 'w-nose' };
+
+    function ownCfg() {
+        return { enabled: true, head: own.head, hair: own.hairStyle, hairColor: own.hair, skin: own.skin, torso: own.body,
+                 eyes: own.eyes, mouth: own.mouth, brows: own.brows, nose: own.nose };
+    }
+    function setFace(tex) {
+        facePlaneMat.map = tex || null; facePlaneMat.needsUpdate = true; facePlane.visible = !!tex;
+    }
+    function apply(choice) {
+        if (!ready) return;
+        if (choice === 'preset') {
+            avatarBodyMat.color.set(preset.body); avatarHairMat.color.set(preset.hair);
+            MVA.set(preset.mva); setFace(preset.tex);
+        } else if (choice === 'default') {
+            avatarBodyMat.color.set(own.body); avatarHairMat.color.set(own.hair);
+            MVA.set(ownCfg()); setFace(ownTex);
+        }
+        save();
+    }
+    function save() {
+        if (!ready) return;
+        try { localStorage.setItem(LS, JSON.stringify(Object.assign({ v: 1, choice: avatarChoice, face: ownFace }, own))); } catch (err) { /* sin almacenamiento */ }
+    }
+    function readInputs() {
+        own.body = $(IDS.body).value; own.hair = $(IDS.hair).value; own.skin = $(IDS.skin).value;
+        own.head = $(IDS.head).value; own.hairStyle = $(IDS.hairStyle).value; own.eyes = $(IDS.eyes).value;
+        own.mouth = $(IDS.mouth).value; own.brows = $(IDS.brows).value; own.nose = $(IDS.nose).value;
+    }
+    function writeInputs() { for (const k in IDS) $(IDS[k]).value = own[k]; }
+    function changed() {
+        if (!ready) return;
+        readInputs();
+        clearTimeout(timer);
+        timer = setTimeout(() => { if (avatarChoice === 'default') apply('default'); else save(); }, 60);
+    }
+    function setOwnFace(dataUrl) {
+        ownFace = dataUrl;
+        textureLoader.load(dataUrl, (tex) => {
+            tex.colorSpace = THREE.SRGBColorSpace;
+            ownTex = tex;
+            $('face-preview').style.backgroundImage = 'url("' + dataUrl + '")';
+            if (avatarChoice === 'default') setFace(ownTex);
+            save();
+        });
+    }
+    function shrink(file) {   // foto de rostro reducida (≤256 px) para que quepa en el almacenamiento del navegador
+        const url = URL.createObjectURL(file), img = new Image();
+        img.onload = () => {
+            const k = Math.min(1, 256 / Math.max(img.width, img.height, 1));
+            const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(img.width * k)); c.height = Math.max(1, Math.round(img.height * k));
+            c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+            URL.revokeObjectURL(url);
+            let d = c.toDataURL('image/webp', 0.85);
+            if (d.indexOf('data:image/webp') !== 0) d = c.toDataURL('image/png');
+            setOwnFace(d);
+        };
+        img.onerror = () => URL.revokeObjectURL(url);
+        img.src = url;
+    }
+    function init() {
+        preset.mva = MVA.get();
+        preset.tex = AV.facePhoto ? facePlaneMat.map : null;
+        // Estado inicial de «mi MyViri»: lo que ya hubiera en la bienvenida (valores heredados) y, encima, lo guardado
+        own.body = $(IDS.body).value; own.hair = $(IDS.hair).value;
+        let saved = null;
+        try { saved = JSON.parse(localStorage.getItem(LS)); } catch (err) { saved = null; }
+        if (saved && saved.v === 1) {
+            if (HEX.test(saved.body)) own.body = saved.body;
+            if (HEX.test(saved.hair)) own.hair = saved.hair;
+            if (HEX.test(saved.skin)) own.skin = saved.skin;
+            own.head = pick(saved.head, ['round', 'square'], own.head);
+            own.hairStyle = pick(saved.hairStyle, ['short', 'long', 'bald'], own.hairStyle);
+            own.eyes = pick(saved.eyes, ['open', 'closed', 'half', 'wink'], own.eyes);
+            own.mouth = pick(saved.mouth, ['happy', 'sad', 'serious', 'angry'], own.mouth);
+            own.brows = pick(saved.brows, ['normal', 'angry', 'raised', 'none'], own.brows);
+            own.nose = pick(saved.nose, ['small', 'big', 'none'], own.nose);
+        }
+        writeInputs();
+        for (const k in IDS) { const el = $(IDS[k]); el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', changed); }
+        $('w-face').addEventListener('change', (e) => { const f = e.target.files[0]; if (f) shrink(f); });
+        $('w-myviri-reset').addEventListener('click', () => {
+            Object.assign(own, { body: preset.body, hair: preset.hair, skin: '#f1c27d', head: 'square', hairStyle: 'short', eyes: 'open', mouth: 'happy', brows: 'normal', nose: 'small' });
+            ownFace = null; ownTex = null; $('face-preview').style.backgroundImage = '';
+            writeInputs();
+            if (avatarChoice === 'default') apply('default'); else save();
+        });
+        // Botón del preestablecido
+        $('w-ch-preset').style.display = presetOn ? '' : 'none';
+        $('w-ch-preset-name').innerText = presetName;
+        ready = true;
+        if (saved && typeof saved.face === 'string' && saved.face.indexOf('data:image/') === 0) setOwnFace(saved.face);
+        // Elección inicial: la recordada si sigue disponible; si no, el avatar de la experiencia, el preestablecido o el propio
+        let ch = (saved && saved.v === 1) ? saved.choice : null;
+        if (ch === 'glb' && !customAvatarModel) ch = null;
+        if (ch === 'preset' && !presetOn) ch = null;
+        if (ch !== 'glb' && ch !== 'preset' && ch !== 'default') ch = (avatarChoice === 'glb') ? 'glb' : (presetOn ? 'preset' : 'default');
+        setAvatarChoice(ch);
+    }
+    const api = { init, apply, get presetOn() { return presetOn; } };
+    window.__myv = api;
+    return api;
+})();
+
 /* ============ ARRANQUE ============ */
 async function boot() {
     try {
@@ -2391,6 +2522,7 @@ async function boot() {
         await setupEnvironment(); tick();
         buildLights(); tick();
         await buildAvatar(); tick();
+        try { MYV.init(); } catch (myvErr) { console.warn('MyViri:', myvErr); }
 
         const built = await Promise.all((CFG.entities || []).map(async (d) => {
             try { return await buildEntity(d); }
@@ -4957,7 +5089,7 @@ const MVA = (function (isDefault) {
     build();
     {   const _r = renderer.render.bind(renderer); renderer.render = function (a, b) { try { tick(); } catch (e) { /* nada */ } _r(a, b); }; }
     return { cfg, get: () => JSON.parse(JSON.stringify(cfg)), set: (p) => { Object.assign(cfg, p || {}); build(); }, demo: (b) => { demoOn = !!b; } };
-})(() => avatarChoice === 'default');
+})(() => avatarChoice === 'default' || avatarChoice === 'preset');
 
 if (AV.custom) MVA.set(AV.custom);
 
