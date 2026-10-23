@@ -188,7 +188,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 
-const CFG = {"title":"MyVR Visor","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":0.2014,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1.00059,1.00059,1.00059]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"game":{"anim":"none","amp":2,"speed":1.5,"face":false,"role":"none","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"kill","hp":1,"item":"sword_long","power":2,"duration":8}},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}},{"name":"Colisión por forma","enabled":true,"isTrigger":false,"verts":[[-8.61123,0,9.3793],[-8.61123,0.29867,9.3793],[-8.61123,0,-14.43873],[-8.61123,0.29867,-14.43873],[13.51076,0,9.3793],[13.51076,0.29867,9.3793],[13.51076,0,-14.43873],[13.51076,0.29867,-14.43873],[-7.64408,0.35171,8.42105],[-7.64408,6.95556,8.42105],[-7.64408,0.35171,7.67128],[-7.64408,6.95556,7.67128],[6.03906,0.35171,8.42105],[6.03906,6.95556,8.42105],[6.03906,0.35171,7.67128],[6.03906,6.95556,7.67128],[-7.5599,0.29867,7.56879],[-7.5599,9.11705,7.56879],[-7.5599,0.29867,-13.65216],[-7.5599,9.11705,-13.65216],[-6.8611,0.29867,7.56879],[-6.8611,9.11705,7.56879],[-6.8611,0.29867,-13.65216],[-6.8611,9.11705,-13.65216],[-6.70091,0.29867,-12.28523],[-6.70091,8.38481,-12.28523],[-6.70091,0.29867,-13.7653],[-6.70091,8.38481,-13.7653],[12.88227,0.29867,-12.28523],[12.88227,8.38481,-12.28523],[12.88227,0.29867,-13.7653],[12.88227,8.38481,-13.7653],[10.59885,0.29866,8.27551],[10.59885,8.70672,8.27551],[10.59885,0.29866,-11.9289],[10.59885,8.70672,-11.9289],[12.27077,0.29866,8.27551],[12.27077,8.70672,8.27551],[12.27077,0.29866,-11.9289],[12.27077,8.70672,-11.9289],[-7.35499,9.11705,9.10315],[-7.35499,9.71963,9.10315],[-7.35499,9.11705,-13.1055],[-7.35499,9.71963,-13.1055],[11.94136,9.11705,9.10315],[11.94136,9.71963,9.10315],[11.94136,9.11705,-13.1055],[11.94136,9.71963,-13.1055]],"indices":[0,1,3,0,3,2,2,3,7,2,7,6,6,7,5,6,5,4,4,5,1,4,1,0,2,6,4,2,4,0,7,3,1,7,1,5,8,9,11,8,11,10,10,11,15,10,15,14,14,15,13,14,13,12,12,13,9,12,9,8,10,14,12,10,12,8,15,11,9,15,9,13,16,17,19,16,19,18,18,19,23,18,23,22,22,23,21,22,21,20,20,21,17,20,17,16,18,22,20,18,20,16,23,19,17,23,17,21,24,25,27,24,27,26,26,27,31,26,31,30,30,31,29,30,29,28,28,29,25,28,25,24,26,30,28,26,28,24,31,27,25,31,25,29,32,33,35,32,35,34,34,35,39,34,39,38,38,39,37,38,37,36,36,37,33,36,33,32,34,38,36,34,36,32,39,35,33,39,33,37,40,41,43,40,43,42,42,43,47,42,47,46,46,47,45,46,45,44,44,45,41,44,41,40,42,46,44,42,44,40,47,43,41,47,41,45],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,0.64641,6.17954],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,0.31486,-0.39817],[-0.4661,0.31486,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,0.31486,0.39817],[-0.4661,0.31486,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,0.41355,0.07509],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.94299,-1.28762],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"short","hairColor":"#39e12d","skin":"#f5b85b","torso":"#2054a2","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"preset":{"enabled":true,"name":""},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"fps"},"viewer":{"chat":true,"chatMax":140,"bubbles":true},"admin":{"pub":{"x":"ORkfQjZIK9uqtRf5JNx811Ax9PPnBXSdAplZ1-7Q0W0","y":"8-1YwZFegioBd7jMora5mUHo_vWigJVCgFcGmp0U__8"},"global":{"screen":false,"voice":false,"cam":false,"chat":true}},"mp":{"enabled":true,"room":"myvr-voe01n","maxUsers":8,"turn":null},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
+const CFG = {"title":"MyVR Visor","env":{"color":"#0084bd","image":null,"light":true},"lights":[{"main":true,"type":"sun","name":"☀️ Sol","xform":{"pos":[12,18,10],"quat":[0,0,0,1],"scl":[1,1,1]},"intensity":1.5,"color":"#ffffff","castShadow":true}],"timeline":{"duration":10,"loop":true,"autoplay":true,"time":0,"items":[{"uid":"ent_1","li":-1,"colFollow":true,"duration":3,"loop":true,"time":2.3997,"tracks":{"scl.u":[{"t":0,"v":1,"e":"smooth"},{"t":1.434,"v":2.4,"e":"smooth"},{"t":3,"v":1,"e":"smooth"}],"pos.x":[{"t":0,"v":-7.9339,"e":"linear"},{"t":1.434,"v":-7.9339,"e":"linear"},{"t":3,"v":-7.9339,"e":"linear"}],"pos.z":[{"t":0,"v":0,"e":"linear"},{"t":1.434,"v":0,"e":"linear"},{"t":3,"v":0,"e":"linear"}],"pos.y":[{"t":0,"v":0.75,"e":"linear"},{"t":1.434,"v":0.75,"e":"linear"},{"t":3,"v":0.75,"e":"linear"}]}}]},"entities":[{"uid":"ent_1","name":"Cubo 15","kind":"cube","visible":true,"transparency":0,"xform":{"pos":[-7.9339,0.75,0],"quat":[0,0,0,1],"scl":[1.45945,1.45945,1.45945]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.75,-0.75,-0.75],[0.75,-0.75,-0.75],[0.75,0.75,-0.75],[-0.75,0.75,-0.75],[-0.75,-0.75,0.75],[0.75,-0.75,0.75],[0.75,0.75,0.75],[-0.75,0.75,0.75]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}]},{"uid":"ent_2","name":"pared cas.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[0,0,-6.30777],"quat":[0,0,0,1],"scl":[0.28872,0.28872,0.28872]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-1.16099,-0.5101,-1.25],[1.16099,-0.5101,-1.25],[1.16099,0.5101,-1.25],[-1.16099,0.5101,-1.25],[-1.16099,-0.5101,1.25],[1.16099,-0.5101,1.25],[1.16099,0.5101,1.25],[-1.16099,0.5101,1.25]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"asset":"assets/models/pared_cas.glb"},{"uid":"ent_3","name":"pato 3.glb","kind":"glb","visible":true,"transparency":0,"xform":{"pos":[5.14839,2.26282,-2.42508],"quat":[0,0,0,1],"scl":[0.94274,0.94274,0.94274]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":false,"verts":[[-0.4661,-1.08812,-0.39817],[0.84808,-1.08812,-0.39817],[0.84808,1.51429,-0.39817],[-0.4661,1.51429,-0.39817],[-0.4661,-1.08812,0.39817],[0.84808,-1.08812,0.39817],[0.84808,1.51429,0.39817],[-0.4661,1.51429,0.39817]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0.00356,-0.41107,0.10622],"quat":[0,0,0,1],"scl":[1,1,1]}}],"pivot":[-0.00356,0.41107,-2.57237],"game":{"anim":"jump","amp":1.2,"speed":1,"face":false,"role":"enemy","npcMode":"simple","text":"","range":3.5,"lookAt":false,"stomp":"hurt","hp":2,"item":"none","power":1,"duration":8},"asset":"assets/models/pato_3.glb"},{"uid":"ent_4","name":"🚪 Puerta → Sala 1","kind":"portal","visible":true,"transparency":0,"xform":{"pos":[8.25253,0.05,0],"quat":[0,0,0,1],"scl":[1,1,1]},"rules":{"touchAction":"none","touchUrl":"","touchMsg":"","clickAction":"none","clickUrl":"","clickMsg":"","touchValue":50,"clickValue":50,"targetIds":[]},"colliders":[{"name":"Colisión 1","enabled":true,"isTrigger":true,"verts":[[-0.9,-0.05,-0.9],[0.9,-0.05,-0.9],[0.9,0.05,-0.9],[-0.9,0.05,-0.9],[-0.9,-0.05,0.9],[0.9,-0.05,0.9],[0.9,0.05,0.9],[-0.9,0.05,0.9]],"indices":[0,2,1,0,3,2,4,5,6,4,6,7,4,7,3,4,3,0,1,2,6,1,6,5,3,7,6,3,6,2,4,0,1,4,1,5],"pivot":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]}}],"portal":{"padType":"A","portalId":1,"bidirectional":true,"initialLocked":false,"linkedUid":null,"dest":{"type":"link","url":"https://mihojadevidalista.github.io/MyVR_Sala-1/","label":"Sala 1"}}}],"globalRules":[],"avatar":{"glb":null,"glbXform":null,"states":{},"runSpeed":6,"defaultXform":{"pos":[0,0,0],"quat":[0,0,0,1],"scl":[1,1,1]},"face":{"pos":[0.01126,1.38,0.19833],"quat":[0,0,0,1],"scl":[1,1,1]},"facePhoto":null,"hairColor":"#3a2010","bodyColor":"#4772b3","custom":{"enabled":true,"head":"square","hair":"long","hairColor":"#39e12d","skin":"#f5b85b","torso":"#4772b3","eyes":"half","mouth":"happy","brows":"raised","nose":"big"},"preset":{"enabled":true,"name":""},"cams":{"fps":{"x":0,"y":1.7,"z":0},"tps":{"x":0,"y":1.8,"z":1.85}},"phys":{"radius":0.23317,"height":1.76251,"noclip":false}},"player":{"speed":16,"jumpEnabled":true,"jumpForce":8.5,"maxSlopeAngle":45,"stepHeight":0.35,"gravity":22,"eyeHeight":1.7},"floor":{"enabled":true,"scale":1,"killY":-20},"spawn":{"pos":[0,1.7,5],"rotY":0},"view":{"perspective":"avatar"},"lives":{"enabled":false,"count":3},"start":{"item":"none","power":1,"uses":0,"keyId":"llave1","coins":0},"viewer":{"chat":true,"chatMax":140,"bubbles":true},"admin":{"pub":{"x":"tRgdl4gfULubiDmGb9Z4NGhpenlyqDQ5lQhYugLQbjU","y":"_KEKpXhbbBhnx94G9l_5pRWhgfDB_HCMpGEHZcA35vw"},"global":{"screen":true,"voice":false,"cam":false,"chat":true}},"mp":{"enabled":true,"room":"myvr-rb10kp","maxUsers":8,"turn":null,"relay":"","publicRelay":true},"controls":{"profileId":2,"turnSpeed":110},"embedded":{"assets/models/pared_cas.glb":"assets/_embed/models__pared_cas.glb.js","assets/models/pato_3.glb":"assets/_embed/models__pato_3.glb.js"}};
 const $ = (id) => document.getElementById(id);
 document.title = CFG.title || 'MyVR Visor';
 
@@ -742,6 +742,33 @@ avatarGroup.add(defaultAvatarMesh);
 let customAvatarModel = null;
 let avatarMixer = null;
 let avatarChoice = 'default';
+// GLB por acción (caminar / correr / saltar): el modelo cambia según lo que hace el avatar
+const avStates = { walk: null, run: null, jump: null };
+let avCurState = 'idle', avLastPos = null, avSpeedSm = 0, avAirT = 0, avRunSpeed = 6;
+function avDesiredState(delta) {
+    const p = playerLogicalPos;
+    if (!avLastPos) avLastPos = new THREE.Vector3().copy(p);
+    const d = Math.hypot(p.x - avLastPos.x, p.z - avLastPos.z);
+    avLastPos.copy(p);
+    if (delta > 0 && d < 2.5) avSpeedSm += ((d / delta) - avSpeedSm) * Math.min(1, delta * 10);
+    avAirT = isGrounded ? 0 : avAirT + delta;
+    if (avAirT > 0.12 && avStates.jump) return 'jump';
+    if (avSpeedSm > 0.4) {
+        const order = avSpeedSm > avRunSpeed ? ['run', 'walk'] : ['walk', 'run'];
+        return order.find(k => avStates[k]) || 'idle';
+    }
+    return 'idle';
+}
+function avStatesTick(delta) {
+    if (!customAvatarModel || !(avStates.walk || avStates.run || avStates.jump)) return;
+    if (avatarChoice !== 'glb') { ['walk', 'run', 'jump'].forEach(k => { if (avStates[k]) avStates[k].model.visible = false; }); return; }
+    const want = (state === 'play') ? avDesiredState(delta) : 'idle';
+    const slot = avStates[want] || null;
+    if (want !== avCurState) { avCurState = want; if (slot && slot.action) slot.action.reset().play(); }
+    customAvatarModel.visible = !slot;
+    ['walk', 'run', 'jump'].forEach(k => { if (avStates[k]) avStates[k].model.visible = (avStates[k] === slot); });
+    if (slot && slot.mixer) slot.mixer.update(delta);
+}
 let nameTag = null;
 
 async function buildAvatar() {
@@ -765,6 +792,28 @@ async function buildAvatar() {
             }
             avatarChoice = 'glb';
         } catch (err) { console.warn('Avatar GLB no disponible', err); customAvatarModel = null; }
+    }
+    if (customAvatarModel && AV.states) {
+        for (const k of ['walk', 'run', 'jump']) {
+            const s = AV.states[k];
+            if (!s || !s.glb) continue;
+            try {
+                const g = await loadGLBAsset(s.glb);
+                const m = g.scene;
+                applyXform(m, s.xform);
+                m.traverse(c => { if (c.isMesh) c.castShadow = true; });
+                m.visible = false;
+                avatarGroup.add(m);
+                const slot = { model: m, mixer: null, action: null };
+                if (g.animations && g.animations.length) {
+                    slot.mixer = new THREE.AnimationMixer(m);
+                    slot.action = slot.mixer.clipAction(g.animations[0]);
+                    slot.action.play();
+                }
+                avStates[k] = slot;
+            } catch (err) { console.warn('Avatar GLB (' + k + ') no disponible', err); }
+        }
+        if (isFinite(AV.runSpeed) && AV.runSpeed > 0) avRunSpeed = AV.runSpeed;
     }
     setAvatarChoice(avatarChoice);
 }
@@ -1661,12 +1710,18 @@ function updateSpecialTools(delta, moveDelta, body, prevEyeY, targetEyeY) {
                      stomp, hp, item, power, duration }
    Por defecto un objeto NO tiene ningún comportamiento. Solo actúa en modo Explorar / Visor.
    ================================================================= */
+/* v55: configuración global de vidas del personaje (visor: CFG.lives · editor: panel Modo Juego) */
+function livesConfig() {
+    try { if (typeof CFG !== 'undefined' && CFG) return CFG.lives || null; } catch (e) { /* sin configuración */ }
+    return window.__gmLives || null;
+}
 const GM = (function (isPlaying) {
     const G = {
         running: false, t: 0, list: [], base: new Map(), gone: new Set(), hp: new Map(), dying: [], stompCd: new Map(),
         invuln: 0, weapon: null, wCool: 0, effects: {}, savedJump: null, flyV: 0, flyPower: 6,
         keys: { up: false, down: false }, touch: { up: false, down: false },
-        nearNpc: null, dlgUid: null, dlgIdx: 0, bubbleKey: '', hudT: 0, fx: [], ghost: new Map(), ui: null
+        nearNpc: null, dlgUid: null, dlgIdx: 0, bubbleKey: '', hudT: 0, fx: [], ghost: new Map(), ui: null,
+        coins: 0, keyring: new Map(), opening: [], goalCd: 0, econ: false, shopKey: '', lastDrop: 0
     };
     const Y_AXIS = new THREE.Vector3(0, 1, 0);
     const qTmp = new THREE.Quaternion();
@@ -1679,7 +1734,7 @@ const GM = (function (isPlaying) {
 
     const EFFECT_NAMES = { superjump: '🦘 Súper salto', fly: '🕊️ Vuelo', invis: '👻 Invisible' };
 
-    function isActive(g) { return !!g && (g.anim !== 'none' || g.role !== 'none' || g.item !== 'none'); }
+    function isActive(g) { return !!g && (g.anim !== 'none' || g.role !== 'none' || g.item !== 'none' || !!g.coinOn || !!g.lockKey); }
     function uidOf(ent) { return ent.userData.uid; }
 
     // Cajas en mundo de un objeto: sus mallas de colisión activas o, si no hay, el objeto completo
@@ -1734,8 +1789,10 @@ const GM = (function (isPlaying) {
     function refreshHud() {
         const ui = ensureUI();
         const parts = [];
-        if (G.weapon) parts.push(G.weapon.icon + ' ' + G.weapon.name + ' · tecla F');
+        if (G.weapon) parts.push(G.weapon.icon + ' ' + G.weapon.name + (G.weapon.max > 0 ? ' · ' + G.weapon.ammo + '/' + G.weapon.max : ' · ∞') + ' · tecla F');
         Object.keys(G.effects).forEach(k => parts.push((EFFECT_NAMES[k] || k) + ' ' + Math.max(0, Math.ceil(G.effects[k].left)) + ' s'));
+        if (G.econ || G.coins > 0) parts.push('🪙 ' + G.coins);
+        G.keyring.forEach((n, id) => parts.push('🗝️ ' + id + (n > 1 ? ' ×' + n : '')));
         ui.hud.textContent = '';
         parts.forEach(p => { const s = document.createElement('span'); s.textContent = p; ui.hud.appendChild(s); });
         ui.hud.style.display = parts.length ? 'flex' : 'none';
@@ -1744,6 +1801,7 @@ const GM = (function (isPlaying) {
         const fl = !!G.effects.fly;
         ui.up.style.display = fl ? 'block' : 'none';
         ui.down.style.display = fl ? 'block' : 'none';
+        setReticle(!!(G.weapon && (G.weapon.type === 'laser' || G.weapon.type === 'gun')));
     }
 
     function hideUI() {
@@ -1751,6 +1809,7 @@ const GM = (function (isPlaying) {
         G.ui.hud.style.display = 'none'; G.ui.bubble.style.display = 'none';
         G.ui.act.style.display = 'none'; G.ui.up.style.display = 'none'; G.ui.down.style.display = 'none';
         G.touch.up = G.touch.down = false; G.keys.up = G.keys.down = false;
+        setReticle(false);
     }
 
     /* ---------- Diálogo de los NPC ---------- */
@@ -1759,9 +1818,9 @@ const GM = (function (isPlaying) {
     function renderBubble() {
         const ui = ensureUI();
         const npc = G.nearNpc;
-        if (!npc) { ui.bubble.style.display = 'none'; G.bubbleKey = ''; return; }
+        if (!npc) { ui.bubble.style.display = 'none'; G.bubbleKey = ''; npcBubbleClear(); return; }
         const g = npc.userData.game, lines = linesOf(g);
-        if (!lines.length) { ui.bubble.style.display = 'none'; G.bubbleKey = ''; return; }
+        if (!lines.length) { ui.bubble.style.display = 'none'; G.bubbleKey = ''; npcBubbleClear(); return; }
         const uid = uidOf(npc);
         if (G.dlgUid !== uid) { G.dlgUid = uid; G.dlgIdx = 0; }
         const dialog = g.npcMode === 'dialog' && lines.length > 1;
@@ -1769,6 +1828,18 @@ const GM = (function (isPlaying) {
         const key = uid + ':' + idx + ':' + (dialog ? 'd' : 's');
         if (key === G.bubbleKey) return;
         G.bubbleKey = key;
+        if (g.bubble !== false) {   // v56: globo estilo historieta sobre el NPC (como el chat)
+            npcBubbleSet(npc, dialog ? lines[idx] : lines.join(' '));
+            ui.bubble.textContent = '';
+            if (dialog) {
+                const nextHint = document.createElement('small');
+                nextHint.textContent = '▶ E / toca aquí para continuar (' + (idx + 1) + '/' + lines.length + ')';
+                ui.bubble.appendChild(nextHint);
+                ui.bubble.style.pointerEvents = 'auto'; ui.bubble.style.display = 'block';
+            } else { ui.bubble.style.display = 'none'; }
+            return;
+        }
+        npcBubbleClear();
         ui.bubble.textContent = '';
         const name = document.createElement('b'); name.textContent = npc.name || 'NPC'; ui.bubble.appendChild(name);
         ui.bubble.appendChild(document.createTextNode(dialog ? lines[idx] : lines.join('\n')));
@@ -1797,13 +1868,14 @@ const GM = (function (isPlaying) {
         if (G.gone.has(uid)) return;
         G.gone.add(uid);
         G.dying.push({ ent, t: 0 });
+        dropReward(ent);
     }
     function damage(ent, n) {
         const uid = uidOf(ent);
         if (G.gone.has(uid)) return;
         const hp = (G.hp.has(uid) ? G.hp.get(uid) : 1) - n;
         G.hp.set(uid, hp);
-        if (hp <= 0) { kill(ent); showToast('💥 ¡Enemigo eliminado!', 1500); }
+        if (hp <= 0) { kill(ent); showToast('💥 ¡Enemigo eliminado!' + (G.lastDrop ? ' · 🪙 +' + G.lastDrop : ''), 1800); G.lastDrop = 0; }
         else showToast('💢 ¡Golpe! Le quedan ' + hp + ' de vida', 1200);
     }
     // Devuelve al personaje al último checkpoint (o al inicio) con un aviso breve que se quita solo
@@ -1813,6 +1885,126 @@ const GM = (function (isPlaying) {
         respawnAtSpawn();
         showToast(activeCheckpoint ? '👾 ¡Te atrapó un enemigo! Vuelves al último checkpoint' : '👾 ¡Te atrapó un enemigo! Vuelves al inicio', 2200);
         return true;
+    }
+
+    /* ---------- v55: vidas (corazones), cartuchos, pérdida de ítem y balas enemigas ---------- */
+    let heartsEl = null, bulletGeo = null;
+    function hint(msg) { if (G.hintT && G.t < G.hintT) return; G.hintT = G.t + 2.5; showToast(msg, 2000); }
+    function renderHearts(blink) {
+        if (!G.maxHearts) { if (heartsEl) heartsEl.style.display = 'none'; return; }
+        if (!heartsEl) {
+            const st = document.createElement('style');
+            st.textContent = '#gm-hearts{position:fixed;top:64px;left:14px;z-index:130;display:none;flex-wrap:wrap;gap:2px;max-width:270px;font-size:22px;line-height:1.1;pointer-events:none;background:rgba(20,24,32,.62);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:3px 9px;text-shadow:0 0 4px #000}' +
+                '#gm-hearts.hit{animation:gmhit .4s}@keyframes gmhit{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}' +
+                '#gm-flash{position:fixed;inset:0;z-index:129;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,rgba(255,0,0,0) 45%,rgba(255,30,30,.55) 100%);transition:opacity .35s}';
+            document.head.appendChild(st);
+            heartsEl = document.createElement('div'); heartsEl.id = 'gm-hearts'; document.body.appendChild(heartsEl);
+            const fl = document.createElement('div'); fl.id = 'gm-flash'; document.body.appendChild(fl);
+        }
+        heartsEl.style.display = 'flex';
+        heartsEl.textContent = '';
+        if (G.maxHearts > 12) { const sp = document.createElement('span'); sp.textContent = '❤️ ' + G.hearts + ' / ' + G.maxHearts; heartsEl.appendChild(sp); }
+        else for (let i = 0; i < G.maxHearts; i++) { const sp = document.createElement('span'); sp.textContent = i < G.hearts ? '❤️' : '🖤'; heartsEl.appendChild(sp); }
+        if (blink) {
+            heartsEl.classList.remove('hit'); void heartsEl.offsetWidth; heartsEl.classList.add('hit');
+            const fl = document.getElementById('gm-flash');
+            if (fl) { fl.style.transition = 'none'; fl.style.opacity = '1'; setTimeout(() => { fl.style.transition = 'opacity .35s'; fl.style.opacity = '0'; }, 60); }
+        }
+    }
+    // Cartucho (recarga el láser / arma con puntero) y corazón (devuelve vida): solo se recogen si hacen falta
+    function useConsumable(g) {
+        const p = Math.max(1, Math.round(Number(g.power) || 1));
+        if (g.item === 'heart') {
+            if (!G.maxHearts) { hint('❤️ Este ítem necesita que las vidas estén activadas'); return false; }
+            if (G.hearts >= G.maxHearts) { hint('❤️ Ya tienes todos tus corazones'); return false; }
+            G.hearts = Math.min(G.maxHearts, G.hearts + p);
+            renderHearts();
+            showToast('❤️ ¡Recuperas ' + p + (p === 1 ? ' corazón!' : ' corazones!'), 2000);
+            return true;
+        }
+        const w = G.weapon;
+        if (!w || !(w.type === 'laser' || w.type === 'gun') || !(w.max > 0)) { hint('📦 Necesitas un láser o un arma con usos limitados para recargar'); return false; }
+        if (w.ammo >= w.max) { hint('📦 Tu arma ya está cargada'); return false; }
+        w.ammo = Math.min(w.max, w.ammo + p);
+        refreshHud();
+        showToast('📦 ¡Recargado! ' + w.ammo + '/' + w.max, 2000);
+        return true;
+    }
+    // Ítems configurados como «se pierde al ser tocado por un enemigo»
+    function loseItems() {
+        const lost = [];
+        if (G.weapon && G.weapon.lose) { lost.push(G.weapon.name); G.weapon = null; }
+        Object.keys(G.effects).forEach(k => { if (G.effects[k].lose) { endEffect(k, true); lost.push(EFFECT_NAMES[k] || k); } });
+        if (lost.length) { refreshHud(); showToast('💨 ¡Perdiste: ' + lost.join(', ') + '!', 2400); }
+    }
+    // Un enemigo (o su bala) toca al personaje. Devuelve true si el personaje fue devuelto al checkpoint / inicio.
+    function enemyHit(g) {
+        if (G.invuln > 0) return false;
+        loseItems();
+        if (!G.maxHearts) return hurtPlayer();                   // sin vidas: comportamiento de siempre
+        const d = Math.max(1, Math.round(Number(g && g.dmg) || 1));
+        G.invuln = 1.4;
+        G.hearts = Math.max(0, G.hearts - d);
+        renderHearts(true);
+        if (G.hearts <= 0) {
+            G.hearts = G.maxHearts;
+            respawnAtSpawn();
+            renderHearts();
+            showToast(activeCheckpoint ? '💔 Te quedaste sin corazones: vuelves al último checkpoint' : '💔 Te quedaste sin corazones: vuelves al inicio', 2600);
+            return true;
+        }
+        showToast('💔 ¡Te golpearon! −' + d + (d === 1 ? ' corazón' : ' corazones'), 1500);
+        return false;
+    }
+    // Enemigos que disparan: balas que viajan hacia el personaje (se detienen en las paredes)
+    function updateShooters(delta) {
+        if (!G.body || G.effects.invis) return;
+        const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
+        const tgt = new THREE.Vector3(playerLogicalPos.x, feetY + (G.body.height || 1.8) * 0.6, playerLogicalPos.z);
+        let walls = null;
+        G.list.forEach(ent => {
+            const g = ent.userData.game, uid = uidOf(ent);
+            if (!g || g.role !== 'enemy' || !g.shoot || !ent.visible || G.gone.has(uid)) return;
+            const cd = (G.shootCd.get(uid) || 0) - delta;
+            if (cd > 0) { G.shootCd.set(uid, cd); return; }
+            const bx = boxesOf(ent)[0]; if (!bx) return;
+            const from = bx.getCenter(new THREE.Vector3());
+            const range = Math.max(2, Number(g.shootRange) || 12);
+            const dist = from.distanceTo(tgt);
+            if (dist > range) { G.shootCd.set(uid, 0); return; }
+            if (!walls) walls = solidWithoutEnemies();
+            const dir = tgt.clone().sub(from).normalize();
+            if (walls.length) { rc.set(from, dir); rc.far = dist; if (rc.intersectObjects(walls, false).length) { G.shootCd.set(uid, 0.3); return; } }
+            if (!bulletGeo) bulletGeo = new THREE.SphereGeometry(0.1, 10, 8);
+            const m = new THREE.Mesh(bulletGeo, new THREE.MeshBasicMaterial({ color: 0xff8a2a, toneMapped: false }));
+            const gl = new THREE.Mesh(bulletGeo, new THREE.MeshBasicMaterial({ color: 0xff5a1a, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+            gl.scale.setScalar(2); m.add(gl);
+            m.position.copy(from); scene.add(m);
+            G.bullets.push({ mesh: m, dir, life: (range + 6) / 11, g });
+            G.shootCd.set(uid, Math.max(0.4, Number(g.shootRate) || 2));
+        });
+    }
+    function freeBullet(b) { scene.remove(b.mesh); b.mesh.children.forEach(c => c.material.dispose()); b.mesh.material.dispose(); }
+    function updateBullets(delta) {
+        const bl = G.bullets; if (!bl || !bl.length) return;
+        const body = G.body || { radius: 0.4, height: 1.8 };
+        const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
+        let walls = null;
+        for (let i = bl.length - 1; i >= 0; i--) {
+            const b = bl[i]; b.life -= delta;
+            let dead = b.life <= 0;
+            const step = 11 * delta;
+            if (!dead) {
+                if (!walls) walls = solidWithoutEnemies();
+                if (walls.length) { rc.set(b.mesh.position, b.dir); rc.far = step + 0.1; if (rc.intersectObjects(walls, false).length) dead = true; }
+            }
+            if (!dead) {
+                b.mesh.position.addScaledVector(b.dir, step);
+                const dx = b.mesh.position.x - playerLogicalPos.x, dz = b.mesh.position.z - playerLogicalPos.z, y = b.mesh.position.y;
+                if (Math.hypot(dx, dz) < (body.radius || 0.4) + 0.12 && y > feetY - 0.05 && y < feetY + (body.height || 1.8) + 0.05) { dead = true; enemyHit(b.g); }
+            }
+            if (dead) { freeBullet(b); bl.splice(i, 1); }
+        }
     }
 
     /* ---------- Ítems ---------- */
@@ -1850,29 +2042,48 @@ const GM = (function (isPlaying) {
         if (!silent) showToast('⏱️ Se acabó el efecto: ' + (EFFECT_NAMES[type] || type), 1800);
     }
     function collect(ent, g) {
+        if (g.item === 'goal') { reachGoal(ent, g); return; }   // la Meta no se recoge: se celebra
+        if (g.item === 'cartridge' || g.item === 'heart') { if (!useConsumable(g)) return; }   // solo se recogen si hacen falta
         G.gone.add(uidOf(ent));
         ent.visible = false;
+        if (g.coinOn) addCoins(g.coinValue);
+        applyItem(g, false);
+    }
+    // Da el ítem al personaje (recogido, comprado o inicial)
+    function applyItem(g, quiet) {
+        const say = quiet ? function () { } : showToast;
         const p = Math.max(1, Number(g.power) || 1);
         switch (g.item) {
             case 'laser':
                 G.weapon = { type: 'laser', icon: '🔫', name: 'Láser', dmg: p, cool: 0.35, range: 40 };
-                showToast('🔫 ¡Láser equipado! Dispara con F (o el botón)', 3500); break;
+                say('🔫 ¡Láser equipado! Dispara con F (o el botón)', 3500); break;
             case 'sword_short':
                 G.weapon = { type: 'sword', icon: '🗡️', name: 'Espada corta', dmg: p, cool: 0.28, reach: 1.9, len: 0.6 };
-                showToast('🗡️ ¡Espada corta! Ataca con F (o el botón)', 3500); break;
+                say('🗡️ ¡Espada corta! Ataca con F (o el botón)', 3500); break;
             case 'sword_long':
                 G.weapon = { type: 'sword', icon: '⚔️', name: 'Espada larga', dmg: p, cool: 0.55, reach: 3.4, len: 1.2 };
-                showToast('⚔️ ¡Espada larga! Ataca con F (o el botón)', 3500); break;
+                say('⚔️ ¡Espada larga! Ataca con F (o el botón)', 3500); break;
+            case 'pointer':
+                G.weapon = { type: 'gun', icon: '🎯', name: 'Arma con puntero', dmg: p, cool: 0.4, range: 60 };
+                say('🎯 ¡Arma con puntero equipada! Apunta con la mira y dispara con F (o el botón)', 3500); break;
+            case 'key':
+                addKey(g.keyId, quiet); break;
             case 'superjump':
                 startEffect('superjump', g.duration, g.power);
-                showToast('🦘 ¡Súper salto por ' + Math.round(g.duration || 8) + ' s!', 2500); break;
+                say('🦘 ¡Súper salto por ' + Math.round(g.duration || 8) + ' s!', 2500); break;
             case 'fly':
                 startEffect('fly', g.duration, g.power);
-                showToast('🕊️ ¡Vuelo por ' + Math.round(g.duration || 8) + ' s! Espacio sube · C / Shift baja', 3500); break;
+                say('🕊️ ¡Vuelo por ' + Math.round(g.duration || 8) + ' s! Espacio sube · C / Shift baja', 3500); break;
             case 'invis':
                 startEffect('invis', g.duration, 1);
-                showToast('👻 ¡Invisible por ' + Math.round(g.duration || 8) + ' s! Los enemigos no te ven', 2500); break;
+                say('👻 ¡Invisible por ' + Math.round(g.duration || 8) + ' s! Los enemigos no te ven', 2500); break;
         }
+        const loseIt = (g.loseItem === 'lose');
+        if (G.weapon && (g.item === 'laser' || g.item === 'sword_short' || g.item === 'sword_long' || g.item === 'pointer')) {
+            const u = Math.max(0, Math.round(Number(g.uses) || 0));   // 0 = usos infinitos
+            G.weapon.max = u; G.weapon.ammo = u; G.weapon.lose = loseIt;
+        }
+        if (G.effects[g.item]) G.effects[g.item].lose = loseIt;
         refreshHud();
     }
 
@@ -1904,7 +2115,335 @@ const GM = (function (isPlaying) {
         scene.add(m);
         G.fx.push({ kind: 'sword', mesh: m, life: 0.24, max: 0.24, len: w.len });
     }
+    /* ---------- Armas v54: espada en la mano (golpe en arco) y láser potente con mira ---------- */
+    const HELD = { grp: null, key: '', swing: null, recoil: 0, trail: null, muzzle: new THREE.Vector3(), t: 0 };
+    const FO = new THREE.Object3D();
+    const aimQ = new THREE.Quaternion(), yawQ = new THREE.Quaternion(), frameQ = new THREE.Quaternion(), tq = new THREE.Quaternion(), tq2 = new THREE.Quaternion();
+    const hv = new THREE.Vector3(), hv2 = new THREE.Vector3(), hCenter = new THREE.Vector3(), hOff = new THREE.Vector3();
+    const AXX = new THREE.Vector3(1, 0, 0);
+    const ZAX = new THREE.Vector3(0, 0, 1);
+    const handP = new THREE.Vector3(), sheathP = new THREE.Vector3(), aimP = new THREE.Vector3();
+    const handQ = new THREE.Quaternion(), sheathQ = new THREE.Quaternion();
+    const LASER_ST = { cols: [0xffffff, 0xff4a3a, 0xff1a10], radii: [0.03, 0.075, 0.2], base: [1, 0.85, 0.35], life: 0.26, k: 1 };
+    const GUN_ST = { cols: [0xffffff, 0xffd34a, 0xff9a1a], radii: [0.012, 0.03, 0.07], base: [1, 0.85, 0.4], life: 0.14, k: 0.45 };
+    const DEG = Math.PI / 180;
+    let unitCyl = null, unitSph = null, reticle = null;
+    const clamp01 = (x) => Math.max(0, Math.min(1, x));
+    const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+    const easeIO = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const fxMat = (color, opacity) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false });
+    const metal = (color, rough, emissive) => new THREE.MeshStandardMaterial({ color, metalness: 0.85, roughness: rough, emissive: emissive || 0x000000 });
+
+    function buildSword(w) {
+        const L = 0.5 + w.len * 0.8;                       // largo de la hoja: corta ≈ 1 m, larga ≈ 1,5 m
+        const g = new THREE.Group();
+        g.add(new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.03, 0.24, 10), metal(0x3b2a1e, 0.7)));            // empuñadura
+        const pom = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 10), metal(0xd4af37, 0.3)); pom.position.y = -0.14; g.add(pom);
+        const guard = new THREE.Mesh(new THREE.BoxGeometry(0.30, 0.045, 0.075), metal(0xd4af37, 0.3)); guard.position.y = 0.14; g.add(guard);
+        const sh = new THREE.Shape();                       // hoja con punta
+        sh.moveTo(-0.042, 0); sh.lineTo(0.042, 0); sh.lineTo(0.036, L * 0.92); sh.lineTo(0, L); sh.lineTo(-0.036, L * 0.92); sh.closePath();
+        const bg = new THREE.ExtrudeGeometry(sh, { depth: 0.016, bevelEnabled: false }); bg.translate(0, 0, -0.008);
+        const blade = new THREE.Mesh(bg, metal(0xe3ecf6, 0.18, 0x1a2a3c)); blade.position.y = 0.16; g.add(blade);
+        const fuller = new THREE.Mesh(new THREE.BoxGeometry(0.012, L * 0.7, 0.022), metal(0x8d9bab, 0.3)); fuller.position.set(0, 0.16 + L * 0.42, 0); g.add(fuller);
+        g.traverse(o => { if (o.isMesh) o.castShadow = true; });
+        g.userData.L = L;
+        return g;
+    }
+    function buildBlaster() {                              // el frente del arma es +Z
+        const g = new THREE.Group();
+        const add = (geo, mat, x, y, z) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = true; g.add(m); return m; };
+        add(new THREE.BoxGeometry(0.09, 0.13, 0.32), metal(0x2b303a, 0.35), 0, 0, 0.06);
+        add(new THREE.BoxGeometry(0.05, 0.03, 0.26), metal(0x4aa3ff, 0.3, 0x0a2a55), 0, 0.08, 0.06);
+        add(new THREE.CylinderGeometry(0.045, 0.045, 0.12, 12).rotateX(Math.PI / 2), metal(0x3a4150, 0.3), 0, 0, 0.26);
+        add(new THREE.CylinderGeometry(0.026, 0.032, 0.30, 12).rotateX(Math.PI / 2), metal(0x8a93a3, 0.25), 0, 0, 0.38);
+        add(new THREE.BoxGeometry(0.096, 0.04, 0.12), new THREE.MeshBasicMaterial({ color: 0xff3b30, toneMapped: false }), 0, 0, 0.03);   // núcleo de energía
+        const hd = add(new THREE.BoxGeometry(0.07, 0.17, 0.085), metal(0x1d2027, 0.8), 0, -0.13, -0.04); hd.rotation.x = -0.25;
+        add(new THREE.SphereGeometry(0.034, 10, 8), new THREE.MeshBasicMaterial({ color: 0xff6a4a, toneMapped: false }), 0, 0, 0.54);
+        g.userData.muz = new THREE.Vector3(0, 0, 0.56);
+        return g;
+    }
+    function buildPistol() {                               // arma con puntero: el frente es +Z
+        const g = new THREE.Group();
+        const add = (geo, mat, x, y, z) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = true; g.add(m); return m; };
+        add(new THREE.BoxGeometry(0.05, 0.07, 0.24), metal(0x20242c, 0.4), 0, 0.01, 0.10);
+        add(new THREE.BoxGeometry(0.045, 0.03, 0.22), metal(0x6b7686, 0.25), 0, 0.065, 0.11);
+        add(new THREE.CylinderGeometry(0.016, 0.016, 0.1, 10).rotateX(Math.PI / 2), metal(0x8a93a3, 0.25), 0, 0.02, 0.26);
+        const hd = add(new THREE.BoxGeometry(0.05, 0.14, 0.07), metal(0x15181e, 0.8), 0, -0.09, 0.0); hd.rotation.x = -0.2;
+        add(new THREE.BoxGeometry(0.035, 0.03, 0.06), new THREE.MeshBasicMaterial({ color: 0xff3b30, toneMapped: false }), 0, -0.03, 0.2);   // módulo del puntero
+        add(new THREE.SphereGeometry(0.018, 8, 6), new THREE.MeshBasicMaterial({ color: 0xff6a4a, toneMapped: false }), 0, 0.02, 0.32);
+        g.userData.muz = new THREE.Vector3(0, 0.03, 0.33);
+        return g;
+    }
+    // Punto al que apunta la mira (primera pared o enemigo): sirve para colocar el puntero rojo
+    function aimProbe(origin, fwd, far) {
+        rayTmp.set(origin, fwd);
+        let best = far;
+        G.list.forEach(ent => {
+            const g = ent.userData.game;
+            if (!g || g.role !== 'enemy' || !ent.visible || G.gone.has(uidOf(ent))) return;
+            boxesOf(ent).forEach(b => { if (rayTmp.intersectBox(b, hitTmp)) { const d = origin.distanceTo(hitTmp); if (d < best) best = d; } });
+        });
+        const walls = solidWithoutEnemies();
+        if (walls.length) {
+            rc.set(origin, fwd); rc.far = best;
+            const hs = rc.intersectObjects(walls, false);
+            if (hs.length && hs[0].distance < best) best = hs[0].distance;
+        }
+        return aimP.copy(origin).addScaledVector(fwd, best);
+    }
+    function heldFree() {
+        if (HELD.grp) { scene.remove(HELD.grp); HELD.grp.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); }); }
+        if (HELD.trail) { scene.remove(HELD.trail); HELD.trail.geometry.dispose(); HELD.trail.material.dispose(); }
+        (HELD.extra || []).forEach(m => { scene.remove(m); m.geometry.dispose(); m.material.dispose(); });
+        HELD.extra = []; HELD.b = 0; HELD.idle = 99;
+        HELD.grp = null; HELD.trail = null; HELD.key = ''; HELD.swing = null; HELD.recoil = 0;
+    }
+    function heldBuild(w, key) {
+        HELD.grp = (w.type === 'sword') ? buildSword(w) : (w.type === 'gun' ? buildPistol() : buildBlaster());
+        HELD.key = key;
+        scene.add(HELD.grp);
+        if (w.type === 'gun') {                            // puntero rojo sobre lo que se apunta + línea de mira
+            const dm = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), fxMat(0xff2a1a, 0.95));
+            const ln = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, 1, 6, 1, true), fxMat(0xff3b30, 0.45));
+            dm.renderOrder = 6; ln.renderOrder = 6;
+            scene.add(dm); scene.add(ln); HELD.extra = [dm, ln];
+        }
+        if (w.type === 'sword') {                          // estela luminosa del tajo (se revela al golpear)
+            const tr = new THREE.Mesh(new THREE.RingGeometry(0.45, 1, 40, 1, -175 * DEG, 180 * DEG), fxMat(0xbfe6ff, 0));
+            tr.material.side = THREE.DoubleSide; tr.visible = false; tr.renderOrder = 5;
+            scene.add(tr); HELD.trail = tr;
+        }
+    }
+
+    // Se coloca el arma en la mano cada cuadro: en primera persona junto a la cámara, en tercera junto al avatar
+    function updateHeld(delta) {
+        const w = G.weapon;
+        if (!w) { if (HELD.grp) heldFree(); return; }
+        const key = w.type + ':' + (w.len || 0);
+        if (!HELD.grp || HELD.key !== key) { heldFree(); heldBuild(w, key); }
+        HELD.t += delta;
+        const grp = HELD.grp;
+        camera.getWorldDirection(dirTmp);
+        const fp = (viewPerspective === 'fps') || !avatarGroup.visible;
+        FO.position.set(0, 0, 0); FO.up.set(0, 1, 0);
+        FO.lookAt(dirTmp.x, dirTmp.y, dirTmp.z); aimQ.copy(FO.quaternion);
+        const hl = Math.hypot(dirTmp.x, dirTmp.z);
+        if (hl > 1e-4) { FO.lookAt(dirTmp.x / hl, 0, dirTmp.z / hl); yawQ.copy(FO.quaternion); } else yawQ.copy(aimQ);
+        const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
+
+        if (w.type === 'sword') {
+            let yA = -22, pI = 34, rO = 6, lf = 0, ex = 1, k = -1, reveal = 0;
+            const sw = HELD.swing;
+            if (sw) {
+                sw.t += delta; k = sw.t / sw.dur;
+                if (k >= 1) {
+                    if (sw.broke) { G.weapon = null; showToast('💥 Tu espada se rompió: se acabaron los usos', 2500); refreshHud(); }
+                    HELD.swing = null; k = -1;
+                }
+                else if (k < 0) { /* desenfundando: la espada sube de la espalda a la mano */ }
+                else {
+                    if (k < 0.22) {                         // 1) se arma el golpe: la hoja sube y se echa hacia atrás
+                        const u = easeOut(k / 0.22);
+                        yA = lerp(-22, -80, u); pI = lerp(34, -25, u); rO = lerp(6, 40, u); lf = lerp(0, 0.4, u); ex = lerp(1, 0.9, u);
+                    } else if (k < 0.60) {                  // 2) tajo rápido y potente: barrido en semicírculo de derecha a izquierda
+                        const u = easeIO((k - 0.22) / 0.38);
+                        yA = lerp(-80, 100, u); pI = lerp(-25, 86, Math.min(1, u * 2.2)); rO = lerp(40, -10, u); lf = lerp(0.4, 0.12, u); ex = 0.9 + 0.5 * Math.sin(u * Math.PI);
+                        reveal = u;
+                    } else {                                // 3) recuperación a la posición de guardia
+                        const u = easeIO((k - 0.60) / 0.40);
+                        yA = lerp(100, -22, u); pI = lerp(86, 34, u); rO = lerp(-10, 6, u); lf = lerp(0.12, 0, u); ex = lerp(0.9, 1, u);
+                        reveal = 1;
+                    }
+                    if (!sw.done && k >= 0.42) { sw.done = true; if (sw.hit) sw.hit(); }   // el daño se aplica en pleno tajo
+                }
+            } else {                                        // guardia: leve vaivén de respiración
+                pI += Math.sin(HELD.t * 2.2) * 2; lf = Math.sin(HELD.t * 2.2) * 0.012;
+            }
+            frameQ.copy(fp ? aimQ : yawQ);
+            if (fp) { hCenter.copy(camera.position).add(hv.set(0, -0.34, 0).applyQuaternion(frameQ)); hCenter.y += lf * 0.7; }
+            else hCenter.set(playerLogicalPos.x, feetY + 0.62 + lf, playerLogicalPos.z);
+            const ox = fp ? -0.30 : -0.34, oz = fp ? 0.40 : 0.12;
+            tq.setFromAxisAngle(Y_AXIS, yA * DEG);
+            hOff.set(ox * ex, 0, oz * ex).applyQuaternion(tq).applyQuaternion(frameQ);
+            grp.position.copy(hCenter).add(hOff);
+            grp.quaternion.copy(frameQ).multiply(tq);
+            tq2.setFromAxisAngle(AXX, pI * DEG); grp.quaternion.multiply(tq2);
+            tq2.setFromAxisAngle(Y_AXIS, rO * DEG); grp.quaternion.multiply(tq2);
+            // Si no se ataca, la espada queda guardada en la espalda del MyViri; al golpear se desenfunda y luego se vuelve a guardar
+            HELD.idle = sw ? 0 : (HELD.idle === undefined ? 99 : HELD.idle) + delta;
+            const wantHand = !!sw || HELD.idle < 1.0;
+            HELD.b = fp ? (wantHand ? 1 : 0) : clamp01((HELD.b || 0) + (wantHand ? delta / 0.10 : -delta / 0.30));
+            if (HELD.b < 1) {
+                const eb = easeIO(HELD.b);
+                handP.copy(grp.position); handQ.copy(grp.quaternion);
+                hv.set(-0.11, 1.26, -0.2).applyQuaternion(yawQ);                    // sobre el hombro derecho, pegada a la espalda
+                sheathP.set(playerLogicalPos.x + hv.x, feetY + hv.y, playerLogicalPos.z + hv.z);
+                sheathQ.copy(yawQ).multiply(tq2.setFromAxisAngle(ZAX, -158 * DEG));   // empuñadura arriba, hoja en diagonal hacia la cadera
+                grp.position.lerpVectors(sheathP, handP, eb);
+                grp.quaternion.copy(sheathQ).slerp(handQ, eb);
+                grp.scale.setScalar(lerp(Math.min(1, 1.1 / (grp.userData.L + 0.2)), 1, eb));
+            } else grp.scale.setScalar(1);
+            grp.visible = !(fp && !wantHand);
+            // estela del tajo
+            const tr = HELD.trail;
+            if (tr) {
+                if (sw && k >= 0.22 && k < 0.78) {
+                    tr.visible = true;
+                    const L = grp.userData.L, handR = Math.hypot(ox, oz);
+                    tr.scale.setScalar(handR * 1.25 + 0.16 + L * 0.98);
+                    tr.position.copy(hCenter);
+                    tr.quaternion.copy(frameQ).multiply(tq.setFromAxisAngle(AXX, -Math.PI / 2));
+                    tr.geometry.setDrawRange(0, Math.max(1, Math.floor(reveal * 40)) * 6);
+                    tr.material.opacity = k < 0.6 ? 0.75 : 0.75 * (1 - clamp01((k - 0.6) / 0.18));
+                } else tr.visible = false;
+            }
+        } else {
+            HELD.recoil = Math.max(0, HELD.recoil - delta * 6);
+            const rec = HELD.recoil;
+            frameQ.copy(aimQ);
+            if (fp) { hv.set(-0.26, -0.24, 0.42 - 0.07 * rec).applyQuaternion(frameQ); hCenter.copy(camera.position).add(hv); }
+            else { hv.set(-0.30, 0, 0.26 - 0.07 * rec).applyQuaternion(frameQ); hCenter.set(playerLogicalPos.x, feetY + 0.88, playerLogicalPos.z).add(hv); }
+            hCenter.y += Math.sin(HELD.t * 2.2) * 0.004;
+            grp.position.copy(hCenter);
+            grp.quaternion.copy(frameQ).multiply(tq.setFromAxisAngle(AXX, -rec * 0.22));   // el retroceso levanta el cañón
+            HELD.muzzle.copy(grp.userData.muz).applyQuaternion(grp.quaternion).add(grp.position);
+            if (w.type === 'gun' && HELD.extra && HELD.extra.length === 2) {
+                const pr = aimProbe(camera.position, dirTmp, w.range || 60), dm = HELD.extra[0], ln = HELD.extra[1];
+                dm.position.copy(pr).addScaledVector(dirTmp, -0.03);
+                dm.scale.setScalar(0.6 + pr.distanceTo(camera.position) * 0.04);   // se ve del mismo tamaño a cualquier distancia
+                hv2.copy(pr).sub(HELD.muzzle);
+                const dl = hv2.length();
+                ln.visible = dl > 0.1;
+                ln.position.copy(HELD.muzzle).addScaledVector(hv2, 0.5);
+                ln.scale.set(1, dl, 1);
+                ln.quaternion.setFromUnitVectors(Y_AXIS, hv2.normalize());
+            }
+        }
+    }
+
+    /* ---------- Mira del láser (siempre visible con el láser equipado, también en tercera persona) ---------- */
+    function setReticle(on) {
+        if (on && !reticle) {
+            const st = document.createElement('style');
+            const line = 'linear-gradient(#ff5a46,#ff5a46)';
+            st.textContent =
+                '#gm-reticle{position:fixed;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;z-index:125;display:none;pointer-events:none;border:2px solid rgba(255,80,60,.92);border-radius:50%;box-shadow:0 0 10px rgba(255,40,20,.75),inset 0 0 8px rgba(255,40,20,.35);transition:transform .12s,border-color .12s}' +
+                '#gm-reticle::before{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#fff;box-shadow:0 0 6px #ff3b30}' +
+                '#gm-reticle::after{content:"";position:absolute;inset:-12px;background:' + line + ' center top/2px 10px no-repeat,' + line + ' center bottom/2px 10px no-repeat,' + line + ' left center/10px 2px no-repeat,' + line + ' right center/10px 2px no-repeat}' +
+                '#gm-reticle.hit{transform:scale(1.4);border-color:#fff}';
+            document.head.appendChild(st);
+            reticle = document.createElement('div'); reticle.id = 'gm-reticle';
+            document.body.appendChild(reticle);
+        }
+        if (reticle) reticle.style.display = on ? 'block' : 'none';
+    }
+    function reticlePulse() {
+        if (!reticle) return;
+        reticle.classList.add('hit');
+        setTimeout(() => { if (reticle) reticle.classList.remove('hit'); }, 110);
+    }
+
+    /* ---------- Rayo láser: núcleo blanco + resplandor, fogonazo en el cañón e impacto ---------- */
+    function addLaserFx(from, to, hit, st) {
+        const S = st || LASER_ST;
+        if (!unitCyl) { unitCyl = new THREE.CylinderGeometry(1, 1, 1, 14, 1, true); unitSph = new THREE.SphereGeometry(1, 14, 10); }
+        const len = from.distanceTo(to);
+        if (len < 0.05) return;
+        const grp = new THREE.Group();
+        const base = S.base, radii = S.radii;
+        const mats = S.cols.map((c, i) => fxMat(c, base[i]));
+        const cyls = radii.map((r, i) => { const m = new THREE.Mesh(unitCyl, mats[i]); m.scale.set(r, len, r); grp.add(m); return m; });
+        const flashMat = fxMat(0xffd2a0, 0.95), impMat = fxMat(hit ? 0xff9a3a : 0xffc878, 0.9);
+        const flash = new THREE.Mesh(unitSph, flashMat); flash.position.y = -len / 2; flash.scale.setScalar(0.17); grp.add(flash);
+        const imp = new THREE.Mesh(unitSph, impMat); imp.position.y = len / 2; imp.scale.setScalar(0.3); grp.add(imp);
+        grp.position.copy(from).add(to).multiplyScalar(0.5);
+        grp.quaternion.setFromUnitVectors(Y_AXIS, hv2.copy(to).sub(from).normalize());
+        scene.add(grp);
+        const impSize = (hit ? 0.5 : 0.32) * S.k;
+        G.fx.push({
+            kind: 'beam2', mesh: grp, life: S.life, max: S.life,
+            tick: (f) => {
+                const k = Math.max(0, f.life / f.max);
+                cyls.forEach((m, i) => { const r = radii[i] * (0.3 + 0.7 * k); m.scale.set(r, len, r); mats[i].opacity = base[i] * k; });
+                flash.scale.setScalar(0.17 * S.k * (0.5 + 0.9 * k)); flashMat.opacity = 0.95 * k;
+                imp.scale.setScalar(impSize * (1.7 - 0.9 * k)); impMat.opacity = 0.9 * k;
+            },
+            free: () => { mats.forEach(m => m.dispose()); flashMat.dispose(); impMat.dispose(); }
+        });
+    }
+    function fireLaser(w, fwd, st) {
+        const eye = playerLogicalPos.clone();
+        const origin = camera.position.clone();            // se apunta desde la cámara: la mira coincide con el impacto (también en 3ª persona)
+        const far = w.range + origin.distanceTo(eye);
+        rayTmp.set(origin, fwd);
+        let best = far, target = null;
+        G.list.forEach(ent => {
+            const g = ent.userData.game;
+            if (!g || g.role !== 'enemy' || !ent.visible || G.gone.has(uidOf(ent))) return;
+            boxesOf(ent).forEach(b => {
+                if (rayTmp.intersectBox(b, hitTmp)) {
+                    const d = origin.distanceTo(hitTmp);
+                    if (d < best && hv.copy(hitTmp).sub(eye).dot(fwd) > 0) { best = d; target = ent; }
+                }
+            });
+        });
+        const walls = solidWithoutEnemies();
+        if (walls.length) {
+            rc.set(origin, fwd); rc.far = best;
+            const hits = rc.intersectObjects(walls, false);
+            if (hits.length && hits[0].distance < best) { best = hits[0].distance; target = null; }
+        }
+        const end = origin.clone().addScaledVector(fwd, best);
+        const muzzle = HELD.grp ? HELD.muzzle.clone() : eye.clone().addScaledVector(fwd, 0.5);
+        if (hv.copy(end).sub(muzzle).dot(fwd) < 0.4) end.copy(muzzle).addScaledVector(fwd, 0.6);
+        addLaserFx(muzzle, end, !!target, st);
+        HELD.recoil = 1;
+        reticlePulse();
+        if (target) damage(target, w.dmg);
+    }
+
+    /* ---------- Espada: el daño se aplica en pleno tajo (ver updateHeld) ---------- */
+    function swordHit(w) {
+        const px = playerLogicalPos.x, pz = playerLogicalPos.z;
+        const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
+        const body = (typeof getPlayerBody === 'function') ? getPlayerBody() : (typeof bodyCfg !== 'undefined' ? bodyCfg : { radius: 0.4, height: 1.8 });
+        const height = body.height || 1.8;
+        camera.getWorldDirection(hv);
+        const fx = hv.x, fz = hv.z, fl = Math.hypot(fx, fz) || 1;
+        G.list.forEach(ent => {
+            const g = ent.userData.game;
+            if (!g || g.role !== 'enemy' || !ent.visible || G.gone.has(uidOf(ent))) return;
+            for (const b of boxesOf(ent)) {
+                const dx = Math.max(b.min.x - px, 0, px - b.max.x);
+                const dz = Math.max(b.min.z - pz, 0, pz - b.max.z);
+                if (Math.hypot(dx, dz) > w.reach) continue;
+                if (!(feetY <= b.max.y + 0.3 && feetY + height + 0.3 >= b.min.y)) continue;
+                const cx = (b.min.x + b.max.x) / 2 - px, cz = (b.min.z + b.max.z) / 2 - pz;
+                const cl = Math.hypot(cx, cz);
+                const facing = cl < 0.8 ? 1 : ((cx * fx + cz * fz) / (cl * fl));
+                if (facing >= 0.25) { damage(ent, w.dmg); break; }
+            }
+        });
+    }
     function fire() {
+        if (!G.running || !isPlaying() || !G.weapon || G.wCool > 0) return;
+        const w = G.weapon;
+        if (w.max > 0 && w.ammo <= 0) {                    // sin usos / cartuchos
+            G.wCool = 0.35;
+            showToast(w.type === 'sword' ? '🗡️ Sin usos' : '📦 Sin cartuchos: busca un cartucho para recargar', 1600);
+            return;
+        }
+        G.wCool = w.cool;
+        camera.getWorldDirection(dirTmp);
+        const fwd = dirTmp.clone();
+        if (w.max > 0) { w.ammo--; refreshHud(); }
+        if (w.type === 'laser') fireLaser(w, fwd);
+        else if (w.type === 'gun') fireLaser(w, fwd, GUN_ST);
+        else HELD.swing = { t: -(1 - clamp01(HELD.b || 0)) * 0.10, dur: (w.len > 0.9 ? 0.46 : 0.30), done: false, broke: (w.max > 0 && w.ammo <= 0), hit: () => swordHit(w) };
+    }
+
+    function fireLegacy() {
         if (!G.running || !isPlaying() || !G.weapon || G.wCool > 0) return;
         const w = G.weapon;
         G.wCool = w.cool;
@@ -1961,6 +2500,391 @@ const GM = (function (isPlaying) {
         }
     }
 
+    /* =================================================================
+       v56: globos de NPC · monedas y tienda · llaves y bloqueos · Meta · inventario inicial
+       Todo es opcional: sin configuración, un objeto se comporta exactamente como antes.
+       userData.game (campos nuevos): bubble, shop, shopItems[], drop, dropN, dropMin, dropMax,
+         coinOn, coinValue, lockKey, lockAct, lockConsume, keyId, goalMsg, goalConfetti, goalTeleport
+       ================================================================= */
+    const ITEM_NAMES = {
+        laser: '🔫 Láser', sword_short: '🗡️ Espada corta', sword_long: '⚔️ Espada larga', pointer: '🎯 Arma con puntero',
+        superjump: '🦘 Súper salto', fly: '🕊️ Vuelo', invis: '👻 Invisibilidad', cartridge: '📦 Cartucho', heart: '❤️ Corazón', key: '🗝️ Llave'
+    };
+    function startConfig() {
+        try { if (typeof CFG !== 'undefined' && CFG && CFG.start) return CFG.start; } catch (e) { /* sin configuración */ }
+        return window.__gmStart || null;
+    }
+    const keyIdOf = (v) => (String(v == null ? '' : v).trim().slice(0, 30) || 'llave1');
+
+    /* ---------- Monedas, llaves y recompensas ---------- */
+    function addCoins(n, silent) {
+        n = Math.max(0, Math.round(Number(n) || 0));
+        G.coins += n; G.econ = true;
+        refreshHud();
+        if (!silent && n > 0) showToast('🪙 +' + n + (n === 1 ? ' moneda' : ' monedas') + ' · Total: ' + G.coins, 1800);
+    }
+    function addKey(id, silent) {
+        id = keyIdOf(id);
+        G.keyring.set(id, (G.keyring.get(id) || 0) + 1);
+        refreshHud();
+        if (!silent) showToast('🗝️ ¡Conseguiste la llave «' + id + '»!', 2500);
+    }
+    function hasKey(id) { return (G.keyring.get(id) || 0) > 0; }
+    function useKey(id) {
+        const n = G.keyring.get(id) || 0;
+        if (n > 1) G.keyring.set(id, n - 1); else G.keyring.delete(id);
+        refreshHud();
+    }
+    function dropReward(ent) {
+        const g = ent.userData.game;
+        G.lastDrop = 0;
+        if (!g || g.role !== 'enemy') return;
+        let n = 0;
+        if (g.drop === 'fixed') n = Math.max(0, Math.round(Number(g.dropN) || 0));
+        else if (g.drop === 'random') {
+            let a = Math.max(0, Math.round(Number(g.dropMin) || 0)), b = Math.max(0, Math.round(Number(g.dropMax) || 0));
+            if (b < a) { const t = a; a = b; b = t; }
+            n = a + Math.floor(Math.random() * (b - a + 1));
+        }
+        if (n > 0) { addCoins(n, true); G.lastDrop = n; }
+    }
+
+    /* ---------- Bloqueos con llave (puertas, muros, cualquier objeto y portales) ---------- */
+    function openLock(ent, g) {
+        G.gone.add(uidOf(ent));
+        if (g.lockAct === 'open') {
+            const bx = boxesOf(ent);
+            let dy = 0;
+            bx.forEach(b => { dy = Math.max(dy, b.max.y - b.min.y); });
+            G.opening.push({ ent, t: 0, y0: ent.position.y, dy: Math.max(0.5, dy) + 0.1 });
+        } else {
+            ent.visible = false;
+        }
+    }
+    function updateOpening(delta) {
+        if (!G.opening || !G.opening.length) return;
+        for (let i = G.opening.length - 1; i >= 0; i--) {
+            const o = G.opening[i];
+            o.t += delta / 0.9;
+            const k = Math.min(1, o.t);
+            o.ent.position.y = o.y0 + o.dy * easeIO(k);
+            o.ent.updateMatrixWorld(true);
+            if (k >= 1) { o.ent.visible = false; G.opening.splice(i, 1); }
+        }
+    }
+    function tryUnlockObject(ent, g) {
+        const id = keyIdOf(g.lockKey);
+        if (hasKey(id)) {
+            if (g.lockConsume !== false) useKey(id);
+            openLock(ent, g);
+            showToast('🔓 ¡Lo abriste con la llave «' + id + '»!', 2200);
+        } else {
+            hint('🔒 Está bloqueado: necesitas la llave «' + id + '»');
+        }
+    }
+    // Portales: se llama desde la lógica de teletransporte cuando el pad está bloqueado
+    function tryUnlockPortal(ent) {
+        const g = ent && ent.userData && ent.userData.game;
+        if (!G.running || !g || !g.lockKey) return false;
+        const id = keyIdOf(g.lockKey);
+        if (!hasKey(id)) return false;
+        if (g.lockConsume !== false) useKey(id);
+        ent.userData.isLocked = false;
+        try { applyPortalVisual(ent); } catch (e) { /* sin aspecto */ }
+        showToast('🔓 ¡Portal desbloqueado con la llave «' + id + '»!', 2400);
+        return true;
+    }
+    function portalLockMsg(ent) {
+        const g = ent && ent.userData && ent.userData.game;
+        if (!G.running || !g || !g.lockKey) return null;
+        return '🔒 Portal bloqueado: necesitas la llave «' + keyIdOf(g.lockKey) + '»';
+    }
+
+    /* ---------- Meta: mensaje grande, confeti y regreso al inicio / checkpoint ---------- */
+    function ensureGoalUI() {
+        if (G.goalUI) return G.goalUI;
+        const st = document.createElement('style');
+        st.textContent =
+            '#gm-confetti{position:fixed;inset:0;z-index:140;pointer-events:none;display:none}' +
+            '#gm-goal{position:fixed;inset:0;z-index:141;pointer-events:none;display:none;align-items:center;justify-content:center;padding:24px}' +
+            '#gm-goal span{display:block;max-width:92vw;text-align:center;white-space:pre-wrap;font:900 clamp(34px,9vw,96px)/1.08 system-ui,sans-serif;color:#fff;letter-spacing:.5px;' +
+            'text-shadow:0 0 18px rgba(241,196,15,.95),0 4px 0 #b9770e,0 8px 26px rgba(0,0,0,.65);animation:gmgoal .7s cubic-bezier(.2,1.6,.4,1) both}' +
+            '@keyframes gmgoal{0%{transform:scale(.2) rotate(-6deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}';
+        document.head.appendChild(st);
+        const cv = document.createElement('canvas'); cv.id = 'gm-confetti'; document.body.appendChild(cv);
+        const box = document.createElement('div'); box.id = 'gm-goal';
+        const msg = document.createElement('span'); box.appendChild(msg); document.body.appendChild(box);
+        G.goalUI = { cv, box, msg };
+        return G.goalUI;
+    }
+    function showGoal(text) {
+        const ui = ensureGoalUI();
+        ui.msg.textContent = text;
+        ui.msg.style.animation = 'none'; void ui.msg.offsetWidth; ui.msg.style.animation = '';
+        ui.box.style.display = 'flex';
+        if (G.goalTimer) clearTimeout(G.goalTimer);
+        G.goalTimer = setTimeout(() => { ui.box.style.display = 'none'; G.goalTimer = 0; }, 4800);
+    }
+    function launchConfetti() {
+        const ui = ensureGoalUI(), cv = ui.cv;
+        const W = cv.width = window.innerWidth, H = cv.height = window.innerHeight;
+        cv.style.display = 'block';
+        const cx = cv.getContext('2d');
+        const cols = ['#f1c40f', '#e74c3c', '#2ecc71', '#3498db', '#9b59b6', '#ff9f43', '#ffffff', '#ff6bcb'];
+        const ps = [];
+        for (let i = 0; i < 240; i++) ps.push({
+            x: Math.random() * W, y: -Math.random() * H * 0.7 - 10, vx: (Math.random() - 0.5) * 3, vy: 2 + Math.random() * 4.5,
+            s: 6 + Math.random() * 8, r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.35, w: Math.random() * 6.28,
+            c: cols[(Math.random() * cols.length) | 0]
+        });
+        const t0 = performance.now();
+        if (G.confRaf) cancelAnimationFrame(G.confRaf);
+        const step = (now) => {
+            const el = now - t0;
+            cx.clearRect(0, 0, W, H);
+            let alive = 0;
+            const a = el > 4200 ? Math.max(0, 1 - (el - 4200) / 800) : 1;
+            ps.forEach(p => {
+                p.w += 0.08; p.x += p.vx + Math.sin(p.w) * 1.2; p.y += p.vy; p.vy += 0.03; p.r += p.vr;
+                if (p.y < H + 20) alive++;
+                cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.globalAlpha = a; cx.fillStyle = p.c;
+                cx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); cx.restore();
+            });
+            if (el < 5000 && alive) G.confRaf = requestAnimationFrame(step);
+            else { G.confRaf = 0; cx.clearRect(0, 0, W, H); cv.style.display = 'none'; }
+        };
+        G.confRaf = requestAnimationFrame(step);
+    }
+    function hideGoal() {
+        if (G.goalTimer) { clearTimeout(G.goalTimer); G.goalTimer = 0; }
+        if (G.confRaf) { cancelAnimationFrame(G.confRaf); G.confRaf = 0; }
+        if (G.goalUI) { G.goalUI.box.style.display = 'none'; G.goalUI.cv.style.display = 'none'; }
+    }
+    function reachGoal(ent, g) {
+        if (G.goalCd > 0) return;
+        G.goalCd = 5;
+        showGoal(String(g.goalMsg || '').trim() || '¡Felicidades! 🎉');
+        if (g.goalConfetti !== false) launchConfetti();
+        const mode = g.goalReturn || (g.goalTeleport === false ? 'none' : 'checkpoint');
+        if (mode !== 'none') {
+            const cp = mode === 'checkpoint' && !!activeCheckpoint;
+            if (mode === 'start') { const saved = activeCheckpoint; activeCheckpoint = null; try { respawnAtSpawn(); } finally { activeCheckpoint = saved; } }
+            else respawnAtSpawn();
+            G.invuln = Math.max(G.invuln, 1.5);
+            showToast(cp ? '🏁 ¡Meta alcanzada! Vuelves al último checkpoint' : '🏁 ¡Meta alcanzada! Vuelves al inicio', 3000);
+        } else {
+            showToast('🏁 ¡Meta alcanzada!', 2500);
+        }
+    }
+
+    /* ---------- Tienda de los NPC ---------- */
+    function shopOf(npc) {
+        const g = npc && npc.userData && npc.userData.game;
+        return (g && g.role === 'npc' && g.shop && Array.isArray(g.shopItems) && g.shopItems.length) ? g.shopItems : null;
+    }
+    function shopLabel(it) {
+        let s = it.name ? String(it.name) : (ITEM_NAMES[it.item] || it.item);
+        if (it.item === 'cartridge' || it.item === 'heart') s += ' ×' + Math.max(1, Math.round(Number(it.power) || 1));
+        else if (it.item === 'key') s += ' «' + keyIdOf(it.keyId) + '»';
+        return s;
+    }
+    function ensureShopUI() {
+        if (G.shopEl) return G.shopEl;
+        const st = document.createElement('style');
+        st.textContent =
+            '#gm-shop{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:131;display:none;width:min(270px,72vw);background:rgba(20,24,32,.94);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:10px 12px;color:#fff;font:13px/1.35 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.5);user-select:none;-webkit-user-select:none}' +
+            '#gm-shop .sh-h{font-weight:800;color:#f1c40f;margin-bottom:6px}' +
+            '#gm-shop .sh-r{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 0;border-top:1px solid rgba(255,255,255,.1)}' +
+            '#gm-shop button{background:#2d323e;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:5px 9px;font:700 12px system-ui,sans-serif;cursor:pointer;white-space:nowrap}' +
+            '#gm-shop button:disabled{opacity:.4;cursor:not-allowed}' +
+            '#gm-shop .sh-f{opacity:.6;font-size:11px;margin-top:6px}';
+        document.head.appendChild(st);
+        const el = document.createElement('div'); el.id = 'gm-shop'; document.body.appendChild(el);
+        ['mousedown', 'touchstart', 'click'].forEach(ev => el.addEventListener(ev, e => e.stopPropagation(), { passive: true }));
+        G.shopEl = el;
+        return el;
+    }
+    function renderShop() {
+        const npc = G.nearNpc, list = shopOf(npc);
+        if (!list) { if (G.shopEl && G.shopEl.style.display !== 'none') G.shopEl.style.display = 'none'; G.shopKey = ''; return; }
+        const el = ensureShopUI();
+        const key = uidOf(npc) + ':' + G.coins + ':' + list.length;
+        if (key === G.shopKey) return;
+        G.shopKey = key;
+        el.textContent = '';
+        const head = document.createElement('div'); head.className = 'sh-h';
+        head.textContent = '🛒 ' + (npc.name || 'Tienda') + ' · 🪙 ' + G.coins;
+        el.appendChild(head);
+        list.forEach((it, i) => {
+            const price = Math.max(0, Math.round(Number(it.price) || 0));
+            const row = document.createElement('div'); row.className = 'sh-r';
+            const lab = document.createElement('span'); lab.textContent = (i < 9 ? (i + 1) + '. ' : '') + shopLabel(it);
+            const btn = document.createElement('button'); btn.textContent = '🪙 ' + price; btn.disabled = G.coins < price;
+            btn.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); buyItem(i); });
+            row.appendChild(lab); row.appendChild(btn); el.appendChild(row);
+        });
+        const foot = document.createElement('div'); foot.className = 'sh-f';
+        foot.textContent = 'Pulsa 1–9 o toca el precio para comprar';
+        el.appendChild(foot);
+        el.style.display = 'block';
+    }
+    function buyItem(i) {
+        const list = shopOf(G.nearNpc);
+        if (!G.running || !list) return;
+        const it = list[i]; if (!it) return;
+        const price = Math.max(0, Math.round(Number(it.price) || 0));
+        if (G.coins < price) { hint('🪙 No te alcanzan las monedas (cuesta ' + price + ')'); return; }
+        const def = { item: it.item, power: it.power, uses: it.uses || 0, duration: it.duration || 8, keyId: it.keyId, loseItem: 'keep' };
+        if (def.item === 'cartridge' || def.item === 'heart') { if (!useConsumable(def)) return; }   // no se cobra si no hace falta
+        G.coins -= price;
+        applyItem(def, true);
+        G.shopKey = '';
+        refreshHud();
+        showToast('🛒 Compraste ' + shopLabel(it) + ' por 🪙 ' + price, 2200);
+        renderShop();
+    }
+    document.addEventListener('keydown', (e) => {
+        if (!G.running || !isPlaying() || !G.nearNpc || !shopOf(G.nearNpc)) return;
+        const tg = e.target && e.target.tagName;
+        if (tg === 'INPUT' || tg === 'TEXTAREA' || tg === 'SELECT') return;
+        const m = /^(?:Digit|Numpad)([1-9])$/.exec(e.code || '');
+        if (m) buyItem(parseInt(m[1], 10) - 1);
+    });
+
+    /* ---------- Globo de diálogo (estilo historieta) sobre el NPC ---------- */
+    const NB = { sprite: null, npc: null, off: new THREE.Vector3(), w: 0, h: 0, born: 0 };
+    const _nbBox = new THREE.Box3(), _nbU = new THREE.Box3(), _nbV = new THREE.Vector3(), _nbC = new THREE.Vector3();
+    function nbWrap(ctx, text, maxW, maxLines) {
+        const lines = [];
+        let cur = '';
+        const words = text.split(' ');
+        for (let w of words) {
+            while (ctx.measureText(w).width > maxW) {
+                let i = w.length;
+                while (i > 1 && ctx.measureText(w.slice(0, i)).width > maxW) i--;
+                if (cur) { lines.push(cur); cur = ''; }
+                lines.push(w.slice(0, i));
+                w = w.slice(i);
+            }
+            const test = cur ? cur + ' ' + w : w;
+            if (cur && ctx.measureText(test).width > maxW) { lines.push(cur); cur = w; } else cur = test;
+        }
+        if (cur) lines.push(cur);
+        if (lines.length > maxLines) {
+            lines.length = maxLines;
+            let last = lines[maxLines - 1];
+            while (last.length > 1 && ctx.measureText(last + '…').width > maxW) last = last.slice(0, -1);
+            lines[maxLines - 1] = last + '…';
+        }
+        return lines;
+    }
+    // Mismo aspecto que los globos del chat
+    function nbRender(text) {
+        const FONT = 'bold 26px "Comic Sans MS","Comic Neue","Chalkboard SE","Segoe UI",system-ui,sans-serif';
+        const maxTextW = 300, lh = 32, padX = 22, padY = 14, tail = 28, m = 8, rad = 22;
+        const meas = document.createElement('canvas').getContext('2d');
+        meas.font = FONT;
+        const lines = nbWrap(meas, text, maxTextW, 6);
+        let tw = 0;
+        lines.forEach(l => { tw = Math.max(tw, meas.measureText(l).width); });
+        const bw = Math.ceil(tw + padX * 2), bh = lines.length * lh + padY * 2;
+        const W = bw + m * 2, H = bh + tail + m * 2;
+        const c = document.createElement('canvas');
+        c.width = W; c.height = H;
+        const g = c.getContext('2d');
+        const x = m, y = m, cx = W / 2;
+        g.fillStyle = '#ffffff'; g.strokeStyle = '#161616'; g.lineWidth = 4; g.lineJoin = 'round'; g.lineCap = 'round';
+        g.shadowColor = 'rgba(0,0,0,0.28)'; g.shadowBlur = 6; g.shadowOffsetY = 2;
+        g.beginPath();
+        g.moveTo(x + rad, y); g.arcTo(x + bw, y, x + bw, y + bh, rad); g.arcTo(x + bw, y + bh, x, y + bh, rad);
+        g.arcTo(x, y + bh, x, y, rad); g.arcTo(x, y, x + bw, y, rad); g.closePath();
+        g.fill();
+        g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
+        g.stroke();
+        g.beginPath(); g.moveTo(cx - 15, y + bh); g.lineTo(cx + 5, y + bh + tail - 2); g.lineTo(cx + 17, y + bh); g.closePath();
+        g.fillStyle = '#ffffff'; g.fill();
+        g.beginPath(); g.moveTo(cx - 15, y + bh); g.lineTo(cx + 5, y + bh + tail - 2); g.lineTo(cx + 17, y + bh); g.stroke();
+        g.fillStyle = '#ffffff'; g.fillRect(cx - 13, y + bh - 3, 28, 6);
+        g.font = FONT; g.fillStyle = '#161616'; g.textAlign = 'center'; g.textBaseline = 'middle';
+        lines.forEach((l, i) => g.fillText(l, cx, y + padY + lh * i + lh / 2 + 1));
+        const tex = new THREE.CanvasTexture(c);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.generateMipmaps = false;
+        tex.minFilter = THREE.LinearFilter;
+        return { tex, w: W, h: H };
+    }
+    // Caja del cuerpo VISIBLE del NPC (sin mallas de colisión, etiquetas ni globos)
+    function nbBounds(ent) {
+        _nbU.makeEmpty();
+        ent.updateWorldMatrix(true, true);
+        const walk = (o) => {
+            if (!o.visible || o.isSprite || o.isLine || o.isPoints || o.name === 'ColliderPivot' || o.name === 'ColliderMesh'
+                || (o.userData && (o.userData.isColPivot || o.userData.isVertexHandle || o.userData.isFaceHandle))) return;
+            if (o.isMesh && o.geometry) {
+                if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+                const gb = o.geometry.boundingBox;
+                if (gb && !gb.isEmpty()) { _nbBox.copy(gb).applyMatrix4(o.matrixWorld); if (isFinite(_nbBox.max.y)) _nbU.union(_nbBox); }
+            }
+            for (let i = 0; i < o.children.length; i++) walk(o.children[i]);
+        };
+        walk(ent);
+        if (_nbU.isEmpty()) boxesOf(ent).forEach(b => _nbU.union(b));
+        return _nbU;
+    }
+    function npcBubbleClear() {
+        const sp = NB.sprite;
+        if (!sp) return;
+        try { scene.remove(sp); if (sp.material.map) sp.material.map.dispose(); sp.material.dispose(); } catch (e) { /* ya liberado */ }
+        NB.sprite = null; NB.npc = null;
+    }
+    function npcBubbleSet(npc, text) {
+        npcBubbleClear();
+        const clean = String(text || '').trim();
+        if (!clean) return;
+        const bb = nbBounds(npc);
+        if (bb.isEmpty()) return;
+        const r = nbRender(clean.length > 180 ? clean.slice(0, 179) + '…' : clean);
+        const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: r.tex, transparent: true, depthWrite: false }));
+        sp.center.set(0.5, 0);      // la cola del globo queda sobre la cabeza del NPC
+        sp.renderOrder = 20;
+        const h = bb.max.y - bb.min.y;
+        const gap = Math.min(0.3, Math.max(0.1, 0.07 + h * 0.06));
+        npc.getWorldPosition(_nbV);
+        NB.off.set((bb.min.x + bb.max.x) / 2 - _nbV.x, bb.max.y + gap - _nbV.y, (bb.min.z + bb.max.z) / 2 - _nbV.z);
+        NB.sprite = sp; NB.npc = npc; NB.w = r.w; NB.h = r.h; NB.born = performance.now();
+        scene.add(sp);
+        npcBubbleTick();
+    }
+    function npcBubbleTick() {
+        const sp = NB.sprite;
+        if (!sp) return;
+        if (!NB.npc || !NB.npc.visible) { npcBubbleClear(); return; }
+        NB.npc.getWorldPosition(_nbV);
+        sp.position.set(_nbV.x + NB.off.x, _nbV.y + NB.off.y, _nbV.z + NB.off.z);
+        const age = performance.now() - NB.born;
+        let k = 1;
+        if (age < 180) { const t = age / 180; k = 0.55 + 0.45 * (1 - Math.pow(1 - t, 3)); }   // pequeño «pop» al aparecer
+        camera.getWorldPosition(_nbC);
+        k *= Math.min(2.6, Math.max(1, sp.position.distanceTo(_nbC) / 6));                  // legible a distancia
+        sp.scale.set(NB.w * 0.0036 * k, NB.h * 0.0036 * k, 1);
+    }
+
+    /* ---------- Economía e inventario inicial (se llama al empezar la partida) ---------- */
+    function initEconomy() {
+        G.coins = 0; G.keyring = new Map(); G.opening = []; G.goalCd = 0; G.econ = false; G.shopKey = ''; G.lastDrop = 0;
+        G.list.forEach(ent => {
+            const g = ent.userData.game;
+            if (g.coinOn || (g.role === 'npc' && g.shop) || (g.role === 'enemy' && g.drop && g.drop !== 'none')) G.econ = true;
+        });
+        const st = startConfig();
+        if (!st) return;
+        const c = Math.max(0, Math.round(Number(st.coins) || 0));
+        if (c > 0) { G.coins = c; G.econ = true; }
+        if (st.item && st.item !== 'none') {
+            applyItem({ item: st.item, power: Math.max(1, Number(st.power) || 1), uses: Math.max(0, Math.round(Number(st.uses) || 0)), duration: 8, keyId: st.keyId, loseItem: 'keep' }, true);
+        }
+    }
+
     /* ---------- Ciclo de vida ---------- */
     function start() {
         G.running = true; G.t = 0; G.list = []; G.base.clear(); G.gone.clear(); G.hp.clear(); G.dying = []; G.stompCd.clear();
@@ -1969,11 +2893,16 @@ const GM = (function (isPlaying) {
             const g = ent.userData.game;
             if (!isActive(g)) return;
             G.list.push(ent);
-            G.base.set(uidOf(ent), { pos: ent.position.clone(), quat: ent.quaternion.clone(), scale: ent.scale.clone(), visible: ent.visible });
+            G.base.set(uidOf(ent), { pos: ent.position.clone(), quat: ent.quaternion.clone(), scale: ent.scale.clone(), visible: ent.visible, locked: ent.userData.isPortalPad ? !!ent.userData.isLocked : undefined });
+            if (ent.userData.isPortalPad && g.lockKey) { ent.userData.isLocked = true; try { applyPortalVisual(ent); } catch (pe) { /* sin aspecto */ } }
             if (g.role === 'enemy') G.hp.set(uidOf(ent), Math.max(1, Math.round(Number(g.hp) || 1)));
         });
+        G.bullets = []; G.chaseP = new Map(); G.chasing = new Set(); G.shootCd = new Map(); G.hintT = 0; G.dt = 0.016; G.body = null;
+        { const lv = livesConfig(); G.maxHearts = (lv && lv.enabled) ? Math.max(1, Math.min(99, Math.round(Number(lv.count) || 3))) : 0; G.hearts = G.maxHearts; }
+        initEconomy();
         ensureUI();
         refreshHud();
+        renderHearts();
     }
     function stop() {
         if (!G.running) return;
@@ -1981,13 +2910,19 @@ const GM = (function (isPlaying) {
         Object.keys(G.effects).slice().forEach(k => endEffect(k, true));
         setGhost(false);
         if (G.savedJump !== null) { playerConfig.jumpForce = G.savedJump; G.savedJump = null; }
-        G.fx.forEach(f => { scene.remove(f.mesh); if (f.kind === 'sword') f.mesh.geometry.dispose(); if (f.mesh.material) f.mesh.material.dispose(); });
+        G.fx.forEach(f => { scene.remove(f.mesh); if (f.free) f.free(); if (f.kind === 'sword') f.mesh.geometry.dispose(); if (f.mesh.material) f.mesh.material.dispose(); });
         G.fx = []; G.dying = [];
+        heldFree();
+        (G.bullets || []).forEach(freeBullet); G.bullets = [];
+        G.maxHearts = 0; renderHearts();
+        npcBubbleClear(); hideGoal(); if (G.shopEl) G.shopEl.style.display = 'none';
+        G.shopKey = ''; G.opening = []; G.coins = 0; G.keyring = new Map(); G.econ = false;
         G.list.forEach(ent => {
             const b = G.base.get(uidOf(ent));
             if (!b) return;
             ent.position.copy(b.pos); ent.quaternion.copy(b.quat); ent.scale.copy(b.scale); ent.visible = b.visible;
             ent.updateMatrixWorld(true);
+            if (b.locked !== undefined) { ent.userData.isLocked = b.locked; try { applyPortalVisual(ent); } catch (pe) { /* sin aspecto */ } }
         });
         G.weapon = null; G.nearNpc = null; G.list = [];
         hideUI();
@@ -2017,6 +2952,35 @@ const GM = (function (isPlaying) {
                 }
                 case 'spin':
                     yaw = G.t * sp * Math.PI; break;
+                case 'chase': {   // v55: si el personaje entra en el rango (Rango = amp), el objeto lo persigue; si se aleja, vuelve a su sitio
+                    const uid = uidOf(ent);
+                    const cp = G.chaseP.get(uid) || { x: b.pos.x, z: b.pos.z };
+                    G.chaseP.set(uid, cp);
+                    const px = playerLogicalPos.x, pz = playerLogicalPos.z;
+                    const dP = Math.hypot(px - cp.x, pz - cp.z);
+                    const seen = !G.effects.invis && (G.chasing.has(uid) ? dP <= amp * 1.6 : dP <= amp);
+                    if (seen) G.chasing.add(uid); else G.chasing.delete(uid);
+                    const tx = seen ? px : b.pos.x, tz = seen ? pz : b.pos.z;
+                    const dd = Math.hypot(tx - cp.x, tz - cp.z);
+                    if (dd > 0.15) {
+                        const step = Math.min(dd, sp * (seen ? 1 : 0.7) * (G.dt || 0.016));
+                        const ux = (tx - cp.x) / dd, uz = (tz - cp.z) / dd;
+                        const walls = solidWithoutEnemies();
+                        const free = (ax, az) => {
+                            if (!walls.length) return true;
+                            hitTmp.set(cp.x, b.pos.y + 0.4, cp.z);
+                            dirTmp.set(ax, 0, az).normalize();
+                            rc.set(hitTmp, dirTmp); rc.far = step + 0.5;
+                            return rc.intersectObjects(walls, false).length === 0;
+                        };
+                        if (free(ux, uz)) { cp.x += ux * step; cp.z += uz * step; }
+                        else if (Math.abs(ux) > 0.2 && free(Math.sign(ux), 0)) cp.x += Math.sign(ux) * step;
+                        else if (Math.abs(uz) > 0.2 && free(0, Math.sign(uz))) cp.z += Math.sign(uz) * step;
+                        if (g.face) yaw = Math.atan2(ux, uz);
+                    }
+                    ent.position.x = cp.x; ent.position.z = cp.z;
+                    break;
+                }
             }
             if (yaw !== null) { qTmp.setFromAxisAngle(Y_AXIS, yaw); ent.quaternion.copy(b.quat).premultiply(qTmp); }
             ent.updateMatrixWorld(true);
@@ -2024,9 +2988,11 @@ const GM = (function (isPlaying) {
     }
 
     function updateFx(delta) {
+        try { updateHeld(delta); } catch (he) { if (!G.heldWarned) { G.heldWarned = true; console.warn('Arma:', he); } }
         for (let i = G.fx.length - 1; i >= 0; i--) {
             const f = G.fx[i];
             f.life -= delta;
+            if (f.tick) f.tick(f, delta);
             if (f.kind === 'sword') {
                 const k = 1 - Math.max(0, f.life) / f.max;
                 camera.getWorldDirection(dirTmp);
@@ -2039,6 +3005,7 @@ const GM = (function (isPlaying) {
             }
             if (f.life <= 0) {
                 scene.remove(f.mesh);
+                if (f.free) f.free();
                 if (f.kind === 'sword') f.mesh.geometry.dispose();
                 if (f.mesh.material) f.mesh.material.dispose();
                 G.fx.splice(i, 1);
@@ -2075,16 +3042,20 @@ const GM = (function (isPlaying) {
     function tick(delta, body, prevEyeY, targetEyeY) {
         if (!isPlaying()) { if (G.running) stop(); return false; }
         if (!G.running) start();
-        if (!G.list.length) return false;
+        if (!G.list.length && !G.weapon && !G.coins && !G.keyring.size) return false;   // v56: con inventario inicial también sigue corriendo
         G.t += delta;
+        G.dt = delta; G.body = body;
         if (G.invuln > 0) G.invuln -= delta;
         if (G.wCool > 0) G.wCool -= delta;
+        if (G.goalCd > 0) G.goalCd -= delta;
+        updateOpening(delta);
         G.stompCd.forEach((v, k) => { if (v - delta <= 0) G.stompCd.delete(k); else G.stompCd.set(k, v - delta); });
 
         runAnimations();
         updateEffects(delta);
         updateFly(delta, prevEyeY, targetEyeY);
         updateFx(delta);
+        try { updateShooters(delta); updateBullets(delta); } catch (se) { if (!G.shootWarned) { G.shootWarned = true; console.warn('Disparos enemigos:', se); } }
 
         const px = playerLogicalPos.x, pz = playerLogicalPos.z;
         const feetY = playerLogicalPos.y - playerConfig.eyeHeight;
@@ -2094,7 +3065,7 @@ const GM = (function (isPlaying) {
         for (const ent of G.list) {
             const g = ent.userData.game, uid = uidOf(ent);
             if (!ent.visible || G.gone.has(uid)) continue;
-            if (g.role === 'none' && g.item === 'none') continue;
+            if (g.role === 'none' && g.item === 'none' && !g.coinOn && !g.lockKey) continue;
             const boxes = boxesOf(ent);
             for (const b of boxes) {
                 const dx = Math.max(b.min.x - px, 0, px - b.max.x);
@@ -2102,8 +3073,13 @@ const GM = (function (isPlaying) {
                 const horiz = Math.hypot(dx, dz);
 
                 // ÍTEM: se recoge al tocarlo
-                if (g.item !== 'none' && horiz <= radius + 0.35 && feetY <= b.max.y + 0.3 && feetY + height >= b.min.y - 0.1) {
+                if ((g.item !== 'none' || g.coinOn) && horiz <= radius + 0.35 && feetY <= b.max.y + 0.3 && feetY + height >= b.min.y - 0.1) {
                     collect(ent, g);
+                    break;
+                }
+                // BLOQUEO con llave (puertas, muros, cualquier objeto): se abre al tocarlo con la llave
+                if (g.lockKey && !ent.userData.isPortalPad && horiz <= radius + 0.45 && feetY <= b.max.y + 0.3 && feetY + height >= b.min.y - 0.1) {
+                    tryUnlockObject(ent, g);
                     break;
                 }
                 // ENEMIGO: contacto, pisotón o golpe
@@ -2117,7 +3093,7 @@ const GM = (function (isPlaying) {
                             playerLogicalPos.y += 0.05;
                             damage(ent, 1);
                         }
-                    } else if (hurtPlayer()) { hurt = true; }
+                    } else if (enemyHit(g)) { hurt = true; }
                     break;
                 }
                 // NPC: el más cercano dentro de su rango
@@ -2139,6 +3115,8 @@ const GM = (function (isPlaying) {
             }
         }
         renderBubble();
+        renderShop();
+        npcBubbleTick();
 
         G.hudT -= delta;
         if (G.hudT <= 0) { G.hudT = 0.2; if (Object.keys(G.effects).length) refreshHud(); }
@@ -2162,7 +3140,7 @@ const GM = (function (isPlaying) {
     // Al salir de Explorar todo vuelve a su lugar original (el editor nunca queda modificado)
     setInterval(() => { if (G.running && !isPlaying()) stop(); }, 100);
 
-    return { tick, stop, warned: false };
+    return { tick, stop, warned: false, tryUnlockPortal, portalLockMsg };
 })(() => state === 'play');
 
 /* ===== COLISIONES DINÁMICAS (objetos animados por la línea de tiempo o escalados en vivo) =====
@@ -2296,6 +3274,8 @@ function updatePlayerPhysics(delta, moveDelta) {
     if (groundY === -Infinity) isGrounded = false;
 
     const specialPrevEyeY = playerLogicalPos.y;
+    // Salió caminando del borde: si el suelo que queda debajo está mucho más abajo, cae con gravedad (antes se «pegaba» al suelo inferior)
+    if (isGrounded && !(typeof ladderClimbing !== 'undefined' && ladderClimbing) && groundY !== -Infinity && (playerLogicalPos.y - targetEyeY) > Math.max(0.5, playerConfig.stepHeight + 0.2)) { isGrounded = false; verticalVelocity = 0; }
     if (!isGrounded) {
         verticalVelocity -= playerConfig.gravity * delta;
         playerLogicalPos.y += verticalVelocity * delta;
@@ -2322,9 +3302,10 @@ function updatePlayerPhysics(delta, moveDelta) {
             if (dist < 1.1 && Math.abs(currentFeetY - padPos.y) < 1.0) {
                 isInsideAnyPortalPad = true;
                 if (!portalActiveCooldown) {
+                    if (ent.userData.isLocked) { try { GM.tryUnlockPortal(ent); } catch (e) { /* sin llaves */ } }
                     if (ent.userData.isLocked) {
                         portalActiveCooldown = true;
-                        showToast('🔒 Portal Bloqueado. Cumple las reglas para activarlo.');
+                        showToast((function () { try { return GM.portalLockMsg(ent); } catch (e) { return null; } })() || '🔒 Portal Bloqueado. Cumple las reglas para activarlo.');
                     } else if (roomPortalUse(ent)) {
                         portalActiveCooldown = true;
                     } else {
@@ -3356,7 +4337,7 @@ function mpOnMessage(m, t, peerKey) {
         if (!r) { t.send({ t: 'rq', u: MP.uid }, peerKey); return; }   // no lo conozco todavía: pido su perfil
         r.links.set(t.name + ':' + peerKey, { t, peerKey });
         r.seen = performance.now();
-        if (Array.isArray(m.p)) mpSetTarget(r, m.p, m.r, m.k);
+        if (Array.isArray(m.p)) mpSetTarget(r, m.p, m.r, m.k); r.climb = m.c === 1;
     }
 }
 function mpSetTarget(r, p, yaw, pitch) {
@@ -3474,9 +4455,189 @@ function mpMakeLocalTransport() {
     };
     return t;
 }
+/* ---------- RELEVO POR WEBSOCKET (no usa WebRTC: funciona entre redes distintas, datos móviles, NAT estrictos) ----------
+   - «relevo-mqtt»: brokers MQTT públicos y gratuitos por WSS (cliente MQTT 3.1.1 mínimo, sin librerías). Se conecta a varios y
+     se queda con los que respondan; publica en 2 y escucha en todos (los duplicados se descartan).
+   - «relevo-propio»: tu servidor WebSocket (archivo metaverso-relay-server.js) o un broker MQTT propio (URL terminada en /mqtt).
+   Conviven con la red P2P: si WebRTC conecta, genial; si no, el relevo asegura que todos se vean.                          */
+const MP_MQTT_BROKERS = [
+    'wss://broker.emqx.io:8084/mqtt',
+    'wss://broker.hivemq.com:8884/mqtt',
+    'wss://test.mosquitto.org:8081/',
+    'wss://mqtt.eclipseprojects.io:443/mqtt'
+];
+const MP_RELAY_URL_OK = /^wss?:\/\/[\w.\-]+(:\d{1,5})?(\/[\w\-.\/%]*)?(\?[\w\-.=&%]*)?$/;
+function mpRelayUrl() {   // relevo propio configurado (visor: configuración exportada · editor: casilla)
+    try {
+        const el = document.getElementById('mp-ed-relay');
+        const v = (typeof MPC !== 'undefined' && MPC && MPC.relay) ? MPC.relay : (el ? el.value : '');
+        const u = String(v || '').trim();
+        if (!u || u.length > 200 || !MP_RELAY_URL_OK.test(u)) return '';
+        if (u.indexOf('ws://') === 0 && location.protocol === 'https:') return '';   // una página https no puede usar ws:// sin cifrar
+        return u;
+    } catch (e) { return ''; }
+}
+function mpPublicRelayOn() {
+    try {
+        if (typeof MPC !== 'undefined' && MPC) return MPC.publicRelay !== false;
+        const el = document.getElementById('mp-ed-pubrelay');
+        return el ? !!el.checked : true;
+    } catch (e) { return true; }
+}
+const MP_TXT_ENC = new TextEncoder(), MP_TXT_DEC = new TextDecoder();
+function mpMqttStr(s) {
+    const b = MP_TXT_ENC.encode(s), o = new Uint8Array(2 + b.length);
+    o[0] = b.length >> 8; o[1] = b.length & 255; o.set(b, 2);
+    return o;
+}
+function mpMqttPkt(first, parts) {
+    let len = 0; parts.forEach(p => { len += p.length; });
+    const rl = []; let x = len;
+    do { let d = x % 128; x = Math.floor(x / 128); if (x > 0) d |= 128; rl.push(d); } while (x > 0);
+    const out = new Uint8Array(1 + rl.length + len);
+    out[0] = first; out.set(rl, 1);
+    let off = 1 + rl.length;
+    parts.forEach(p => { out.set(p, off); off += p.length; });
+    return out;
+}
+function mpMqttFeed(c, data, onPacket) {   // acumula bytes y entrega paquetes MQTT completos
+    let buf = data;
+    if (c.buf) { buf = new Uint8Array(c.buf.length + data.length); buf.set(c.buf, 0); buf.set(data, c.buf.length); }
+    let i = 0;
+    while (buf.length - i >= 2) {
+        let mul = 1, len = 0, j = i + 1, ok = false;
+        while (j < buf.length && j <= i + 4) { const d = buf[j++]; len += (d & 127) * mul; mul *= 128; if (!(d & 128)) { ok = true; break; } }
+        if (!ok) { if (j > i + 4) throw new Error('paquete MQTT inválido'); break; }
+        if (len > 400000) throw new Error('paquete MQTT demasiado grande');
+        if (buf.length - j < len) break;
+        onPacket(buf[i], buf.subarray(j, j + len));
+        i = j + len;
+    }
+    c.buf = i < buf.length ? buf.slice(i) : null;
+}
+function mpMakeRelayTransport(name, kind, urls) {
+    const topic = 'myvr-p2p-v1/r/' + MP.room;
+    const S = { dead: false, seq: 0, seen: new Set(), conns: [], helloTimer: null };
+    const t = {
+        name,
+        send(msg, peer) {
+            if (S.dead) return;
+            let env;
+            try { env = JSON.stringify({ f: MP.uid, to: peer || null, i: ++S.seq, m: msg }); } catch (e) { return; }
+            if (env.length > 200000) return;
+            let used = 0;
+            for (const c of S.conns) { if (c.ready) { c.pub(env); if (++used >= 2) break; } }   // se publica en 2 como máximo
+        },
+        leave() {
+            S.dead = true; clearInterval(S.helloTimer);
+            S.conns.forEach(c => c.close());
+        }
+    };
+    function receive(text) {
+        let env;
+        try { env = JSON.parse(text); } catch (e) { return; }
+        if (!env || typeof env !== 'object' || typeof env.f !== 'string' || env.f === MP.uid || env.f.length > 24) return;
+        if (env.to && env.to !== MP.uid) return;
+        if (!env.m || typeof env.m !== 'object') return;
+        const key = env.f + ':' + env.i;
+        if (S.seen.has(key)) return;   // el mismo mensaje puede llegar por 2 brokers
+        S.seen.add(key);
+        if (S.seen.size > 800) S.seen.delete(S.seen.values().next().value);
+        env.m.u = env.f;
+        mpOnMessage(env.m, t, env.f);
+    }
+    function openConn(url) {
+        const c = { url, ws: null, ready: false, fails: 0, buf: null, ping: null, retry: null, to: null };
+        c.pub = (env) => {
+            try {
+                if (!c.ws || c.ws.readyState !== 1) return;
+                if (kind === 'mqtt') c.ws.send(mpMqttPkt(0x30, [mpMqttStr(topic), MP_TXT_ENC.encode(env)]));
+                else c.ws.send(env);
+            } catch (e) { /* conexión caída: se reintenta sola */ }
+        };
+        c.close = () => {
+            c.ready = false; clearInterval(c.ping); clearTimeout(c.retry); clearTimeout(c.to);
+            try { if (c.ws) { c.ws.onopen = c.ws.onmessage = c.ws.onclose = c.ws.onerror = null; c.ws.close(); } } catch (e) { /* ya cerrado */ }
+            c.ws = null;
+        };
+        const ready = () => {
+            c.ready = true; c.fails = 0; clearTimeout(c.to);
+            mpRefreshStatus();
+            try { t.send(mpHelloMsg(true)); } catch (e) { /* sin perfil aún */ }
+        };
+        const lost = () => {
+            if (S.dead) return;
+            const was = c.ready;
+            c.close();
+            c.fails++;
+            if (was) mpRefreshStatus();
+            c.retry = setTimeout(connect, Math.min(20000, 1500 * Math.pow(2, Math.min(c.fails, 4))) + Math.random() * 800);
+        };
+        function connect() {
+            if (S.dead) return;
+            try {
+                const full = kind === 'json' ? (url + (url.indexOf('?') > -1 ? '&' : '?') + 'room=' + encodeURIComponent(MP.room)) : url;
+                c.ws = kind === 'mqtt' ? new WebSocket(full, 'mqtt') : new WebSocket(full);
+                c.ws.binaryType = 'arraybuffer';
+            } catch (e) { c.ws = null; return lost(); }
+            c.to = setTimeout(() => { if (!c.ready) lost(); }, 9000);   // si no responde, se prueba de nuevo / se pasa al siguiente
+            c.ws.onopen = () => {
+                if (kind === 'mqtt') {
+                    const cid = 'myvr' + MP.uid.slice(1, 10) + Math.random().toString(36).slice(2, 6);
+                    c.ws.send(mpMqttPkt(0x10, [mpMqttStr('MQTT'), new Uint8Array([4, 2, 0, 30]), mpMqttStr(cid)]));
+                } else ready();
+            };
+            c.ws.onmessage = (ev) => {
+                try {
+                    if (kind === 'json') { if (typeof ev.data === 'string') receive(ev.data); return; }
+                    const data = new Uint8Array(ev.data);
+                    mpMqttFeed(c, data, (first, body) => {
+                        const type = first >> 4;
+                        if (type === 2) {   // CONNACK
+                            if (body[1] !== 0) throw new Error('broker rechazó la conexión');
+                            c.ws.send(mpMqttPkt(0x82, [new Uint8Array([0, 1]), mpMqttStr(topic), new Uint8Array([0])]));
+                            c.ping = setInterval(() => { try { c.ws.send(new Uint8Array([0xC0, 0])); } catch (e) { /* caída */ } }, 20000);
+                        } else if (type === 9) { ready(); }   // SUBACK
+                        else if (type === 3) {                // PUBLISH
+                            const qos = (first >> 1) & 3, tl = (body[0] << 8) | body[1];
+                            const off = 2 + tl + (qos ? 2 : 0);
+                            receive(MP_TXT_DEC.decode(body.subarray(off)));
+                        }
+                    });
+                } catch (e) { lost(); }
+            };
+            c.ws.onclose = lost;
+            c.ws.onerror = () => { /* onclose se encarga del reintento */ };
+        }
+        c.connect = connect;
+        return c;
+    }
+    S.conns = urls.map((u, i) => openConn(u));
+    S.conns.forEach((c, i) => setTimeout(c.connect, i * 250));
+    S.helloTimer = setInterval(() => {   // mientras nadie aparezca, se vuelve a anunciar la presencia
+        if (!MP.remotes.size && S.conns.some(c => c.ready)) { try { t.send(mpHelloMsg(false)); } catch (e) { /* sin perfil */ } }
+    }, 10000);
+    t.isReady = () => S.conns.some(c => c.ready);
+    return t;
+}
+function mpJoinRelay(name) {
+    let urls = [], kind = 'mqtt';
+    if (name === 'relevo-propio') {
+        const u = mpRelayUrl();
+        if (!u) { MP.joined = MP.joined.filter(n => n !== name); return; }
+        urls = [u]; kind = /\/mqtt(\?.*)?$/i.test(u) ? 'mqtt' : 'json';
+    } else {
+        if (!mpPublicRelayOn()) { MP.joined = MP.joined.filter(n => n !== name); return; }
+        urls = MP_MQTT_BROKERS.slice();
+    }
+    try { MP.transports.push(mpMakeRelayTransport(name, kind, urls)); }
+    catch (err) { console.warn('[MP] relevo falló (' + name + ')', err); MP.errors.push(name); MP.joined = MP.joined.filter(n => n !== name); }
+    mpRefreshStatus();
+}
 async function mpJoinStrategy(name) {
     if (MP.joined.includes(name) || MP.blocked || !MP.started) return;
     MP.joined.push(name); mpRefreshStatus();
+    if (name === 'relevo-mqtt' || name === 'relevo-propio') { mpJoinRelay(name); return; }   // relevos por WebSocket (sin WebRTC)
     const joinRoom = await mpLoadLib(name);
     if (!joinRoom) {
         MP.errors.push(name);
@@ -3509,7 +4670,7 @@ function mpRejoin() {   // vuelve a anunciarse en los señalizadores (sirve tras
     if (!MP.started || MP.blocked) return;
     const live = MP.transports.filter(t => t.name !== 'local');
     if (MP.joined.some(n => !live.some(t => t.name === n))) return;   // aún cargando una librería: no interrumpir
-    const names = live.length ? live.map(t => t.name) : ['torrent', 'nostr', 'mqtt'];
+    const names = live.length ? live.map(t => t.name) : ['torrent', 'nostr', 'mqtt', 'relevo-mqtt', 'relevo-propio'];
     names.forEach(n => { if (MP.errors.includes(n)) MP.libs[n] = null; });
     live.forEach(t => { try { t.leave(); } catch (e) { /* ya salió */ } });
     MP.transports = MP.transports.filter(t => t.name === 'local');
@@ -3559,6 +4720,7 @@ function mpStart() {
     }
     MP.startedAt = Date.now(); MP.lastRejoin = Date.now(); MP.healN = 0; MP.lastRx = 0;
     mpJoinStrategy('torrent'); mpJoinStrategy('nostr');   // dos señalizadores en paralelo desde el inicio
+    mpJoinStrategy('relevo-mqtt'); mpJoinStrategy('relevo-propio');   // relevos por WebSocket: garantizan verse entre redes distintas
     MP.timers = [setTimeout(() => mpEscalate('mqtt'), 5000)];
     mpHealStart();
     if (!MP.unloadHooked) { MP.unloadHooked = true; window.addEventListener('pagehide', () => mpStop(true)); }
@@ -3567,6 +4729,7 @@ function mpRetry() {
     if (!MP.started) return;
     if (MP.blocked) return;
     ['torrent', 'nostr', 'mqtt'].forEach(n => { MP.libs[n] = MP.libs[n] && MP.errors.includes(n) ? null : MP.libs[n]; mpJoinStrategy(n); });
+    mpJoinStrategy('relevo-mqtt'); mpJoinStrategy('relevo-propio');
     mpStatus('🔄 Reintentando con todos los señalizadores…');
 }
 function mpStop(silent) {
@@ -4079,7 +5242,7 @@ function mpTick(delta) {
     const moved = !s || Math.abs(l.x - s.x) + Math.abs(l.y - s.y) + Math.abs(l.z - s.z) > 0.01 || Math.abs(l.yaw - s.yaw) > 0.01 || Math.abs(l.pitch - s.pitch) > 0.01;
     if (moved || now - MP.lastSentT > 1000) {
         MP.lastSent = { x: l.x, y: l.y, z: l.z, yaw: l.yaw, pitch: l.pitch }; MP.lastSentT = now;
-        mpBroadcast({ t: 'st', u: MP.uid, p: [+l.x.toFixed(2), +l.y.toFixed(2), +l.z.toFixed(2)], r: +l.yaw.toFixed(3), k: +l.pitch.toFixed(3) });
+        mpBroadcast({ t: 'st', u: MP.uid, p: [+l.x.toFixed(2), +l.y.toFixed(2), +l.z.toFixed(2)], r: +l.yaw.toFixed(3), k: +l.pitch.toFixed(3), c: (typeof ladderClimbing !== 'undefined' && ladderClimbing) ? 1 : 0 });
     }
 }
 // Foto de rostro reducida (96×96) para enviarla a los demás
@@ -5487,6 +6650,7 @@ function animate() {
     updateGifAnimations();
     tlViewerTick(delta);
     mpTick(delta);
+    avStatesTick(delta);
 
     if (state === 'welcome') {
         // Vista previa del avatar frente a la cámara, orbitando suavemente
@@ -5730,6 +6894,13 @@ const MVA = (function (isDefault) {
         amp += (Math.min(1, speed / 3) - amp) * Math.min(1, dt * 10);
         phase += speed * dt * 2.4;
         if (rig) { const a = Math.sin(phase) * 0.8 * amp; rig.arms[0].rotation.x = a; rig.arms[1].rotation.x = -a; rig.legs[0].rotation.x = -a; rig.legs[1].rotation.x = a; }
+        if (rig) {
+            const cl = (typeof ladderClimbing !== 'undefined' && ladderClimbing) ? 1 : 0;
+            const vy = rig.cy === undefined ? 0 : (wp.y - rig.cy) / Math.max(dt, 1e-3); rig.cy = wp.y;
+            rig.cAmt = (rig.cAmt || 0) + (cl - (rig.cAmt || 0)) * Math.min(1, dt * 10);
+            rig.cPh = (rig.cPh || 0) + Math.min(6, Math.abs(vy)) * dt * 2.6;
+            if (rig.cAmt > 0.01) window.mvClimbPose(rig, rig.cAmt, rig.cPh);
+        }
     }
     build();
     {   const _r = renderer.render.bind(renderer); renderer.render = function (a, b) { try { tick(); } catch (e) { /* nada */ } _r(a, b); }; }
@@ -5906,6 +7077,15 @@ function mpAvApply(r, av) {
     r.avSig = sig;
     mpAvBuild(r, a);
 }
+window.mvClimbPose = function (rig, amt, ph) {   // brazos arriba alternando y rodillas que suben, como al trepar
+    if (!rig || !rig.arms || !rig.legs || amt < 0.01) return;
+    const k = Math.min(1, amt), sn = Math.sin(ph);
+    const ta = [-2.3 + sn * 0.55, -2.3 - sn * 0.55], tl = [-0.1 - Math.max(0, sn) * 1.0, -0.1 - Math.max(0, -sn) * 1.0];
+    for (let i = 0; i < 2; i++) {
+        if (rig.arms[i]) rig.arms[i].rotation.x += (ta[i] - rig.arms[i].rotation.x) * k;
+        if (rig.legs[i]) rig.legs[i].rotation.x += (tl[i] - rig.legs[i].rotation.x) * k;
+    }
+};
 function mpAvTick(delta) {
     const dt = Math.max(1e-3, Math.min(0.1, delta || 0.016));
     MP.remotes.forEach(r => {
@@ -5923,6 +7103,10 @@ function mpAvTick(delta) {
             A.phase += speed * dt * 2.4;
             const w = Math.sin(A.phase) * 0.8 * A.amp;
             A.rig.arms[0].rotation.x = w; A.rig.arms[1].rotation.x = -w; A.rig.legs[0].rotation.x = -w; A.rig.legs[1].rotation.x = w;
+            const vy = A.cy === undefined ? 0 : (p.y - A.cy) / dt; A.cy = p.y;
+            A.cAmt = (A.cAmt || 0) + ((r.climb ? 1 : 0) - (A.cAmt || 0)) * Math.min(1, dt * 10);
+            A.cPh = (A.cPh || 0) + Math.min(6, Math.abs(vy)) * dt * 2.6;
+            if (A.cAmt > 0.01) window.mvClimbPose(A.rig, A.cAmt, A.cPh);
         }
     });
 }
